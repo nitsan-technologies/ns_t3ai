@@ -27,8 +27,7 @@ CKEDITOR.dialog.add("nsOpenAiContentDialog", function(editor) {
                             var xhr = new XMLHttpRequest();
                             xhr.open("POST", "https://api.openai.com/v1/completions", true);
                             xhr.setRequestHeader("Content-Type", "application/json");
-                            xhr.setRequestHeader("Authorization", "Bearer " + NS_OPENAI_KEY);
-                            xhr.setRequestHeader("OpenAI-Organization", NS_OPENAI_ORG);
+                            xhr.setRequestHeader("Authorization", "Bearer " + NS_OPENAI_KEY);                            
                             xhr.send(JSON.stringify({
                                 prompt: this.getValue(),
                                 // Text to complete
