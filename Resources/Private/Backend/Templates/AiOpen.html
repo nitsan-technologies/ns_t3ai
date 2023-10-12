@@ -17,14 +17,19 @@
 
 
     <div class="ns-openai__action-wrapper">
+        <div class="ns-openai__btn-group">
+            <a href="javascript:;" ns-data-target="ns-openai__content1" class="ns-openai__btn-top ns-openai__btn-seo">
+                <f:translate key="page.seo" />
+            </a>
+        </div>
         <!-- SEO Content -->
-        <div class="ns-openai__seo" style="display: block;">
+        <div class="ns-openai--content ns-openai__seo ns-openai-hidden" id="ns-openai__content1" >
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a href="javascript:;" class="nav-link active" id="ns_seo_title" data-bs-toggle="tab"
                            data-bs-target="#ns_content_seo_title">
-                            <f:translate key="page.seo" />
+                            <f:translate key="page.seoMetadata" />
                         </a>
                     </div>
 
@@ -46,6 +51,14 @@
                     </div>
                     <button class="mb-3 mt-1 btn btn-primary ns-openai-seo-set-btn" style="display:none;" data-page-id="{pageId}"
                     data-field-name="seo_title">
+                        <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-document-save"
+                        data-identifier="actions-document-save">
+                            <span class="icon-markup">
+                                <svg class="icon-color">
+                                    <use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-save"></use>
+                                </svg>
+                            </span>
+                        </span>
                         <f:translate key="seo.button.set" />
                     </button>
                 </div>

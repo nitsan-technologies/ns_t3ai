@@ -108,7 +108,9 @@
 .ns-openai__action-wrapper {
     position: relative;
     padding-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgb(237, 237, 237);
+    padding: 10px;
 }
 
 .ns-openai__seo {
@@ -150,12 +152,18 @@
     background-color: #fafafa;
 }
 
+.ns-openai-card-wrapper {
+    background-color: #fafafa;
+    border-bottom: 1px solid #cdcdcd;
+    padding: 0 15px;
+}
+
 .ns-openai-og-card__topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    padding: 3px 0;
 }
 
 .ns-openai-og-card__topbar .btn {
@@ -170,11 +178,6 @@
 .ns-openai__seo .tab-pane {
     background-color: #fafafa;
     padding: 10px 10px 15px;
-}
-
-.ns-openai__seo .col-md-4 {
-    background-color: #fafafa;
-    border-bottom: 1px solid #cdcdcd;
 }
 
 .ns-openai__seo-title-ddr,
@@ -194,9 +197,9 @@
 
 .ns-openai-preview-card {
     background-color: #fff;
-    margin-top: 30px;
+    margin-top: 15px;
     padding: 25px;
-    border-radius: 6px;
+    border-radius: 2px;
     box-shadow: 0 0px 6px -1px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
 }
@@ -261,7 +264,7 @@
 
 .ns-openai__keyword-ddr .form-select {
     margin-right: 10px;
-    width: 85%;
+    width: 50%;
 }
 
 .ns-openai__og_title,
@@ -303,7 +306,6 @@
     background-color: #fafafa;
     min-height: 300px;
     padding: 16px;
-    height: 95%;
 }
 
 .ns-openai__topics-input {
@@ -461,6 +463,3 @@
 .ns-openai__seo-descriptions h2 {
     font-size: 14px;
 }
-
-
-

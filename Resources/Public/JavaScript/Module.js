@@ -30,7 +30,7 @@ define(["TYPO3/CMS/Core/Ajax/AjaxRequest",
      * @param {object} button
      */
     function sendAjaxRequest(pageId, fieldName, button) {
-        Notification.info('start', 'keywords', 8);
+        Notification.info(TYPO3.lang['NsOpenai.request.send'], TYPO3.lang['NsOpenai.generating'], 8);
         var keyword = '';
         if (document.getElementById('topic_keyword')) {
             keyword = document.getElementById('topic_keyword').value
@@ -48,10 +48,10 @@ define(["TYPO3/CMS/Core/Ajax/AjaxRequest",
                 const resolved = await response.resolve();
                 const responseBody = JSON.parse(resolved);
                 if (responseBody.error) {
-                    Notification.error('error', responseBody.error);
+                    Notification.error(TYPO3.lang['NsOpenai.error'], responseBody.error);
                 } else {
                     handleResponse(pageId, fieldName, responseBody)
-                    Notification.success('finish', 'success', 8);
+                    Notification.success(TYPO3.lang['NsOpenai.generated.success'], TYPO3.lang['NsOpenai.generated.success.message'], 8);
                     button.disabled = false;
                     // button.querySelector('.btn-label').innerHTML = TYPO3.lang['NsOpenai.regenerate'];
                     document.getElementById('ns-openai__loader').innerHTML = '';
@@ -59,7 +59,7 @@ define(["TYPO3/CMS/Core/Ajax/AjaxRequest",
                 }
             })
             .catch((error) => {
-                Notification.error('something went wrong', error);
+                Notification.error(TYPO3.lang['NsOpenai.error'], error);
             });
     }
 
@@ -98,7 +98,7 @@ define(["TYPO3/CMS/Core/Ajax/AjaxRequest",
      * @param {string} suggestion
      */
     function sendSaveRequest(pageId, fieldName, suggestion) {
-        Notification.info('start', 'keywords', 8);
+        Notification.info(TYPO3.lang['NsOpenai.request.send'], TYPO3.lang['NsOpenai.generating'], 50);
         new AjaxRequest(TYPO3.settings.ajaxUrls['save_request'])
             .post(
                 {
@@ -111,31 +111,51 @@ define(["TYPO3/CMS/Core/Ajax/AjaxRequest",
                 const resolved = await response.resolve();
                 const responseBody = JSON.parse(resolved);
                 if (responseBody.error) {
-                    Notification.error('error', responseBody.error);
+                    Notification.error(TYPO3.lang['NsOpenai.error'], responseBody.error);
                 } else {
-                    // handleResponse(pageId, fieldName, responseBody)
-                    Notification.success('finish', 'success', 8);
+                    Notification.success(TYPO3.lang['NsOpenai.generated.success'], TYPO3.lang['NsOpenai.generated.success.message'], 8);
                     document.querySelector('.ns-openai__seo').style.display = 'none';
                     location.reload();
                     document.querySelector('.ns-openai-seo-set-btn').style.display = 'none';
                 }
             })
             .catch((error) => {
-                Notification.error('something went wrong', error);
+                Notification.error(TYPO3.lang['NsOpenai.error'], error);
             });
     }
 // create CE from selected outlines - end
 });
 
-// Start Tabs changes Code here
-const nsOpenai = document.querySelectorAll('.ns-openai');
-if (nsOpenai.length > 0) {
-    const getSeoBtn = document.querySelector('.ns-openai__btn-seo');
-    if(getSeoBtn){
-        getSeoBtn.addEventListener('click', () => {
-            getSeoBtn.classList.add('active');
-            getSeoTab.style.display = 'block';
+// Top 2 Tabs Button changes Code here
+const tabButtons = document.querySelectorAll('.ns-openai__btn-top');
+function toggleTab(tabId) {
+    const content = document.getElementById(tabId);
+    const activeButton = document.querySelector(`[ns-data-target="${tabId}"]`);
+
+    if (content.classList.contains('active-tab')) {
+        content.classList.remove('active-tab');
+        activeButton.classList.remove('active');
+    } else {
+        const contentSections = document.querySelectorAll('.ns-openai--content');
+        contentSections.forEach((section) => {
+            section.classList.remove('active-tab');
+        });
+        content.classList.add('active-tab');
+        activeButton.classList.add('active');
+
+        const tabButtons = document.querySelectorAll('.ns-openai__btn-top');
+        tabButtons.forEach((button) => {
+            if (button !== activeButton) {
+                button.classList.remove('active');
+            }
         });
     }
 }
-// End Tabs changes Code here
+
+tabButtons.forEach((button) => {
+    button.addEventListener('click', function () {
+        const tabContentId = button.getAttribute('ns-data-target');
+        toggleTab(tabContentId);
+    });
+});
+// Top 2 Tabs Button changes Code here

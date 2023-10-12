@@ -96,6 +96,26 @@
 			<trans-unit id="t3planetsupport">
 				<source>T3PlanetSupport</source>
 			</trans-unit>
+
+			<!-- JavaScript Module.js Localisation start -->
+			<trans-unit id="NsOpenai.error">
+				<source>Sorry, an error occurred! Please attempt once more.</source>
+			</trans-unit>
+			<trans-unit id="NsOpenai.request.send">
+				<source>Connecting with ChatGPT (by OpenAI)</source>
+			</trans-unit>
+			<trans-unit id="NsOpenai.request.send.message">
+				<source>Please wait a moment as we retrieve information from the ChatGPT API.</source>
+			</trans-unit>
+			<trans-unit id="NsOpenai.generated.success">
+				<source>Received a reply from ChatGPT (by OpenAI)</source>
+			</trans-unit>
+			<trans-unit id="NsOpenai.generated.success.message">
+				<source>Successfully retrieved the content from the ChatGPT API.</source>
+			</trans-unit>
+
+			<!-- JavaScript Module.js Localisation end -->
+
 		</body>
 	</file>
 </xliff>

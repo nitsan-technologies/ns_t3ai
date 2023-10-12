@@ -10,7 +10,7 @@
                 <source>Optimize AI-SEO</source>
             </trans-unit>
             <trans-unit id="page.title">
-                <source>Generate Title</source>
+                <source>Generate Meta Title</source>
             </trans-unit>
             <trans-unit id="generate">
                 <source>Generate</source>
@@ -20,9 +20,6 @@
             </trans-unit>
             <trans-unit id="be.openai">
                 <source>T3OpenAI</source>
-            </trans-unit>
-            <trans-unit id="page.generateTitle">
-                <source>Generate Title</source>
             </trans-unit>
             <trans-unit id="page.seo">
                 <source>Optimize AI-SEO</source>
@@ -42,6 +39,9 @@
             <trans-unit id="topicOutline.topics">
                 <source>Choose Suggested Page Title</source>
             </trans-unit>
+            <trans-unit id="page.seoMetadata">
+                <source>Metadata</source>
+            </trans-unit>            
         </body>
     </file>
 </xliff>
