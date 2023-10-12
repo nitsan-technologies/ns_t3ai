@@ -1,0 +1,212 @@
+:root {
+}
+
+.nschatbot {
+  padding: 15px 15px 195px 15px;
+}
+
+.nschatbot .nschatbot-header h1{
+  text-align: center;
+  color: rgba(131, 131, 131, 0.2);
+  font-weight: 600;
+  font-size: 36px;
+  hyphens: auto;
+  word-wrap: break-word;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+   
+}
+
+.nschatbot .nschatbot-card {
+    padding: 20px 30px 20px 20px;
+    height: calc(100% - 24px);
+    border-radius: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: all ease 0.5s;
+    position: relative;
+    background: #fff;
+    margin-bottom: 24px;
+}
+
+.nschatbot .nschatbot-card::before {
+    content: '';
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiBjbGFzcz0iaWNvbi1zbSIgdmlld0JveD0iMCAwIDE2IDE2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTS41IDEuMTYzQTEgMSAwIDAxMS45Ny4yOGwxMi44NjggNi44MzdhMSAxIDAgMDEwIDEuNzY2TDEuOTY5IDE1LjcyQTEgMSAwIDAxLjUgMTQuODM2VjEwLjMzYTEgMSAwIDAxLjgxNi0uOTgzTDguNSA4IDEuMzE2IDYuNjUzQTEgMSAwIDAxLjUgNS42N1YxLjE2M3oiLz48L3N2Zz4=');
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 13%;
+    opacity: 0;
+    transition: all ease 0.5s;
+    filter: opacity(0.5);
+}
+
+.nschatbot .nschatbot-card h2 {
+   margin-top: 0;
+   margin-bottom: 10px;
+}
+
+.nschatbot .nschatbot-card p:last-child{
+    margin-bottom: 0;
+ }
+
+.nschatbot .ns-openai-prompt-card:hover {
+    text-decoration: none;
+}
+
+.nschatbot .nschatbot-card:hover {
+    background: rgba(221, 221, 221, 0.2);
+}
+
+.nschatbot .nschatbot-card:hover::before {
+    transition: all ease 0.5s;
+    opacity: 1;
+}
+
+.nschatbot .nschatbot-form {
+    padding: 15px 10px 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background: #fff;
+}
+
+.nschatbot .nschatbot-form p {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #565869;
+    padding-top: 10px;
+}
+
+.nschatbot .nschatbot-form p a {
+    text-decoration: underline;
+}
+
+.nschatbot .nschatbot-form .nschatbot-input {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.nschatbot .nschatbot-form .form-group .form-control {
+    padding: 15px 50px 15px 15px;
+    border-radius: 5px;
+}
+
+.nschatbot .nschatbot-form .form-group  .search-box {
+    padding: 4px;
+    border-radius: 5px;
+    width: 20%;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nschatbot .nschatbot-form .form-group input[type='text'] {
+    font-size: 15px;
+}
+
+.nschatbot .nschatbot-form .form-group input[type='text']::placeholder {
+    opacity: 0.7;
+}
+    
+.nschatbot .nschatbot-form .form-group .nschatbot-form-btn  {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwNjYiIGNsYXNzPSJpY29uLXNtIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTS41IDEuMTYzQTEgMSAwIDAxMS45Ny4yOGwxMi44NjggNi44MzdhMSAxIDAgMDEwIDEuNzY2TDEuOTY5IDE1LjcyQTEgMSAwIDAxLjUgMTQuODM2VjEwLjMzYTEgMSAwIDAxLjgxNi0uOTgzTDguNSA4IDEuMzE2IDYuNjUzQTEgMSAwIDAxLjUgNS42N1YxLjE2M3oiLz48L3N2Zz4=');
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: 50% 50%;   
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+    margin-left: -50px;
+    border: transparent;
+    opacity: 0.5;
+}
+
+.nschatbot .nschatbot-form .form-group .submitbtn {
+    background-color: #ddd;
+    opacity: 1;
+}
+
+.nschatbot .nschatbot-form .form-group .nschatbot-form-btn:hover { 
+    background-color: #ddd;
+    opacity: 1;
+}
+
+.nschatbot .nschatbot-conversation-header h4 {
+    text-align: center;
+    color: rgba(131, 131, 131, 0.8);
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    font-size: 16px;
+    padding-top: 5px;
+}
+
+.nschatbot .nschatbot-conversation .nschatbot-conversation-user,
+.nschatbot .nschatbot-conversation .nschatbot-conversation-openai {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 26px 15px;
+    position: relative;
+}
+
+.nschatbot .nschatbot-conversation .nschatbot-conversation-user h4,
+.nschatbot .nschatbot-conversation .nschatbot-conversation-openai h4{
+   color: #374151;
+   font-size: 14px;
+   line-height: 22px;
+   margin-bottom: 0;
+}
+
+.nschatbot .nschatbot-conversation .nschatbot-conversation-user {
+    background: #fff;
+}
+
+.nschatbot .nschatbot-conversation .nschatbot-conversation-user .nschatbot-conversation-user-img svg,
+.nschatbot .nschatbot-conversation .nschatbot-conversation-openai .nschatbot-conversation-openai-img svg  {
+    width: 36px;
+    height: 36px;
+    margin-right: 24px;
+}
+
+.nschatbot .nschatbot-conversation .nschatbot-conversation-openai {
+    background:#f7f8f8;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nschatbot-dots {
+    width: 41px;
+    height: 9.4px;
+    background: radial-gradient(circle closest-side,#b9b9b9 90%,#0000) 0% 50%, radial-gradient(circle closest-side,#b9b9b9 90%,#0000) 50% 50%, radial-gradient(circle closest-side,#b9b9b9 90%,#0000) 100% 50%;
+    background-repeat: repeat, repeat, repeat;
+    background-size: auto, auto, auto;
+    background-size: calc(100%/3) 100%;
+    background-repeat: no-repeat;
+    animation: dots-zcf63l 1s infinite linear;
+    margin-top: 14px;
+ }
+ 
+ @keyframes dots-zcf63l {
+    33% {
+       background-size: calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%;
+    }
+ 
+    50% {
+       background-size: calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%;
+    }
+ 
+    66% {
+       background-size: calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%;
+    }
+ }

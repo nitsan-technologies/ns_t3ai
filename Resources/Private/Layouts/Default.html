@@ -1,0 +1,10 @@
+<html xmlns:f="https://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:be.container pageTitle="{f:translate(key: 'pagetitle')}" includeRequireJsModules="{0:'TYPO3/CMS/NsOpenai/Backend'}">
+
+    <link rel="stylesheet" type="text/css" href="{f:uri.resource(path:'Vendor/backend.css', extensionName: 'NsOpenai')}"
+          media="all">
+
+    <f:flashMessages/>
+    <f:render section="content"/>
+</f:be.container>
+</html>

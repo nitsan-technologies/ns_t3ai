@@ -1,0 +1,21 @@
+pageContent = PAGE
+pageContent {
+    typeNum = 1696828748
+    config {
+        disableAllHeaderCode = 1
+        additionalHeaders = Content-type:application/html
+        xhtml_cleaning = 0
+        admPanel = 0
+    }
+    // Get the content of defined page with colPos=0
+    20 = CONTENT
+    20 {
+        table = tt_content
+        select {
+            orderBy = uid
+            where = colPos = 0 or colPos = 1 or colPos = 2
+        }
+        wrap = <div class="pageContent">|</div>
+    }
+
+}

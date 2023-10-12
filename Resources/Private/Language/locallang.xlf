@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="EXT:ns_openai/Resources/Private/Language/locallang_be" date="2023-03-12T06:46:21Z" product-name="ns_openai">
+        <header/>
+        <body>
+            <trans-unit id="pageTitle">
+                <source>Page title</source>
+            </trans-unit>
+            <trans-unit id="generateAll">
+                <source>Optimize AI-SEO</source>
+            </trans-unit>
+            <trans-unit id="page.title">
+                <source>Generate Title</source>
+            </trans-unit>
+            <trans-unit id="generate">
+                <source>Generate</source>
+            </trans-unit>
+            <trans-unit id="global.prompt">
+                <source>Use Default</source>
+            </trans-unit>
+            <trans-unit id="be.openai">
+                <source>T3OpenAI</source>
+            </trans-unit>
+            <trans-unit id="page.generateTitle">
+                <source>Generate Title</source>
+            </trans-unit>
+            <trans-unit id="page.seo">
+                <source>Optimize AI-SEO</source>
+            </trans-unit>
+            <trans-unit id="page.nsopenai">
+                <source>T3OpenAI</source>
+            </trans-unit>
+            <trans-unit id="page.upgrade">
+                <source>Upgrade Premium?</source>
+            </trans-unit>
+            <trans-unit id="preview.google.search">
+                <source>Google SERP</source>
+            </trans-unit>
+            <trans-unit id="seo.button.set">
+                <source>Save Changes</source>
+            </trans-unit>
+            <trans-unit id="topicOutline.topics">
+                <source>Choose Suggested Page Title</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

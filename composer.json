@@ -1,0 +1,43 @@
+{
+    "name": "nitsan/ns-openai",
+    "type": "typo3-cms-extension",
+    "description": "First-ever ChatGPT (by OpenAI) feature-rich content assistance in TYPO3 that automates content creation and optimization. The extension comes with numerous features like SEO optimization, Create AI-Page, Language Translation, Chat assistance, Read-to-use helpful prompts, etc. Explore more https://t3planet.com/t3openai-typo3-chatgpt-extension",
+    "homepage": "https://t3planet.com/t3openai-typo3-chatgpt-extension",
+    "authors": [
+        {
+            "name": "T3: Nilesh Malankiya, T3: Parth Parmar, T3: Jay Bhalgamiya, T3: Rohan Parmar, QA: Vishal Solanki",
+            "role": "Developer"
+        }
+    ],
+    "license": "GPL-2.0-or-later",
+    "keywords": [
+        "TYPO3",
+        "OpenAI",
+        "ChatGPT",
+        "AI"
+    ],
+    "support": {
+        "issues": "https://t3planet.com/support"
+    },
+    "require": {
+        "typo3/cms-core": "^11"
+    },
+    "autoload": {
+        "psr-4": {
+            "NITSAN\\NsOpenai\\": "Classes"
+        }
+    },
+    "replace": {
+        "typo3-ter/ns-openai": "self.version"
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "extra": {
+        "typo3/cms": {
+            "web-dir": ".Build/public",
+            "extension-key": "ns_openai"
+        }
+    }
+}

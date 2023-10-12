@@ -1,0 +1,466 @@
+.ns-openai__topics .btn-primary:focus,
+.ns-openai__topics .btn-primary:hover,
+.ns-openai__seo .btn-primary:focus,
+.ns-openai__seo .btn-primary:hover {
+    background-color: #d7d7d7;
+}
+
+.ns-openai__topics .btn-primary,
+.ns-openai__seo .btn-primary {
+    background-color: #ededed;
+    border-color: #bbb;
+    color: #212424;
+}
+
+.ns-openai__topics .btn-primary svg,
+.ns-openai__seo .btn-primary svg g,
+.ns-openai__seo .btn-primary svg {
+    fill: #212424;
+}
+
+.ns-openai--content.ns-openai-hidden {
+    display: none;
+}
+
+.ns-openai--content.active-tab {
+    display: block;
+} 
+
+.ns-openai__top-bar {
+    background: #ededed;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ns-openai__top-bar h3 svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+}
+
+.ns-openai__top-bar svg {
+    width: 16px;
+}
+
+.ns-openai__top-bar a span {
+    text-decoration: underline;
+}
+
+.ns-openai__top-bar a:hover,
+.ns-openai__top-bar a:hover span {
+    color: #ff8700;
+}
+
+.ns-openai__top-bar h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.ns-openai__top-bar h3 span {
+    display: inline-block;
+}
+
+.ns-openai__top-bar h3 span.icon-state-default {
+    margin-right: 5px;
+}
+
+.ns-openai__btn-top.active {
+    background-color: #d7d7d7;
+}
+
+.ns-openai__btn-top {
+    background-color: #ededed;
+    border: 1px solid #bbbbbb;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 15px;
+    padding: 6px 12px 6px 12px;
+    margin-bottom: 10px;
+    padding-right: 34px;
+    position: relative;
+}
+.ns-openai__btn-top.active::after{
+    transform: translateY(-50%) rotate(180deg);
+}
+
+ .ns-openai__btn-top::after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23333333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 14px;
+ }
+
+.ns-openai__btn-top:hover {
+    background-color: #d7d7d7;
+    text-decoration: none;
+}
+
+.ns-openai__action-wrapper {
+    position: relative;
+    padding-top: 10px;
+    margin-bottom: 15px;
+}
+
+.ns-openai__seo {
+    position: relative;
+}
+
+#ns-openai__loader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#ns-openai__loader.ns-show-overlay {
+    z-index: 1;
+}
+
+#ns-openai__loader.ns-show-overlay::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#ns-openai__loader .icon {
+    z-index: 999;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ns-openai__seo .nav-tabs {
+    background-color: #fafafa;
+}
+
+.ns-openai-og-card__topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.ns-openai-og-card__topbar .btn {
+    margin: 0;
+}
+
+.ns-openai__action-wrapper h3 {
+    margin: 0;
+    font-size: 13px;
+}
+
+.ns-openai__seo .tab-pane {
+    background-color: #fafafa;
+    padding: 10px 10px 15px;
+}
+
+.ns-openai__seo .col-md-4 {
+    background-color: #fafafa;
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.ns-openai__seo-title-ddr,
+.ns-openai__seo-descriptions-ddr {
+    display: flex;
+    align-items: center;
+}
+
+.ns-openai__seo-title-ddr .form-select,
+.ns-openai__seo-descriptions-ddr .form-select {
+    margin-right: 10px;
+}
+
+.ns-openai__seo .tab-content {
+    border-bottom: 1px solid #cdcdcd;
+}
+
+.ns-openai-preview-card {
+    background-color: #fff;
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 0px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.ns-openai-preview-card .link { 
+    margin-bottom: 12px;
+}
+
+.ns-openai-preview-card h4 {
+    margin-bottom: 14px;
+    color: #212424;
+    font-size: 15px;
+    line-height: 23px;
+} 
+
+.ns-openai-preview-card p {
+    font-size: 13px;
+    color: #827a7a;
+    margin-bottom: 15px;
+}
+
+.ns-openai-preview-card label,
+.ns-openai-preview-card h5 {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.ns-openai-card .btn {
+    margin-left: 2px;
+}
+
+.ns-openai__seo .link svg {
+    width: 16px;
+    height: 16px;
+    fill: #827a7a;
+}
+
+.ns-openai__seo .link span {
+    color: #827a7a;
+}
+
+.ns-openai-card h3 svg {
+    width: 16px;
+}
+
+.ns-openai-card h4 {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.ns-openai-card h4 svg {
+    width: 22px;
+    height: 22px;
+    margin-right: 5px;
+}
+
+.ns-openai__keyword-ddr {
+    display: flex;
+    align-items: center;
+}
+
+.ns-openai__keyword-ddr .form-select {
+    margin-right: 10px;
+    width: 85%;
+}
+
+.ns-openai__og_title,
+.ns-openai__og_description,
+.ns-openai__description,
+.ns-openai__seo_title {
+    padding: 8px 0;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.ns-openai__topics .nav-tabs {
+    display: block;
+    background-color: transparent;
+    border: 0;
+}
+
+.ns-openai__topics .nav-link {
+    position: relative;
+    padding: 16px 60px 16px 11px;
+    border: 1px solid #ccc;
+    margin-bottom: 12px;
+}
+
+.ns-openai__topics .nav-link .btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ns-openai__topics .nav-tabs .nav-link.active {
+    border-bottom: 1px solid #ccc;
+    background-color: #ededed;
+}
+
+.ns-openai__topics .tab-content {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    background-color: #fafafa;
+    min-height: 300px;
+    padding: 16px;
+    height: 95%;
+}
+
+.ns-openai__topics-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.ns-openai__topics-input .btn {
+    height: 40.21px;
+    border-radius: 0;
+    border: 0;
+}
+
+.ns-openai__topics-input .form-control {
+    font-size: 14px;
+    padding: 10px;
+    width: calc(100% - 130px);
+    border-radius: 0;
+    border-right: 0;
+}
+
+.ns-openai__keywords-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ns-openai__keywords {
+    width: 23.33%;
+}
+
+/* Start Keywords Custom Checkbox */
+.keywords-chk__wrapper {
+    transition: 0.5s ease 0s;
+    display: block;
+    position: relative;
+    padding-left: 0;
+    cursor: pointer;
+    font-size: 13px;
+    user-select: none;
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 6px;
+}
+
+.keywords-chk__wrapper {
+    transition: 0.2s ease 0s;
+}
+
+.keywords-chk__wrapper input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.keywords-chk__wrapper:hover {
+  background-color: #ededed;
+}
+
+.keywords-chk__wrapper input:checked ~ .keywords-checkmark {
+  background-color: #ddd;
+}
+
+.keywords-chk__wrapper .keywords-checkmark {
+    position: absolute;
+    top: 0;
+    transition: 0.5s ease 0s;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.keywords-checkmark-label {
+    z-index: 999;
+    position: relative;
+}
+/* End Keywords Custom Checkbox */
+
+/* Start Keywords Custom Radio Button */
+.keywords-rdo__wrapper {
+    transition: 0.2s ease 0s;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 13px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.keywords-rdo__wrapper {
+    transition: 0.20s ease 0s;
+}
+
+.keywords-rdo__wrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.keywords-rdomark {
+    transition: 0.2s ease 0s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.keywords-rdo__wrapper:hover {
+    color: #737373;
+}
+
+.keywords-rdo__wrapper:hover input ~ .keywords-rdomark {
+    background-color: #ededed;
+}
+
+.keywords-rdo__wrapper input:checked ~ .keywords-rdomark {
+    background-color: #737373;
+    border: 0;
+}
+
+.keywords-rdomark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.keywords-rdo__wrapper input:checked ~ .keywords-rdomark:after {
+    display: block;
+}
+
+.keywords-rdo__wrapper .keywords-rdomark:after {
+    transition: 0.2s ease 0s;
+ 	top: 50%;
+	left: 50%;
+    transform: translate(-50%, -50%);
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+/* End Keywords Custom Radio Button */
+
+.ns-openai__keyword h2,
+.ns-openai__seo-title h2,
+.ns-openai__seo-descriptions h2 {
+    font-size: 14px;
+}
+
+
+
