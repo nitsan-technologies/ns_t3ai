@@ -31,5 +31,4 @@ if (TYPO3_MODE === 'BE' && \NITSAN\NsOpenai\Utility\NsOpenAiBackendUtility::isAp
     $config = $extensionConfiguration->get('ns_openai');
     $renderer = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
     $renderer->addJsInlineCode('nsopenaikey', 'const NS_OPENAI_KEY = "' . $config['apiKey'] . '"', false, true);
-    $renderer->addJsInlineCode('nsopenaiorg', 'const NS_OPENAI_ORG = "' . $config['openaiOrg'] . '"', false, true);
 }
