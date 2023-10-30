@@ -9,6 +9,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 class PageLayoutHeader extends AbstractPageLayoutHeader
 {
@@ -48,9 +49,15 @@ class PageLayoutHeader extends AbstractPageLayoutHeader
         $standlone->getRequest()->setControllerExtensionName('ns_openai');
         $templateRootPath = GeneralUtility::getFileAbsFileName('EXT:ns_openai/Resources/Private/Backend/Templates/');
         $standlone->setPartialRootPaths([GeneralUtility::getFileAbsFileName('EXT:ns_openai/Resources/Private/Backend/Partials/')]);
+        $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
+            VersionNumberUtility::getCurrentTypo3Version()
+        );
         $templatePathAndFilename = $templateRootPath.'AiOpen.html';
+        if (version_compare($typo3VersionArray['version_main'], 11, '<')) {
+            $templatePathAndFilename = $templateRootPath.'/v10/AiOpen.html';
+        }
         $standlone->setTemplatePathAndFilename($templatePathAndFilename);
-        $pageData = $this->pageRepository->getCurrentPageData($parentObj->id);
+        $pageData = $this->pageRepository->getCurrentPageData($parentObj->id, $typo3VersionArray['version_main']);
         $assign = [
             'baseUrl' => GeneralUtility::getIndpEnv('TYPO3_SITE_URL'),
             'pageId' => $parentObj->id,

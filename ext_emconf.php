@@ -12,7 +12,7 @@ $EM_CONF['ns_openai'] = [
     'version' => '1.0.2',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.0.0-11.5.99',
+            'typo3' => '10.0.0-11.5.99',
         ],
         'conflicts' => [],
         'suggests' => [],

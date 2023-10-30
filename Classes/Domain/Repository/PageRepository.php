@@ -13,29 +13,18 @@ class PageRepository
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
         try {
-            $row = $connection->select(
-                ['*'],
+            $connection->update(
                 'pages',
-                ['uid' => (int)$pageId],
-                [],
-                [],
-                1
-            )->fetchAssociative();
-            if($data['fieldName']=='seo_title'){
-                $row['seo_title'] = '';
-            }
-            if ($row !== false && isset($row[$data['fieldName']])) {
-                if($data['fieldName'] == 'seo_title'){
-                    $connection->update('pages', [
-                        $data['fieldName'] => (string)$data['suggestion'],
-                        'seo_title' => (string)$data['suggestion']
-                    ], ['uid' => (int)$pageId]);
-                }
-            }
+                [
+                   $data['fieldName'] => $data['suggestion'],
+                ],
+                ['uid' => (int)$pageId]
+            );
             return true;
         } catch (Exception $e) {
             return false;
         }
+
     }
 
     /**
@@ -65,16 +54,28 @@ class PageRepository
     /**
      * @throws Exception
      */
-    public function getCurrentPageData($pageId): array
+    public function getCurrentPageData($pageId, $version)
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
-        return $connection->select(
-            ['uid', 'title', 'seo_title', 'description', 'keywords', 'og_title', 'og_description', 'twitter_title', 'twitter_description'],
-            'pages',
-            ['uid' => (int)$pageId],
-            [],
-            [],
-            1
-        )->fetchAssociative();
+        if($version < 11){
+            return $connection->select(
+                ['uid', 'title', 'seo_title', 'description', 'keywords', 'og_title', 'og_description', 'twitter_title', 'twitter_description'],
+                'pages',
+                ['uid' => (int)$pageId],
+                [],
+                [],
+                1
+            )->fetch();
+        }
+        else{
+            return $connection->select(
+                ['uid', 'title', 'seo_title', 'description', 'keywords', 'og_title', 'og_description', 'twitter_title', 'twitter_description'],
+                'pages',
+                ['uid' => (int)$pageId],
+                [],
+                [],
+                1
+            )->fetchAssociative();
+        }
     }
 }

@@ -53,12 +53,14 @@ class OpenAiController
             );
             return $response;
         } catch (GuzzleException $e) {
+            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($e->getMessage(), __FILE__.' Line No. '.__LINE__);die;
             $response = $this->logGuzzleError($e, $response);
         } catch (UnableToLinkToPageException $e) {
             $this->logger->error($e->getMessage());
             $response->withStatus(404);
             $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
         } catch (Exception $e) {
+            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($e->getMessage(), __FILE__.' Line No. '.__LINE__);die;
             $response = $this->logError($e, $response);
         }
         return $response;

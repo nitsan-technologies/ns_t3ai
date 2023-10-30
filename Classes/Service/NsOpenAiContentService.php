@@ -221,11 +221,12 @@ class NsOpenAiContentService
     protected function getPreviewUrl(int $pageId, int $pageLanguage): string
     {
         $previewUri = $this->uriBuilder
-            ->reset()
             ->setTargetPageUid($pageId)
-            ->setArguments(['_language'=>$pageLanguage, 'type'=>'1696828748'])
-            ->buildFrontendUri();
-        return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST'). $previewUri;
+            ->setCreateAbsoluteUri(true)
+            ->setArguments(['_language'=>$pageLanguage, 'type'=>'1696828748'])->buildFrontendUri();
+
+        return filter_var($previewUri, FILTER_VALIDATE_URL) ? $previewUri : GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST'). $previewUri;
+
     }
 
 
