@@ -180,6 +180,14 @@
     padding: 10px 10px 15px;
 }
 
+.ns-openai__seo label {
+    font-weight: 400;
+}
+
+.ns-openai__seo .tab-pane.fade.show {
+    opacity: 1;
+}
+
 .ns-openai__seo-title-ddr,
 .ns-openai__seo-descriptions-ddr {
     display: flex;
@@ -273,6 +281,10 @@
 .ns-openai__seo_title {
     padding: 8px 0;
     border-bottom: 1px solid #e7e7e7;
+}
+
+.ns-openai__seo .ns-openai-seo-set-btn {
+    margin-top: 15px;
 }
 
 .ns-openai__topics .nav-tabs {

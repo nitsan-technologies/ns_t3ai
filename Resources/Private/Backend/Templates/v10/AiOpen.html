@@ -34,24 +34,18 @@
                             </a>
                         </div>
                         <div class="tab-content" id="ns-openai-nav-tabContent">
-                            <div class="tab-pane fade active show" id="ns_content_seo_title" role="tabpanel"
-                                 aria-labelledby="ns_seo_title">
-                                <div class="panel panel-tab">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="ns-openai__seo-title">
-                                                    <label><f:translate key="page.title" /></label>
-                                                    <div class="ns-openai__seo-title-ddr">
-                                                        <f:render section="prompt" arguments="{prompts: pageTitlePrompts, fieldName: 'seo_title', pageId: pageId}" />
-                                                    </div>
-                                                    <div id="nav_seo_title"></div>
-                                                </div>
+                            <div class="tab-pane fade active show" id="ns_content_seo_title" role="tabpanel" aria-labelledby="ns_seo_title">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="ns-openai__seo-title">
+                                            <label><f:translate key="page.title" /></label>
+                                            <div class="ns-openai__seo-title-ddr">
+                                                <f:render section="prompt" arguments="{prompts: pageTitlePrompts, fieldName: 'seo_title', pageId: pageId}" />
                                             </div>
+                                            <div id="nav_seo_title"></div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -75,7 +69,7 @@
 </section>
 
 <f:section name="prompt">
-    <f:form.select id="{fieldName}_prompt" name="{fieldName}_prompt" class="form-select">
+    <f:form.select id="{fieldName}_prompt" name="{fieldName}_prompt" class="form-select form-control">
         <f:form.select.option value="">{f:translate(key: 'global.prompt')}</f:form.select.option>
         <f:for each="{prompts}" as="popmptValue" key="popmptLabel">
             <f:form.select.option value="{popmptValue}">{popmptLabel}</f:form.select.option>
