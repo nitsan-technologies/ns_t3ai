@@ -9,10 +9,10 @@ $EM_CONF['ns_openai'] = [
     'author_company' => 'NITSAN Technologies Pvt Ltd',
     'state' => 'stable',
     'clearCacheOnLoad' => 0,
-    'version' => '1.0.2',
+    'version' => '1.2.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.0.0-11.5.99',
+            'typo3' => '10.0.0-11.5.99',
         ],
         'conflicts' => [],
         'suggests' => [],
