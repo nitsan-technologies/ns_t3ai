@@ -1,0 +1,34 @@
+editor:
+  config:
+    importModules:
+      - { module: '@nitsan/nsopenai/openai-plugin.js', exports: ['Openai'] }
+    toolbar:
+      items:
+        - style
+        - heading
+        # grouping separator
+        - '|'
+        - bold
+        - italic
+        - subscript
+        - superscript
+        - softhyphen
+        - '|'
+        - bulletedList
+        - numberedList
+        - blockQuote
+        - alignment
+        - '|'
+        - findAndReplace
+        - link
+        - '|'
+        - removeFormat
+        - undo
+        - redo
+        - '|'
+        - insertTable
+        - '|'
+        - specialCharacters
+        - openai
+        - horizontalLine
+        - sourceEditing

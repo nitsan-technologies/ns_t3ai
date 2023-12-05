@@ -14,8 +14,14 @@ use NITSAN\NsOpenai\Service\NsOpenAiContentService;
 use NITSAN\NsOpenai\Factory\CustomLanguageFactory;
 use NITSAN\NsOpenai\Controller\OpenAiController;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
+    global $typo3VersionArray;
+    $typo3VersionArray = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray(
+        \TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version()
+    );
+
     $services = $containerConfigurator->services();
     $services->defaults()
         ->private()
@@ -61,8 +67,22 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->set(NsExtensionConfiguration::class)
         ->public();
 
-    $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeader::class)
-        ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
-        ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
-        ->public();
+    if(version_compare($typo3VersionArray['version_main'], 12, '>=')){
+        //    $containerBuilder->register('modifyEvent', \NITSAN\NsOpenai\Backend\Listener\ModifyPageLayoutContent::class);
+        //    $services->set('ModifyPageLayout', 'modifyEvent')
+        //        ->factory([
+        //            new ReferenceConfigurator(\TYPO3\CMS\Backend\Controller\Event\ModifyPageLayoutContentEvent::class), '__invoke'
+        //        ]);
+        $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeaderV12::class)
+            ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
+            ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
+            ->arg('$pageRenderer', new ReferenceConfigurator(PageRenderer::class))
+            ->public();
+    }
+    else{
+        $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeader::class)
+            ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
+            ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
+            ->public();            
+    }
 };
