@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
+use NITSAN\NsOpenai\Utility\NsOpenAiBackendUtility;
 
 $typo3VersionArray = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray(
     \TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version()
@@ -27,25 +28,30 @@ $extensionConfiguration = GeneralUtility::makeInstance(
     ExtensionConfiguration::class
 );
 
-(static function () use ($extensionConfiguration, $typo3VersionArray): void {
+// $renderer = GeneralUtility::makeInstance(
+//     PageRenderer::class
+// );
+
+// $apiKeySet = \NITSAN\NsOpenai\Utility\NsOpenAiBackendUtility::isApiKeySet();
+// \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($apiKeySet,__FILE__.''.__LINE__);
+(static function () : void {
     ExtensionManagementUtility::addTypoScript(
         'ns_openai',
         'setup',
         "@import 'EXT:ns_openai/Configuration/TypoScript/openai.typoscript'"
     );
-
-    if (version_compare($typo3VersionArray['version_main'], 12, '=')) {
-//         $config = $extensionConfiguration->get('ns_openai');
-//         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($config['apiKey'], __FILE__.'Line no: '.__LINE__);
-//         $renderer = GeneralUtility::makeInstance(PageRenderer::class);
-// //        $renderer->loadJavaScriptModule('TYPO3/CMS/NsOpenai/Localization');
-//         $renderer->addJsInlineCode('nsopenaikey', 'const NS_OPENAI_KEY = "' . $config['apiKey'] . '"', false, true);
-    } else {
-        // if (TYPO3_MODE === 'BE' && \NITSAN\NsOpenai\Utility\NsOpenAiBackendUtility::isApiKeySet()) {
-        //     $config = $extensionConfiguration->get('ns_openai');
-        //     $renderer = GeneralUtility::makeInstance(PageRenderer::class);
-        //     $renderer->addJsInlineCode('nsopenaikey', 'const NS_OPENAI_KEY = "' . $config['apiKey'] . '"', false, true);
-        // }
-    }
 })();
-
+if (version_compare($typo3VersionArray['version_main'], 12, '>=')) {
+    // if($apiKeySet == true){
+    //     // $config = $extensionConfiguration->get('ns_openai');
+    //     // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($config,__FILE__.''.__LINE__);
+    //     // $apiKey = GeneralUtility::makeInstance(NsOpenAiBackendUtility::class);
+    //     //  $renderer->addJsInlineCode('nsopenaikey', 'const NS_OPENAI_KEY = "' . $config['apiKey'] . '"', false, true);
+    // }
+} else {
+    if (TYPO3_MODE === 'BE' && \NITSAN\NsOpenai\Utility\NsOpenAiBackendUtility::isApiKeySet()) {
+        $config = $extensionConfiguration->get('ns_openai');
+        $renderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $renderer->addJsInlineCode('nsopenaikey', 'const NS_OPENAI_KEY = "' . $config['apiKey'] . '"', false, true);
+    }
+}

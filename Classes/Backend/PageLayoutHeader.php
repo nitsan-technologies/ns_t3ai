@@ -63,6 +63,7 @@ class PageLayoutHeader extends AbstractPageLayoutHeader
             'pageId' => $parentObj->id,
             'pageTitlePrompts' => $this->extensionConfiguration->getPageTitlePrompts(),
             'pageData' => $pageData,
+            'version' => $typo3VersionArray['version_main'],
         ];
 
         $standlone->assignMultiple($assign);

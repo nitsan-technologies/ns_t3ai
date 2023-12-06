@@ -4,9 +4,6 @@ services:
     autoconfigure: true
     public: false
 
-  NITSAN\NsOpenai\:
-    resource: '../Classes/*'
-
   NITSAN\NsOpenai\Backend\Listener\ModifyPageLayoutContent:
     tags:
       - name: event.listener

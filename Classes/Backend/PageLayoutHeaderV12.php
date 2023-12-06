@@ -17,7 +17,7 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 class PageLayoutHeaderV12
 {
     private array $requireJsModules = [
-        '@TYPO3/CMS/NsOpenai/Module.js',
+        '@nitsan/nsopenai/ModuleV12.js',
     ];
 
     protected ?PageRepository $pageRepository = null;
@@ -45,28 +45,14 @@ class PageLayoutHeaderV12
         }
         $this->pageRenderer->addCssFile('EXT:ns_openai/Resources/Public/Css/Style.css');
 
-        // $standlone->getRequest()->setControllerExtensionName('ns_openai');
-        $standlone->setRequest($request);
-
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($request,__FILE__.''.__LINE__);
-
-        // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($request->getControllerExtensionName(),__FILE__.''.__LINE__);
-        // $standlone->getRequest()->setControllerExtensionName('ns_openai');
-
-
         $this->pageRenderer->addInlineLanguageLabelFile('EXT:ns_openai/Resources/Private/Language/locallang_be.xlf');
         $templateRootPath = GeneralUtility::getFileAbsFileName('EXT:ns_openai/Resources/Private/Backend/Templates/');
         $standlone->setPartialRootPaths([GeneralUtility::getFileAbsFileName('EXT:ns_openai/Resources/Private/Backend/Partials/')]);
         $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
             VersionNumberUtility::getCurrentTypo3Version()
         );
+
         $templatePathAndFilename = $templateRootPath.'AiOpen.html';
-        if (version_compare($typo3VersionArray['version_main'], 11, '<')) {
-            $templatePathAndFilename = $templateRootPath.'/v10/AiOpen.html';
-        }
-        if (version_compare($typo3VersionArray['version_main'], 12, '=')) {
-            $templatePathAndFilename = $templateRootPath.'/v12/AiOpen.html';
-        }       
         $standlone->setTemplatePathAndFilename($templatePathAndFilename);
         $pageData = $this->pageRepository->getCurrentPageData($pageId, $typo3VersionArray['version_main']);
         $assign = [
@@ -74,6 +60,7 @@ class PageLayoutHeaderV12
             'pageId' => $pageId,
             'pageTitlePrompts' => $this->extensionConfiguration->getPageTitlePrompts(),
             'pageData' => $pageData,
+            'version' => $typo3VersionArray['version_main'],
         ];
 
         $standlone->assignMultiple($assign);
