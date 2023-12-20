@@ -34,7 +34,7 @@ class PageLayoutHeaderV12
         $languageId = $this->getLanguageId();
         $pageId = (int)$request->getQueryParams()['id'];
         $currentPage = $this->getCurrentPage($pageId, $languageId);
-        if (!is_array($currentPage) || $languageId == -1) {
+        if (!is_array($currentPage) || $languageId == -1 || $currentPage['hidden'] == 1) {
             return '';
         }
         $standlone = GeneralUtility::makeInstance(StandaloneView::class);

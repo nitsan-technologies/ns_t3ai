@@ -38,7 +38,7 @@ class PageLayoutHeader extends AbstractPageLayoutHeader
         $languageId = $this->getLanguageId();
         $pageId = (int)GeneralUtility::_GET('id');
         $currentPage = $this->getCurrentPage($pageId, $languageId, $parentObj);
-        if (!is_array($currentPage) || $languageId == -1) {
+        if (!is_array($currentPage) || $languageId == -1 || $currentPage['hidden']) {
             return '';
         }
         $standlone = GeneralUtility::makeInstance(StandaloneView::class);
