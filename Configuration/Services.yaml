@@ -8,4 +8,4 @@ services:
     tags:
       - name: event.listener
         identifier: 'nitsan/openai/modify-page-module-content'
-
+        event: TYPO3\CMS\Backend\Controller\Event\ModifyPageLayoutContentEvent

@@ -4,10 +4,7 @@ namespace NITSAN\NsOpenai\Backend;
 
 use NITSAN\NsOpenai\Domain\Repository\PageRepository;
 use NITSAN\NsOpenai\Helper\NsExtensionConfiguration;
-use TYPO3\CMS\Backend\Controller\PageLayoutController;
-use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
@@ -21,6 +18,7 @@ class PageLayoutHeaderV12
     ];
 
     protected ?PageRepository $pageRepository = null;
+    protected PageRenderer $pageRenderer;
 
     private NsExtensionConfiguration $extensionConfiguration;
 

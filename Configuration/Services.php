@@ -2,7 +2,6 @@
 
 use NITSAN\NsOpenai\Factory\SelectedModelFactory;
 use NITSAN\NsOpenai\Helper\NsExtensionConfiguration;
-use NITSAN\NsOpenai\Hooks\TranslateHook;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
@@ -15,7 +14,6 @@ use NITSAN\NsOpenai\Factory\CustomLanguageFactory;
 use NITSAN\NsOpenai\Controller\OpenAiController;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use NITSAN\NsOpenai\Utility\NsOpenAiBackendUtility;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
     global $typo3VersionArray;
@@ -69,7 +67,6 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
         ->public();
 
     if(version_compare($typo3VersionArray['version_main'], 12, '>=')){
-        // $services->set(NsOpenAiBackendUtility::class);
         $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeaderV12::class)
             ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
             ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
