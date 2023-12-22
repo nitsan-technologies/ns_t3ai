@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  NITSAN\NsOpenai\Backend\Listener\ModifyPageLayoutContent:
+    tags:
+      - name: event.listener
+        identifier: 'nitsan/openai/modify-page-module-content'
+        event: TYPO3\CMS\Backend\Controller\Event\ModifyPageLayoutContentEvent

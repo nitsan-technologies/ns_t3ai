@@ -2,7 +2,6 @@
 
 use NITSAN\NsOpenai\Factory\SelectedModelFactory;
 use NITSAN\NsOpenai\Helper\NsExtensionConfiguration;
-use NITSAN\NsOpenai\Hooks\TranslateHook;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
@@ -14,8 +13,14 @@ use NITSAN\NsOpenai\Service\NsOpenAiContentService;
 use NITSAN\NsOpenai\Factory\CustomLanguageFactory;
 use NITSAN\NsOpenai\Controller\OpenAiController;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Core\Page\PageRenderer;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
+    global $typo3VersionArray;
+    $typo3VersionArray = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray(
+        \TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version()
+    );
+
     $services = $containerConfigurator->services();
     $services->defaults()
         ->private()
@@ -61,8 +66,17 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->set(NsExtensionConfiguration::class)
         ->public();
 
-    $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeader::class)
-        ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
-        ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
-        ->public();
+    if(version_compare($typo3VersionArray['version_main'], 12, '>=')){
+        $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeaderV12::class)
+            ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
+            ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
+            ->arg('$pageRenderer', new ReferenceConfigurator(PageRenderer::class))
+            ->public();
+    }
+    else{
+        $services->set(\NITSAN\NsOpenai\Backend\PageLayoutHeader::class)
+            ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
+            ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
+            ->public();            
+    }
 };

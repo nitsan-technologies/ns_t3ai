@@ -1,0 +1,12 @@
+imports:
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Processing.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Base.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Editor/Plugins.yaml" }
+  - { resource: "EXT:rte_ckeditor/Configuration/RTE/Default.yaml" }
+editor:
+  config:
+    importModules:
+      - { module: '@nitsan/nsopenai/pluginv12.js', exports: ['Openai'] }
+    toolbar:
+      items:
+        - openai

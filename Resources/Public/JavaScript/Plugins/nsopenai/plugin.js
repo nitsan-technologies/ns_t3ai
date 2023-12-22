@@ -1,4 +1,5 @@
 CKEDITOR.dialog.add("nsOpenAiContentDialog", function(editor) {
+    const NsOpenaiKey = TYPO3.settings.NS_OPENAI_KEY;
     let select_model = "text-davinci-003", select_temperature = 0.5, select_max_tokens = 4e3, select_amount = 1;
     const escapeHtml = (unsafe) => {
         return unsafe.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
@@ -27,7 +28,7 @@ CKEDITOR.dialog.add("nsOpenAiContentDialog", function(editor) {
                             var xhr = new XMLHttpRequest();
                             xhr.open("POST", "https://api.openai.com/v1/completions", true);
                             xhr.setRequestHeader("Content-Type", "application/json");
-                            xhr.setRequestHeader("Authorization", "Bearer " + NS_OPENAI_KEY);                            
+                            xhr.setRequestHeader("Authorization", "Bearer " + NsOpenaiKey);                            
                             xhr.send(JSON.stringify({
                                 prompt: this.getValue(),
                                 // Text to complete

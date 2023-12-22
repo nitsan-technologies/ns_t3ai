@@ -1,5 +1,5 @@
 # cat=ai engine settings//10; type=string; label=LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:extmng.apiKey
-apiKey =
+apiKey = 
 # cat=ai engine settings//15; type=options[text-davinci-003, gpt-4, gpt-3.5-turbo, text-curie-001, text-babbage-001, text-ada-001]; label=LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:extmng.model
 model = gpt-3.5-turbo
 
