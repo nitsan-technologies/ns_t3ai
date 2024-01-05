@@ -6,10 +6,13 @@ $typo3VersionArray = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersio
 
 if (version_compare($typo3VersionArray['version_main'], 11, '<=')) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/db_layout.php']['drawHeaderHook'][] = \NITSAN\NsOpenai\Backend\PageLayoutHeader::class . '->render';
-    $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = 'EXT:ns_openai/Configuration/RTE/Plugin.yaml';
+    $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['nsopenai'] =
+    'EXT:ns_openai/Configuration/RTE/Plugin.yaml';
+
 }
 else{
-    $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = 'EXT:ns_openai/Configuration/RTE/Pluginv12.yaml';
+    $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['nsopenai'] =
+    'EXT:ns_openai/Configuration/RTE/Pluginv12.yaml';
 }
 
 //// Make the extension configuration accessible

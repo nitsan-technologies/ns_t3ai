@@ -18,22 +18,11 @@
           <div class="form-group">
             <label class="" for="inputText">About what should I write?</label>
             <f:translate key="LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:chatgpttext" extensionName="NsOpenai"/>
-            <textarea name="inputText" id="input-text" class="text-area-input" cols="20" rows="7" ></textarea>
+            <textarea name="inputText" id="input-text" class="text-area-input" cols="20" rows="4" ></textarea>
           </div>
         </div>
         <div id="advanced" class="tab-contents">
           
-          <div class="form-group">
-            <label for="advanceOption3"
-              >Please choose the model you want to use</label
-            >
-            <select name="advanceOption3" id="model-type">
-              <option value="text-davinci-003">Davinci</option>
-              <option value="text-curie-001">Curie</option>
-              <option value="text-babbage-001">Babbage</option>
-              <option value="text-ada-001">Ada</option>
-            </select>
-          </div>
           <div class="form-group">
             <label for="advanceOption4"
               >Temperature from 0-2. The smaller the value the more reproducible

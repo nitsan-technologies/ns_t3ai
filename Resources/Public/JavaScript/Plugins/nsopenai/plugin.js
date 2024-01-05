@@ -28,13 +28,13 @@ CKEDITOR.dialog.add("nsOpenAiContentDialog", function(editor) {
                             var xhr = new XMLHttpRequest();
                             xhr.open("POST", "https://api.openai.com/v1/completions", true);
                             xhr.setRequestHeader("Content-Type", "application/json");
-                            xhr.setRequestHeader("Authorization", "Bearer " + NsOpenaiKey);                            
+                            xhr.setRequestHeader("Authorization", "Bearer " + NsOpenaiKey);
                             xhr.send(JSON.stringify({
                                 prompt: this.getValue(),
                                 // Text to complete
                                 max_tokens: select_max_tokens,
                                 // 1 to 4000
-                                model: select_model,
+                                model: 'gpt-3.5-turbo-instruct',
                                 // 'text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'
                                 temperature: select_temperature,
                                 // 0.0 is equivalent to greedy sampling
@@ -71,23 +71,6 @@ CKEDITOR.dialog.add("nsOpenAiContentDialog", function(editor) {
                 id: "tab-advanced",
                 label: editor.lang.nsopenai_content.tabAdvanced,
                 elements: [
-                    // Add select field with options to choose the model from openai api.
-                    {
-                        type: "select",
-                        id: "model",
-                        title: editor.lang.nsopenai_content.modelSelction,
-                        label: editor.lang.nsopenai_content.modelSelctionLabel,
-                        default: "text-davinci-003",
-                        items: [
-                            ["Davinci", "text-davinci-003"],
-                            ["Curie", "text-curie-001"],
-                            ["Babbage", "text-babbage-001"],
-                            ["Ada", "text-ada-001"]
-                        ],
-                        setup: function(element) {
-                            this.setValue(element.getText());
-                        }
-                    },
                     // Add select field with different temperatures from 0 to 2
                     {
                         type: "select",
@@ -138,25 +121,9 @@ CKEDITOR.dialog.add("nsOpenAiContentDialog", function(editor) {
         ],
         onOk: function() {
             let dialog = this, nsopenai = editor.document.createElement("div");
-            select_model = dialog.getValueOf("tab-advanced", "model");
             select_temperature = parseFloat(dialog.getValueOf("tab-advanced", "temperature"));
             select_amount = parseInt(dialog.getValueOf("tab-advanced", "amount"));
-            switch (select_model) {
-                case "text-davinci-003":
-                    select_max_tokens = 4e3;
-                    break;
-                case "text-curie-001":
-                    select_max_tokens = 2e3;
-                    break;
-                case "text-babbage-001":
-                    select_max_tokens = 2e3;
-                    break;
-                case "text-ada-001":
-                    select_max_tokens = 2e3;
-                    break;
-                default:
-                    select_max_tokens = 4e3;
-            }
+            select_max_tokens = 4e3;
             dialog.commitContent(nsopenai);
             editor.insertElement(nsopenai);
         }

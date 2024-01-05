@@ -56,27 +56,10 @@ export class Openai extends Core.Plugin {
               var userInput = modelContent.find("#input-text")[0].value;
               var temperature =
                 Number(modelContent.find("#temperature")[0].value) ?? 0.01;
-              var modelType =
-                modelContent.find("#model-type")[0].value ?? "text-davinci-003";
+              var modelType = 'gpt-3.5-turbo-instruct';
               var resultAmount =
                 Number(modelContent.find("#result-amont")[0].value) ?? 1;
               var select_max_tokens = 4e3;
-              switch (modelType) {
-                case "text-davinci-003":
-                  select_max_tokens = 4e3;
-                  break;
-                case "text-curie-001":
-                  select_max_tokens = 2e3;
-                  break;
-                case "text-babbage-001":
-                  select_max_tokens = 2e3;
-                  break;
-                case "text-ada-001":
-                  select_max_tokens = 2e3;
-                  break;
-                default:
-                  select_max_tokens = 4e3;
-              }
               var responseText = "";
               if(!userInput) {
                 alert('Your description must not be empty!')
