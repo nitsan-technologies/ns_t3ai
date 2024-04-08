@@ -1,7 +1,7 @@
 {
     "name": "nitsan/ns-openai",
     "type": "typo3-cms-extension",
-    "description": "First-ever ChatGPT (by OpenAI) feature-rich content assistance in TYPO3 that automates content creation and optimization. The extension comes with numerous features like SEO optimization, Create AI-Page, Language Translation, Chat assistance, Read-to-use helpful prompts, etc. Explore more https://t3planet.com/t3openai-typo3-chatgpt-extension",
+    "description": "T3AI — TYPO3 meets Artificial Intelligence with OpenAI (ChatGPT, DALL-E, etc). T3AI provides rich content assistance, automating tasks like content creation and SEO optimization. It offers wide range of features like quick sidebar options, AI page creation, RTE chatbot, Language translation, Chat assistance, and Helpful prompts and so on.",
     "homepage": "https://t3planet.com/t3openai-typo3-chatgpt-extension",
     "authors": [
         {
