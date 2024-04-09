@@ -1,12 +1,14 @@
 <?php
 
 $EM_CONF['ns_openai'] = [
-    'title' => '[NITSAN] T3OpenAI - TYPO3 ChatGPT Extension',
-    'description' => 'First-ever ChatGPT (by OpenAI) feature-rich content assistance in TYPO3 that automates content creation and optimization. The extension comes with numerous features like SEO optimization, Create AI-Page, Language Translation, Chat assistance, Read-to-use helpful prompts, etc. Explore more https://t3planet.com/t3openai-typo3-chatgpt-extension',
+    'title' => 'T3AI = TYPO3 + AI',
+    'description' => 'T3AI — TYPO3 meets Artificial Intelligence with OpenAI (ChatGPT, DALL-E, etc). T3AI provides rich content assistance, automating tasks like content creation and SEO optimization. It offers wide range of features like quick sidebar options, AI page creation, RTE chatbot, Language translation, Chat assistance, and Helpful prompts and so on.
+
+    *** Live Demo: https://demo.t3planet.com/t3-extensions/pro/t3openai-typo3-chatgpt-extension *** Premium Version, Documentation & Free Support: https://t3planet.com/t3openai-typo3-chatgpt-extension',
     'category' => 'be',
     'author' => 'T3: Nilesh Malankiya, T3: Parth Parmar, T3: Jay Bhalgamiya, T3: Rohan Parmar, QA: Vishal Solanki, Krishna Dhapa',
     'author_email' => 'sanjay@nitsantech.com',
-    'author_company' => 'NITSAN Technologies Pvt Ltd',
+    'author_company' => 'T3Planet // NITSAN',
     'state' => 'stable',
     'clearCacheOnLoad' => 0,
     'version' => '1.3.2',
