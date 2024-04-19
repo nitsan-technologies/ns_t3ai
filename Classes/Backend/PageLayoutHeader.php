@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 class PageLayoutHeader extends AbstractPageLayoutHeader
 {
     private array $requireJsModules = [
-        'TYPO3/CMS/NsT3Ai/Module',
+        'TYPO3/CMS/NsT3ai/Module',
     ];
 
     protected ?PageRepository $pageRepository = null;
