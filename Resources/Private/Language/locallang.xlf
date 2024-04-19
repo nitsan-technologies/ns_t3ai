@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="EXT:ns_openai/Resources/Private/Language/locallang_be" date="2023-03-12T06:46:21Z" product-name="ns_openai">
+    <file source-language="en" datatype="plaintext" original="EXT:ns_t3ai/Resources/Private/Language/locallang_be" date="2023-03-12T06:46:21Z" product-name="ns_t3ai">
         <header/>
         <body>
             <trans-unit id="pageTitle">
@@ -19,13 +19,13 @@
                 <source>Use Default</source>
             </trans-unit>
             <trans-unit id="be.openai">
-                <source>T3OpenAI</source>
+                <source>T3AI</source>
             </trans-unit>
             <trans-unit id="page.seo">
                 <source>Optimize AI-SEO</source>
             </trans-unit>
-            <trans-unit id="page.nsopenai">
-                <source>T3OpenAI</source>
+            <trans-unit id="page.nst3ai">
+                <source>T3AI</source>
             </trans-unit>
             <trans-unit id="page.upgrade">
                 <source>Upgrade Premium?</source>

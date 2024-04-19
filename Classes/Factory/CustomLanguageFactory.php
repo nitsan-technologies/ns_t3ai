@@ -1,8 +1,8 @@
 <?php
 
-namespace NITSAN\NsOpenai\Factory;
+namespace NITSAN\NsT3Ai\Factory;
 
-use NITSAN\NsOpenai\Domain\Repository\CustomLanguageRepository;
+use NITSAN\NsT3Ai\Domain\Repository\CustomLanguageRepository;
 
 class CustomLanguageFactory
 {

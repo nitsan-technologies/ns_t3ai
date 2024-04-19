@@ -1,8 +1,8 @@
 {
-    "name": "nitsan/ns-openai",
+    "name": "nitsan/ns-t3ai",
     "type": "typo3-cms-extension",
-    "description": "T3AI — TYPO3 meets Artificial Intelligence with OpenAI (ChatGPT, DALL-E, etc). T3AI provides rich content assistance, automating tasks like content creation and SEO optimization. It offers wide range of features like quick sidebar options, AI page creation, and Helpful prompts and so on.",
-    "homepage": "https://t3planet.com/t3openai-typo3-chatgpt-extension",
+    "description": "T3AI — TYPO3 meets Artificial Intelligence with T3AI (ChatGPT, DALL-E, etc). T3AI provides rich content assistance, automating tasks like content creation and SEO optimization. It offers wide range of features like quick sidebar options, AI page creation, and Helpful prompts and so on.",
+    "homepage": "https://t3planet.com/t3ai-typo3-chatgpt-extension",
     "authors": [
         {
             "name": "T3: Nilesh Malankiya, T3: Parth Parmar, T3: Jay Bhalgamiya, T3: Rohan Parmar, QA: Vishal Solanki",
@@ -12,7 +12,7 @@
     "license": "GPL-2.0-or-later",
     "keywords": [
         "TYPO3",
-        "OpenAI",
+        "T3AI",
         "ChatGPT",
         "AI"
     ],
@@ -24,11 +24,11 @@
     },
     "autoload": {
         "psr-4": {
-            "NITSAN\\NsOpenai\\": "Classes"
+            "NITSAN\\NsT3Ai\\": "Classes"
         }
     },
     "replace": {
-        "typo3-ter/ns-openai": "self.version"
+        "typo3-ter/ns-t3ai": "self.version"
     },
     "config": {
         "vendor-dir": ".Build/vendor",
@@ -37,7 +37,7 @@
     "extra": {
         "typo3/cms": {
             "web-dir": ".Build/public",
-            "extension-key": "ns_openai"
+            "extension-key": "ns_t3ai"
         }
     }
 }

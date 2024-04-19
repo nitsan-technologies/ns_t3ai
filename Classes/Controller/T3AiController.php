@@ -1,25 +1,25 @@
 <?php
 
-namespace NITSAN\NsOpenai\Controller;
+namespace NITSAN\NsT3Ai\Controller;
 
-use NITSAN\NsOpenai\Service\NsOpenAiContentService;
+use NITSAN\NsT3Ai\Service\NsT3AiContentService;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use NITSAN\NsOpenai\Domain\Repository\PageRepository;
+use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Routing\UnableToLinkToPageException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-class OpenAiController
+class T3AiController
 {
     /**
-     * @var NsOpenAiContentService
+     * @var NsT3AiContentService
      */
-    protected NsOpenAiContentService $contentService;
+    protected NsT3AiContentService $contentService;
 
     /**
      * @var LoggerInterface
@@ -29,10 +29,10 @@ class OpenAiController
     protected PageRepository $pageRepository;
 
     /**
-     * @param NsOpenAiContentService $contentService
+     * @param NsT3AiContentService $contentService
      * @param LoggerInterface $logger
      */
-    public function __construct(NsOpenAiContentService $contentService, LoggerInterface $logger, PageRepository $pageRepository)
+    public function __construct(NsT3AiContentService $contentService, LoggerInterface $logger, PageRepository $pageRepository)
     {
         $this->contentService = $contentService;
         $this->logger = $logger;
@@ -71,10 +71,10 @@ class OpenAiController
         $this->logger->error($e->getMessage());
         if ($e->getCode() === 500 && strpos($e->getMessage(), 'auth_subrequest_error') !== false) {
             $response->withStatus($e->getCode());
-            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:NsOpenai.apiNotReachable')]));
+            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.apiNotReachable')]));
         } elseif ($e->getCode() === 401 && strpos($e->getMessage(), 'You need to provide your API key') !== false) {
             $response->withStatus($e->getCode());
-            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:NsOpenai.missingApiKey')]));
+            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.missingApiKey')]));
         } else {
             $response->withStatus(400);
             $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
@@ -87,7 +87,7 @@ class OpenAiController
         $this->logger->error($e->getMessage());
         $response->withStatus(400);
         if ($e->getCode() === 1476107295) {
-            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:NsOpenai.pageNotAccessible')]));
+            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.pageNotAccessible')]));
         } else {
             $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
         }

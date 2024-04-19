@@ -1,4 +1,4 @@
-CKEDITOR.plugins.setLang('nsopenai_content', 'de', {
+CKEDITOR.plugins.setLang('nst3ai_content', 'de', {
     tabGeneral: 'Allgemein',
     tabAdvanced: 'Erweitert',
     writeAbout: 'Worüber soll ich schreiben?',

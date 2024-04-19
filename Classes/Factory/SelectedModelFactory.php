@@ -1,6 +1,6 @@
 <?php
 
-namespace NITSAN\NsOpenai\Factory;
+namespace NITSAN\NsT3Ai\Factory;
 
 class SelectedModelFactory
 {

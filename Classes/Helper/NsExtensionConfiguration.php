@@ -1,6 +1,6 @@
 <?php
 
-namespace NITSAN\NsOpenai\Helper;
+namespace NITSAN\NsT3Ai\Helper;
 
 class NsExtensionConfiguration
 {

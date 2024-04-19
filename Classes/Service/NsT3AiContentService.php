@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NITSAN\NsOpenai\Service;
+namespace NITSAN\NsT3Ai\Service;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -21,7 +21,7 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class NsOpenAiContentService
+class NsT3AiContentService
 {
     /**
      * @var array
@@ -134,8 +134,8 @@ class NsOpenAiContentService
     {
         $data = $request->getParsedBody();
         $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
-        $standaloneView->setTemplateRootPaths(['EXT:ns_openai/Resources/Private/Templates/OpenAi/']);
-        $standaloneView->getRenderingContext()->setControllerName('OpenAi');
+        $standaloneView->setTemplateRootPaths(['EXT:ns_t3ai/Resources/Private/Templates/T3Ai/']);
+        $standaloneView->getRenderingContext()->setControllerName('T3Ai');
         $standaloneView->setTemplate('GenerateSuggestions');
         $generatedContent = $this->getContentFromAi($request, 'openAiPromptPrefix' . $type, 'seo keywords:');
         $standaloneView->assignMultiple([
@@ -185,7 +185,7 @@ class NsOpenAiContentService
         $fetchedContent = $response->getBody()->getContents();
 
         if (empty($fetchedContent)) {
-            throw new Exception(LocalizationUtility::translate('LLL:EXT:ns_openai/Resources/Private/Language/backend.xlf:AiSeoHelper.fetchContentFailed'));
+            throw new Exception(LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:AiSeoHelper.fetchContentFailed'));
         }
         return $fetchedContent;
     }

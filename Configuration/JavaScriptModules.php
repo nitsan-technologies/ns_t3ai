@@ -6,8 +6,8 @@ return [
         'backend.form',
     ],
     'imports' => [
-        '@nitsan/nsopenai/openai-plugin.js' => 'EXT:ns_openai/Resources/Public/JavaScript/Ckeditor/openai-plugin.js',
-        '@nitsan/nsopenai/ModuleV12.js' => 'EXT:ns_openai/Resources/Public/JavaScript/ModuleV12.js',
-        '@nitsan/nsopenai/pluginv12.js' => 'EXT:ns_openai/Resources/Public/JavaScript/Plugins/nsopenai/pluginv12.js',
+        '@nitsan/nst3ai/t3ai-plugin.js' => 'EXT:ns_t3ai/Resources/Public/JavaScript/Ckeditor/t3ai-plugin.js',
+        '@nitsan/nst3ai/ModuleV12.js' => 'EXT:ns_t3ai/Resources/Public/JavaScript/ModuleV12.js',
+        '@nitsan/nst3ai/pluginv12.js' => 'EXT:ns_t3ai/Resources/Public/JavaScript/Plugins/nst3ai/pluginv12.js',
     ],
 ];  

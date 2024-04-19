@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace NITSAN\NsOpenai\Backend;
+namespace NITSAN\NsT3Ai\Backend;
 
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -18,7 +18,7 @@ abstract class AbstractPageLayoutHeader
     public function __construct()
     {
         $this->pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        $this->pageRenderer->addInlineLanguageLabelFile('EXT:ns_openai/Resources/Private/Language/locallang_be.xlf');
+        $this->pageRenderer->addInlineLanguageLabelFile('EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf');
     }
 
     abstract public function render(array $params = null, $parentObj = null): string;

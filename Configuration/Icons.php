@@ -6,8 +6,8 @@ use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 
 return [
     // Icon identifier
-    'openai_module' => [
+    't3ai_module' => [
         'provider' => SvgIconProvider::class,
-        'source' => 'EXT:ns_openai/Resources/Public/Icons/Extension-Logo.svg',
+        'source' => 'EXT:ns_t3ai/Resources/Public/Icons/Extension-Logo.svg',
     ],
 ];

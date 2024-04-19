@@ -1,7 +1,7 @@
-# cat=ai engine settings//10; type=string; label=LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:extmng.apiKey
+# cat=ai engine settings//10; type=string; label=LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:extmng.apiKey
 apiKey = 
-# cat=ai engine settings//15; type=options[gpt-4, gpt-3.5-turbo]; label=LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:extmng.model
+# cat=ai engine settings//15; type=options[gpt-4, gpt-3.5-turbo]; label=LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:extmng.model
 model = gpt-3.5-turbo
 
-#cat=page title; type=options[Professional = Act as an SEO expert and write five an optimized title tag for a web page about [Content] , Optimized = Act as an SEO expert and write five an optimized title tag for a web page about [Content] the title tag should not exceed 60 characters in length, Catchy = Act as an SEO expert and write five an optimized and catchy with user friendly tone title tag for a web page about [Content] the title tag should not exceed 60 characters in length]; label=LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:openAiPromptPrefixPageTitle
+#cat=page title; type=options[Professional = Act as an SEO expert and write five an optimized title tag for a web page about [Content] , Optimized = Act as an SEO expert and write five an optimized title tag for a web page about [Content] the title tag should not exceed 60 characters in length, Catchy = Act as an SEO expert and write five an optimized and catchy with user friendly tone title tag for a web page about [Content] the title tag should not exceed 60 characters in length]; label=LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:openAiPromptPrefixPageTitle
 openAiPromptPrefixPageTitle = Act as an SEO expert and write five an optimized title tag for a web page about [Content]

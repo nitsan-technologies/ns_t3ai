@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NITSAN\NsOpenai\Domain\Repository;
+namespace NITSAN\NsT3Ai\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;

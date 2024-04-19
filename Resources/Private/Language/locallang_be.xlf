@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="EXT:ns_openai/Resources/Private/Language/locallang_be" date="2023-03-12T06:46:21Z" product-name="ns_openai">
+	<file source-language="en" datatype="plaintext" original="EXT:ns_t3ai/Resources/Private/Language/locallang_be" date="2023-03-12T06:46:21Z" product-name="ns_t3ai">
 		<header/>
 		<body>
 			<trans-unit id="extmng.apiKey">
@@ -16,81 +16,81 @@
 				<source>Show raw response content of page title suggestions: By default, the extension prepares the page title suggestions in such a way that they can be selected via radio button. If you change the prompt prefix and no bullet point list is returned as a result, display problems can occur here. With this option you can output the raw content and select your favorite page title via copy/paste.</source>
 			</trans-unit>
 			<trans-unit id="openAiModel" resname="openAiModel">
-				<source>OpenAI Model: The id of the model which will generate the completion. See https://platform.openai.com/docs/models/gpt-3-5 for an overview of available models.</source>
+				<source>T3AI Model: The id of the model which will generate the completion. See https://platform.openai.com/docs/models/gpt-3-5 for an overview of available models.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.start" resname="NsOpenai.notification.generation.start">
+			<trans-unit id="NsT3Ai.notification.generation.start" resname="NsT3Ai.notification.generation.start">
 				<source>Started</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.finish" resname="NsOpenai.notification.generation.finish">
+			<trans-unit id="NsT3Ai.notification.generation.finish" resname="NsT3Ai.notification.generation.finish">
 				<source>Finished</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.copy" resname="NsOpenai.notification.generation.copy">
+			<trans-unit id="NsT3Ai.notification.generation.copy" resname="NsT3Ai.notification.generation.copy">
 				<source>Copied</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.error" resname="NsOpenai.notification.generation.error">
+			<trans-unit id="NsT3Ai.notification.generation.error" resname="NsT3Ai.notification.generation.error">
 				<source>Unexpected error</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.requestError" resname="NsOpenai.notification.generation.requestError">
+			<trans-unit id="NsT3Ai.notification.generation.requestError" resname="NsT3Ai.notification.generation.requestError">
 				<source>Request error</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.start.keywords" resname="NsOpenai.notification.generation.start.keywords">
+			<trans-unit id="NsT3Ai.notification.generation.start.keywords" resname="NsT3Ai.notification.generation.start.keywords">
 				<source>Keywords generation is in progress. Please wait...</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.finish.keywords" resname="NsOpenai.notification.generation.finish.keywords">
+			<trans-unit id="NsT3Ai.notification.generation.finish.keywords" resname="NsT3Ai.notification.generation.finish.keywords">
 				<source>Keywords were generated successfully.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.finish.metaDescription" resname="NsOpenai.notification.generation.finish.metaDescription">
+			<trans-unit id="NsT3Ai.notification.generation.finish.metaDescription" resname="NsT3Ai.notification.generation.finish.metaDescription">
 				<source>Meta description was generated successfully.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.start.suggestions" resname="NsOpenai.notification.generation.start.suggestions">
+			<trans-unit id="NsT3Ai.notification.generation.start.suggestions" resname="NsT3Ai.notification.generation.start.suggestions">
 				<source>Suggestions generation is in progress. Please wait...</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.finish.suggestions" resname="NsOpenai.notification.generation.finish.suggestions">
+			<trans-unit id="NsT3Ai.notification.generation.finish.suggestions" resname="NsT3Ai.notification.generation.finish.suggestions">
 				<source>Suggestions were generated successfully.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.suggestions.missingSelection" resname="NsOpenai.notification.generation.suggestions.missingSelection">
+			<trans-unit id="NsT3Ai.notification.generation.suggestions.missingSelection" resname="NsT3Ai.notification.generation.suggestions.missingSelection">
 				<source>Missing selection</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.suggestions.missingSelectionInfo" resname="NsOpenai.notification.generation.suggestions.missingSelectionInfo">
+			<trans-unit id="NsT3Ai.notification.generation.suggestions.missingSelectionInfo" resname="NsT3Ai.notification.generation.suggestions.missingSelectionInfo">
 				<source>Please select a suggestion.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.suggestions.ogTwitterTitlesUpdated" resname="NsOpenai.notification.generation.suggestions.ogTwitterTitlesUpdated">
+			<trans-unit id="NsT3Ai.notification.generation.suggestions.ogTwitterTitlesUpdated" resname="NsT3Ai.notification.generation.suggestions.ogTwitterTitlesUpdated">
 				<source>Copied selected suggestion to fields for Open Graph and Twitter title.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.notification.generation.suggestions.ogTwitterDescriptionsUpdated" resname="NsOpenai.notification.generation.suggestions.ogTwitterDescriptionsUpdated">
+			<trans-unit id="NsT3Ai.notification.generation.suggestions.ogTwitterDescriptionsUpdated" resname="NsT3Ai.notification.generation.suggestions.ogTwitterDescriptionsUpdated">
 				<source>Copied selected suggestion to fields for Open Graph and Twitter description.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.unableToLinkToPage" resname="NsOpenai.unableToLinkToPage">
+			<trans-unit id="NsT3Ai.unableToLinkToPage" resname="NsT3Ai.unableToLinkToPage">
 				<source>Unable to link to page with ID %s and language ID %s</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.setSuggestion" resname="NsOpenai.setSuggestion">
+			<trans-unit id="NsT3Ai.setSuggestion" resname="NsT3Ai.setSuggestion">
 				<source>Set selected suggestion</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.removeSuggestions" resname="NsOpenai.removeSuggestions">
+			<trans-unit id="NsT3Ai.removeSuggestions" resname="NsT3Ai.removeSuggestions">
 				<source>Remove suggestions</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.fetchContentFailed" resname="NsOpenai.fetchContentFailed">
+			<trans-unit id="NsT3Ai.fetchContentFailed" resname="NsT3Ai.fetchContentFailed">
 				<source>Page content could not be loaded.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.apiNotReachable" resname="NsOpenai.apiNotReachable">
-				<source>Unfortunately, the OpenAI API is currently not available. Please try again later.</source>
+			<trans-unit id="NsT3Ai.apiNotReachable" resname="NsT3Ai.apiNotReachable">
+				<source>Unfortunately, the T3AI API is currently not available. Please try again later.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.missingApiKey" resname="NsOpenai.missingApiKey">
-				<source>OpenAI verification failed. Maybe you haven't saved your API key in the extension configuration yet?</source>
+			<trans-unit id="NsT3Ai.missingApiKey" resname="NsT3Ai.missingApiKey">
+				<source>T3AI verification failed. Maybe you haven't saved your API key in the extension configuration yet?</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.pageNotAccessible" resname="NsOpenai.pageNotAccessible">
+			<trans-unit id="NsT3Ai.pageNotAccessible" resname="NsT3Ai.pageNotAccessible">
 				<source>Page not found. If the page is hidden, please activate it (and possibly deactivate the option "Page in menus activated" within the page properties) so that the page is accessible.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.tx_aiseohelper_domain_model_customlanguage" resname="NsOpenai.tx_aiseohelper_domain_model_customlanguage">
+			<trans-unit id="NsT3Ai.tx_aiseohelper_domain_model_customlanguage" resname="NsT3Ai.tx_aiseohelper_domain_model_customlanguage">
 				<source>Custom language</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.tx_aiseohelper_domain_model_customlanguage.iso_code" resname="NsOpenai.tx_aiseohelper_domain_model_customlanguage.iso_code">
+			<trans-unit id="NsT3Ai.tx_aiseohelper_domain_model_customlanguage.iso_code" resname="NsT3Ai.tx_aiseohelper_domain_model_customlanguage.iso_code">
 				<source>ISO code</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.tx_aiseohelper_domain_model_customlanguage.speech" resname="NsOpenai.tx_aiseohelper_domain_model_customlanguage.speech">
+			<trans-unit id="NsT3Ai.tx_aiseohelper_domain_model_customlanguage.speech" resname="NsT3Ai.tx_aiseohelper_domain_model_customlanguage.speech">
 				<source>Speech</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.regenerate" resname="NsOpenai.tx_aiseohelper_domain_model_customlanguage.speech">
+			<trans-unit id="NsT3Ai.regenerate" resname="NsT3Ai.tx_aiseohelper_domain_model_customlanguage.speech">
 				<source>Re-Generate</source>
 			</trans-unit>
 			<trans-unit id="t3planetsupport">
@@ -98,19 +98,19 @@
 			</trans-unit>
 
 			<!-- JavaScript Module.js Localisation start -->
-			<trans-unit id="NsOpenai.error">
+			<trans-unit id="NsT3Ai.error">
 				<source>Sorry, an error occurred! Please attempt once more.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.request.send">
-				<source>Connecting with ChatGPT (by OpenAI)</source>
+			<trans-unit id="NsT3Ai.request.send">
+				<source>Connecting with ChatGPT (by T3AI)</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.request.send.message">
+			<trans-unit id="NsT3Ai.request.send.message">
 				<source>Please wait a moment as we retrieve information from the ChatGPT API.</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.generated.success">
-				<source>Received a reply from ChatGPT (by OpenAI)</source>
+			<trans-unit id="NsT3Ai.generated.success">
+				<source>Received a reply from ChatGPT (by T3AI)</source>
 			</trans-unit>
-			<trans-unit id="NsOpenai.generated.success.message">
+			<trans-unit id="NsT3Ai.generated.success.message">
 				<source>Successfully retrieved the content from the ChatGPT API.</source>
 			</trans-unit>
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NITSAN\NsOpenai\Utility;
+namespace NITSAN\NsT3Ai\Utility;
 
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -18,9 +18,9 @@ use TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider;
 use TYPO3\CMS\Core\Imaging\IconRegistry;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use NITSAN\NsOpenai\Service\LanguageService;
+use NITSAN\NsT3Ai\Service\LanguageService;
 
-class NsOpenAiBackendUtility
+class NsT3AiBackendUtility
 {
     private static string $apiKey = '';
 
@@ -44,7 +44,7 @@ class NsOpenAiBackendUtility
 
     public static function loadConfiguration(): void
     {
-        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('ns_openai');
+        $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('ns_t3ai');
         self::$apiKey = $extensionConfiguration['apiKey'];
         self::$configurationLoaded = true;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NITSAN\NsOpenai\Domain\Model;
+namespace NITSAN\NsT3Ai\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 

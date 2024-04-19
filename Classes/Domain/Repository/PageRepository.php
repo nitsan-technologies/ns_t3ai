@@ -1,6 +1,6 @@
 <?php
 
-namespace NITSAN\NsOpenai\Domain\Repository;
+namespace NITSAN\NsT3Ai\Domain\Repository;
 
 use Doctrine\DBAL\Driver\Exception;
 use TYPO3\CMS\Core\Database\Connection;
@@ -30,15 +30,15 @@ class PageRepository
     /**
      * @param array{uid: int} $targetLanguage
      */
-    public function markPageAsTranslatedWithNsOpenai(int $pageId, array $targetLanguage): void
+    public function markPageAsTranslatedWithNsT3Ai(int $pageId, array $targetLanguage): void
     {
         GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('pages')
             ->update(
                 'pages',
                 [
-                    'tx_nsopenai_content_not_checked' => 1,
-                    'tx_nsopenai_translated_time' => time(),
+                    'tx_nst3ai_content_not_checked' => 1,
+                    'tx_nst3ai_translated_time' => time(),
                 ],
                 [
                     'l10n_parent' => $pageId,

@@ -1,15 +1,15 @@
 <?php
 
-use NITSAN\NsOpenai\Controller\OpenAiController;
-use NITSAN\NsOpenai\Override\LocalizationController;
+use NITSAN\NsT3Ai\Controller\T3AiController;
+use NITSAN\NsT3Ai\Override\LocalizationController;
 
 return [
     'seo_title_generation' => [
         'path' => '/generate/page-title',
-        'target' => OpenAiController::class . '::generatePageTitleAction'
+        'target' => T3AiController::class . '::generatePageTitleAction'
     ],
     'save_request' => [
         'path' => '/generate/save',
-        'target' => OpenAiController::class . '::saveAction'
+        'target' => T3AiController::class . '::saveAction'
     ],
 ];

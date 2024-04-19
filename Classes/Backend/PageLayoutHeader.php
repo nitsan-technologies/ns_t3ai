@@ -1,9 +1,9 @@
 <?php
 
-namespace NITSAN\NsOpenai\Backend;
+namespace NITSAN\NsT3Ai\Backend;
 
-use NITSAN\NsOpenai\Domain\Repository\PageRepository;
-use NITSAN\NsOpenai\Helper\NsExtensionConfiguration;
+use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
+use NITSAN\NsT3Ai\Helper\NsExtensionConfiguration;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -14,7 +14,7 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 class PageLayoutHeader extends AbstractPageLayoutHeader
 {
     private array $requireJsModules = [
-        'TYPO3/CMS/NsOpenai/Module',
+        'TYPO3/CMS/NsT3Ai/Module',
     ];
 
     protected ?PageRepository $pageRepository = null;
@@ -45,16 +45,16 @@ class PageLayoutHeader extends AbstractPageLayoutHeader
         foreach ($this->requireJsModules as $requireJsModule) {
             $this->pageRenderer->loadRequireJsModule($requireJsModule);
         }
-        $this->pageRenderer->addCssFile('EXT:ns_openai/Resources/Public/Css/Style.css');
-        $standlone->getRequest()->setControllerExtensionName('ns_openai');
-        $templateRootPath = GeneralUtility::getFileAbsFileName('EXT:ns_openai/Resources/Private/Backend/Templates/');
-        $standlone->setPartialRootPaths([GeneralUtility::getFileAbsFileName('EXT:ns_openai/Resources/Private/Backend/Partials/')]);
+        $this->pageRenderer->addCssFile('EXT:ns_t3ai/Resources/Public/Css/Style.css');
+        $standlone->getRequest()->setControllerExtensionName('ns_t3ai');
+        $templateRootPath = GeneralUtility::getFileAbsFileName('EXT:ns_t3ai/Resources/Private/Backend/Templates/');
+        $standlone->setPartialRootPaths([GeneralUtility::getFileAbsFileName('EXT:ns_t3ai/Resources/Private/Backend/Partials/')]);
         $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
             VersionNumberUtility::getCurrentTypo3Version()
         );
-        $templatePathAndFilename = $templateRootPath.'AiOpen.html';
+        $templatePathAndFilename = $templateRootPath.'T3Ai.html';
         if (version_compare($typo3VersionArray['version_main'], 11, '<')) {
-            $templatePathAndFilename = $templateRootPath.'/v10/AiOpen.html';
+            $templatePathAndFilename = $templateRootPath.'/v10/T3Ai.html';
         }
         $standlone->setTemplatePathAndFilename($templatePathAndFilename);
         $pageData = $this->pageRepository->getCurrentPageData($parentObj->id, $typo3VersionArray['version_main']);

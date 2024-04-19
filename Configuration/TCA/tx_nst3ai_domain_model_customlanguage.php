@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:NsOpenai.tx_nsopenai_domain_model_customlanguage',
+        'title' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.tx_nst3ai_domain_model_customlanguage',
         'label' => 'iso_code',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -17,7 +17,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'iso_code,speech',
-        'iconfile' => 'EXT:ns_openai/Resources/Public/Icons/tx_nsopenai_domain_model_customlanguage.svg'
+        'iconfile' => 'EXT:ns_t3ai/Resources/Public/Icons/tx_nst3ai_domain_model_customlanguage.svg'
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid,iso_code,speech, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden,'],
@@ -50,8 +50,8 @@ return [
                 'items' => [
                     ['', 0],
                 ],
-                'foreign_table' => 'tx_nsopenai_domain_model_customlanguage',
-                'foreign_table_where' => 'AND {#tx_nsopenai_domain_model_customlanguage}.{#pid}=###CURRENT_PID### AND {#tx_nsopenai_domain_model_customlanguage}.{#sys_language_uid} IN (-1,0)',
+                'foreign_table' => 'tx_nst3ai_domain_model_customlanguage',
+                'foreign_table_where' => 'AND {#tx_nst3ai_domain_model_customlanguage}.{#pid}=###CURRENT_PID### AND {#tx_nst3ai_domain_model_customlanguage}.{#sys_language_uid} IN (-1,0)',
             ],
         ],
         'l10n_diffsource' => [
@@ -105,7 +105,7 @@ return [
         ],
         'iso_code' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:ns_openai/Resources/Private/Language/backend.xlf:NsOpenai.tx_nsopenai_domain_model_customlanguage.iso_code',
+            'label' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:NsT3Ai.tx_nst3ai_domain_model_customlanguage.iso_code',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -115,7 +115,7 @@ return [
         ],
         'speech' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:ns_openai/Resources/Private/Language/backend.xlf:NsOpenai.tx_nsopenai_domain_model_customlanguage.speech',
+            'label' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:NsT3Ai.tx_nst3ai_domain_model_customlanguage.speech',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

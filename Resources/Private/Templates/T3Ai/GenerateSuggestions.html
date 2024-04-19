@@ -1,10 +1,10 @@
 <html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers">
 
 <div id="selection">
-    <h2><f:translate key="LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:NsOpenai.suggestionsHeader"/></h2>
-    <p><f:translate key="LLL:EXT:ns_openai/Resources/Private/Language/locallang_be.xlf:NsOpenai.suggestionsSubheader"/></p>
+    <h2><f:translate key="LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.suggestionsHeader"/></h2>
+    <p><f:translate key="LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.suggestionsSubheader"/></p>
     <f:for each="{suggestions}" as="suggestion" iteration="it">
-        <div class="ns-openai__{data.fieldName}">
+        <div class="ns-t3ai__{data.fieldName}">
             <label for="suggestion{data.fieldName}-{it.index}" class="keywords-rdo__wrapper">
                 <input type="radio" id="suggestion{data.fieldName}-{it.index}" name="generated{data.fieldName}Suggestions" value="{suggestion}" class="mx-1">
                 <span class="keywords-rdomark"></span>

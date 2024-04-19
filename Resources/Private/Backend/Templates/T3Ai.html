@@ -3,82 +3,91 @@
         xmlns:core="http://typo3.org/ns/TYPO3/Core/Core/ViewHelpers"
         data-namespace-typo3-fluid="true">
 
-<section class="ns-openai">
-    <div class="ns-openai__top-bar">
+<section class="ns-t3ai">
+    <div class="ns-t3ai__top-bar">
         <h3>
             <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><g id="Layer_1-2"><rect width="300" height="300" style="fill:#c8c7c8;"/><path d="m227.49,133.58c4.09-12.32,2.67-25.81-3.89-37.01-9.87-17.17-29.69-26.01-49.06-21.85-16.88-18.77-45.78-20.31-64.55-3.43-5.96,5.36-10.4,12.18-12.89,19.8-12.72,2.61-23.7,10.57-30.13,21.85-9.97,17.14-7.71,38.77,5.6,53.48-4.11,12.31-2.7,25.8,3.85,37.01,9.88,17.18,29.72,26.01,49.09,21.86,8.62,9.7,21,15.23,33.98,15.15,19.85.02,37.43-12.8,43.5-31.7,12.72-2.61,23.7-10.58,30.13-21.86,9.85-17.11,7.58-38.62-5.63-53.3h0Zm-67.99,95.02c-7.92.01-15.6-2.76-21.68-7.84l1.07-.61,36.01-20.79c1.82-1.07,2.95-3.02,2.96-5.13v-50.77l15.22,8.81c.15.08.26.22.29.39v42.07c-.04,18.69-15.18,33.83-33.87,33.87Zm-72.8-31.09c-3.97-6.86-5.4-14.9-4.03-22.71l1.07.64,36.04,20.79c1.82,1.07,4.07,1.07,5.88,0l44.03-25.39v17.58c0,.18-.1.36-.25.46l-36.47,21.04c-16.21,9.34-36.91,3.78-46.28-12.41h0Zm-9.48-78.44c4-6.9,10.32-12.17,17.83-14.87v42.78c-.03,2.11,1.09,4.06,2.92,5.1l43.82,25.28-15.22,8.81c-.17.09-.37.09-.54,0l-36.4-21c-16.18-9.38-21.72-30.07-12.41-46.28v.18Zm125.07,29.06l-43.96-25.53,15.19-8.77c.17-.09.37-.09.54,0l36.4,21.04c16.2,9.35,21.76,30.06,12.41,46.26-3.94,6.82-10.13,12.06-17.51,14.81v-42.78c-.06-2.1-1.23-4.01-3.07-5.03h0Zm15.15-22.78l-1.07-.64-35.97-20.96c-1.83-1.07-4.09-1.07-5.92,0l-43.99,25.38v-17.58c-.02-.18.06-.36.21-.46l36.4-21c16.23-9.35,36.96-3.77,46.31,12.45,3.95,6.85,5.38,14.87,4.04,22.66v.14Zm-95.27,31.16l-15.22-8.77c-.15-.09-.26-.25-.29-.43v-41.96c.02-18.73,15.22-33.89,33.95-33.86,7.9.01,15.56,2.78,21.63,7.83l-1.07.61-36.01,20.78c-1.82,1.07-2.95,3.02-2.96,5.13l-.04,50.66Zm8.27-17.83l19.61-11.3,19.65,11.3v22.6l-19.57,11.3-19.64-11.3-.04-22.6Z" style="fill:#fff;"/></g></svg>
-            <f:translate key="page.nsopenai" />
+            <f:translate key="page.nst3ai" extensionName="NsT3ai" />
         </h3>
-        <a href="https://t3planet.com/t3openai-typo3-chatgpt-extension" target="_blank">
+        <a href="https://t3planet.com/t3ai-typo3-chatgpt-extension" target="_blank">
             <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><g id="Layer_1-2"><g id="star"><path d="m14.7,6.9l-3,2.93.71,4.13c.03.18-.04.36-.19.47-.08.06-.18.09-.28.09-.08,0-.15-.02-.22-.06l-3.71-1.95-3.71,1.95c-.16.09-.36.07-.51-.04-.15-.11-.22-.29-.19-.47l.71-4.13-3-2.93c-.13-.13-.18-.32-.12-.49s.21-.3.39-.33l4.15-.6,1.86-3.76c.16-.33.7-.33.86,0l1.86,3.76,4.15.6c.18.03.33.15.39.33s0,.37-.12.49h0Z" style="fill:#ff8700;" /></g><rect width="16" height="16" style="fill:none;" /></g></svg>
-            <span><f:translate key="page.upgrade" /></span>
+            <span><f:translate key="page.upgrade" extensionName="NsT3ai"/></span>
         </a>
     </div>
 
-    <div class="ns-openai__action-wrapper">
-        <div class="ns-openai__btn-group">
-            <a href="javascript:;" ns-data-target="ns-openai__content1" class="ns-openai__btn-top ns-openai__btn-seo">
-                <f:translate key="page.seo" />
+
+    <div class="ns-t3ai__action-wrapper">
+        <div class="ns-t3ai__btn-group">
+            <a href="javascript:;" ns-data-target="ns-t3ai__content1" class="ns-t3ai__btn-top ns-t3ai__btn-seo">
+                <f:translate key="page.seo" extensionName="NsT3ai"/>
             </a>
         </div>
-
         <!-- SEO Content -->
-        <div class="ns-openai--content ns-openai__seo ns-openai-hidden" id="ns-openai__content1">
+        <div class="ns-t3ai--content ns-t3ai__seo ns-t3ai-hidden" id="ns-t3ai__content1" >
             <div class="row">
                 <div class="col-md-12 col-lg-12">
-                    <div class="tabpanel">
-                        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <li class="active">
-                                <a href="javascript:;" class="nav-link active" id="ns_seo_title" data-toggle="tab"
-                                   data-target="#ns_content_seo_title"> <f:translate key="page.seoMetadata" />
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="ns-openai-nav-tabContent">
-                            <div class="tab-pane fade active show" id="ns_content_seo_title" role="tabpanel" aria-labelledby="ns_seo_title">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="ns-openai__seo-title">
-                                            <label><f:translate key="page.title" /></label>
-                                            <div class="ns-openai__seo-title-ddr">
-                                                <f:render section="prompt" arguments="{prompts: pageTitlePrompts, fieldName: 'seo_title', pageId: pageId}" />
-                                            </div>
-                                            <div id="nav_seo_title"></div>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a href="javascript:;" class="nav-link active" id="ns_seo_title" data-bs-toggle="tab"
+                           data-bs-target="#ns_content_seo_title">
+                            <f:translate key="page.seoMetadata" extensionName="NsT3ai" />
+                        </a>
+                    </div>
+
+                    <div class="tab-content" id="ns-t3ai-nav-tabContent">
+                        <div class="tab-pane fade active show" id="ns_content_seo_title" role="tabpanel"
+                             aria-labelledby="ns_seo_title">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="ns-t3ai__seo-title">
+                                        <label><f:translate key="page.title" extensionName="NsT3ai"/></label>
+                                        <div class="ns-t3ai__seo-title-ddr">
+                                            <f:render section="prompt" arguments="{prompts: pageTitlePrompts, fieldName: 'seo_title', pageId: pageId, versionNum: version}" />
                                         </div>
+                                        <div id="nav_seo_title"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="mb-3 mt-1 btn btn-primary ns-openai-seo-set-btn" style="display:none;" data-page-id="{pageId}"
-                            data-field-name="seo_title">
+                    <button class="mb-3 mt-1 btn btn-primary ns-t3ai-seo-set-btn" style="display:none;" data-page-id="{pageId}"
+                    data-field-name="seo_title">
                         <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-document-save"
-                              data-identifier="actions-document-save">
+                        data-identifier="actions-document-save">
                             <span class="icon-markup">
                                 <svg class="icon-color">
                                     <use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-save"></use>
                                 </svg>
                             </span>
                         </span>
-                        <f:translate key="seo.button.set" />
+                        <f:translate key="seo.button.set" extensionName="NsT3ai" />
                     </button>
                 </div>
             </div>
         </div>
-        <div id="ns-openai__loader"></div>
+        <div id="ns-t3ai__loader"></div>
     </div>
 </section>
 
 <f:section name="prompt">
-    <f:form.select id="{fieldName}_prompt" name="{fieldName}_prompt" class="form-select form-control">
-        <f:form.select.option value="">{f:translate(key: 'global.prompt')}</f:form.select.option>
-        <f:for each="{prompts}" as="popmptValue" key="popmptLabel">
-            <f:form.select.option value="{popmptValue}">{popmptLabel}</f:form.select.option>
-        </f:for>
-    </f:form.select>
-
-
-    <button class="btn btn-primary ns-openai-seo-generation-btn" type="button" data-page-id="{pageId}" data-field-name="{fieldName}">
+    <f:if condition="{versionNum} >= 12">
+        <f:then>
+            <select id="{fieldName}_prompt" name="{fieldName}_prompt" class="form-select">
+                <option value="">{f:translate(key: 'global.prompt', extensionName: 'NsT3ai')}</option>
+                <f:for each="{prompts}" as="popmptValue" key="popmptLabel">
+                    <option value="{popmptValue}">{popmptLabel}</option>
+                </f:for>
+            </select>
+        </f:then>
+        <f:else>
+            <f:form.select id="{fieldName}_prompt" name="{fieldName}_prompt" class="form-select">
+                <f:form.select.option value="">{f:translate(key: 'global.prompt')}</f:form.select.option>
+                <f:for each="{prompts}" as="popmptValue" key="popmptLabel">
+                    <f:form.select.option value="{popmptValue}">{popmptLabel}</f:form.select.option>
+                </f:for>
+            </f:form.select>
+        </f:else>
+    </f:if>
+    <button class="btn btn-primary ns-t3ai-seo-generation-btn" type="button" data-page-id="{pageId}" data-field-name="{fieldName}">
         <span class="icon icon-size-small icon-state-default">
             <span class="icon-markup">
                 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16"><g fill="currentColor"><path d="M6.768 15H1.5a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v5.47a5.779 5.779 0 0 0-1-.831V2H2v12h3.975c.227.362.493.698.793 1Zm-1.572-3H3v1h2.476a5.707 5.707 0 0 1-.28-1Zm-.018-2H3v1h2.1a5.87 5.87 0 0 1 .078-1Zm.735-2H3v1h2.44c.125-.35.285-.685.473-1Zm2.01-2H3v1h3.671a5.775 5.775 0 0 1 1.251-1ZM3 3h10v2H3V3Zm8 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM9.285 8.55l-.517-.86a4 4 0 0 1 6.248 3.307h.825c.14 0 .226.161.151.285l-1.307 2.433a.175.175 0 0 1-.304 0l-1.357-2.433c-.075-.124.011-.284.151-.284h.84a3 3 0 0 0-4.73-2.449ZM11.024 14c.645 0 1.218-.203 1.707-.55l.517.86A4 4 0 0 1 7 11.002h-.817c-.14 0-.226-.161-.152-.285l1.3-2.433a.175.175 0 0 1 .304 0l1.316 2.433c.074.124-.012.284-.152.284H8C8.001 12.658 9.368 14 11.024 14Z"/></g></svg>

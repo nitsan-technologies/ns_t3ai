@@ -6,5 +6,5 @@ imports:
   - { resource: "EXT:rte_ckeditor/Configuration/RTE/Default.yaml" }
 editor:
   externalPlugins:
-    nsopenai_content:
-      resource: "EXT:ns_openai/Resources/Public/JavaScript/Plugins/nsopenai/"
+    nst3ai_content:
+      resource: "EXT:ns_t3ai/Resources/Public/JavaScript/Plugins/nst3ai/"

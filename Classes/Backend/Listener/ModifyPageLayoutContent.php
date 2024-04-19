@@ -1,7 +1,7 @@
 <?php
-namespace NITSAN\NsOpenai\Backend\Listener;
+namespace NITSAN\NsT3Ai\Backend\Listener;
 use TYPO3\CMS\Backend\Controller\Event\ModifyPageLayoutContentEvent;
-use NITSAN\NsOpenai\Backend\PageLayoutHeaderV12;
+use NITSAN\NsT3Ai\Backend\PageLayoutHeaderV12;
 
 class ModifyPageLayoutContent {
 

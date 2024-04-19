@@ -6,7 +6,7 @@ imports:
 editor:
   config:
     importModules:
-      - { module: '@nitsan/nsopenai/pluginv12.js', exports: ['Openai'] }
+      - { module: '@nitsan/nst3ai/pluginv12.js', exports: ['T3Ai'] }
     toolbar:
       items:
-        - openai
+        - t3ai

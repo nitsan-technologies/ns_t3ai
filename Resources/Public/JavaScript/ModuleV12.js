@@ -6,15 +6,15 @@ import Icons from "@typo3/backend/icons.js";
 addEventListener();
 
 function addEventListener() {
-    document.querySelectorAll('.ns-openai-seo-generation-btn').forEach(function (button) {
+    document.querySelectorAll('.ns-t3ai-seo-generation-btn').forEach(function (button) {
         button.addEventListener("click", function (ev) {
             ev.preventDefault();
             if (button !== null) {
                 button.disabled = true;
 
                 Icons.getIcon('spinner-circle-light', Icons.sizes.large).then(function (markup) {
-                    document.getElementById('ns-openai__loader').innerHTML = markup;
-                    document.getElementById('ns-openai__loader').classList.add('ns-show-overlay');
+                    document.getElementById('ns-t3ai__loader').innerHTML = markup;
+                    document.getElementById('ns-t3ai__loader').classList.add('ns-show-overlay');
                 });
             }
             let pageId = parseInt(this.getAttribute('data-page-id'));
@@ -31,7 +31,7 @@ function addEventListener() {
  * @param {object} button
  */
 function sendAjaxRequest(pageId, fieldName, button) {
-    Notification.info(TYPO3.lang['NsOpenai.request.send'], TYPO3.lang['NsOpenai.generating'], 8);
+    Notification.info(TYPO3.lang['NsT3Ai.request.send'], TYPO3.lang['NsT3Ai.generating'], 8);
     var keyword = '';
     if (document.getElementById('topic_keyword')) {
         keyword = document.getElementById('topic_keyword').value
@@ -49,18 +49,18 @@ function sendAjaxRequest(pageId, fieldName, button) {
             const resolved = await response.resolve();
             const responseBody = JSON.parse(resolved);
             if (responseBody.error) {
-                Notification.error(TYPO3.lang['NsOpenai.error'], responseBody.error);
+                Notification.error(TYPO3.lang['NsT3Ai.error'], responseBody.error);
             } else {
                 handleResponse(pageId, fieldName, responseBody)
-                Notification.success(TYPO3.lang['NsOpenai.generated.success'], TYPO3.lang['NsOpenai.generated.success.message'], 8);
+                Notification.success(TYPO3.lang['NsT3Ai.generated.success'], TYPO3.lang['NsT3Ai.generated.success.message'], 8);
                 button.disabled = false;
-                // button.querySelector('.btn-label').innerHTML = TYPO3.lang['NsOpenai.regenerate'];
-                document.getElementById('ns-openai__loader').innerHTML = '';
-                document.getElementById('ns-openai__loader').classList.remove('ns-show-overlay');
+                // button.querySelector('.btn-label').innerHTML = TYPO3.lang['NsT3Ai.regenerate'];
+                document.getElementById('ns-t3ai__loader').innerHTML = '';
+                document.getElementById('ns-t3ai__loader').classList.remove('ns-show-overlay');
             }
         })
         .catch((error) => {
-            Notification.error(TYPO3.lang['NsOpenai.error'], error);
+            Notification.error(TYPO3.lang['NsT3Ai.error'], error);
         });
 }
 
@@ -72,9 +72,9 @@ function sendAjaxRequest(pageId, fieldName, button) {
  */
 function handleResponse(pageId, fieldName, responseBody) {
     document.querySelector('#nav_' + fieldName).innerHTML = responseBody.output;
-    document.querySelector('.ns-openai-seo-set-btn').style.display = 'block';
+    document.querySelector('.ns-t3ai-seo-set-btn').style.display = 'block';
 
-    document.querySelectorAll('.ns-openai-seo-set-btn').forEach(function (button) {
+    document.querySelectorAll('.ns-t3ai-seo-set-btn').forEach(function (button) {
         button.addEventListener("click", function (ev) {
             ev.preventDefault();
             let pageId = parseInt(this.getAttribute('data-page-id'));
@@ -99,7 +99,7 @@ function handleResponse(pageId, fieldName, responseBody) {
  * @param {string} suggestion
  */
 function sendSaveRequest(pageId, fieldName, suggestion) {
-    Notification.info(TYPO3.lang['NsOpenai.request.send'], TYPO3.lang['NsOpenai.generating'], 50);
+    Notification.info(TYPO3.lang['NsT3Ai.request.send'], TYPO3.lang['NsT3Ai.generating'], 50);
     new AjaxRequest(TYPO3.settings.ajaxUrls['save_request'])
         .post(
             {
@@ -112,21 +112,21 @@ function sendSaveRequest(pageId, fieldName, suggestion) {
             const resolved = await response.resolve();
             const responseBody = JSON.parse(resolved);
             if (responseBody.error) {
-                Notification.error(TYPO3.lang['NsOpenai.error'], responseBody.error);
+                Notification.error(TYPO3.lang['NsT3Ai.error'], responseBody.error);
             } else {
-                Notification.success(TYPO3.lang['NsOpenai.generated.success'], TYPO3.lang['NsOpenai.generated.success.message'], 8);
-                document.querySelector('.ns-openai__seo').style.display = 'none';
+                Notification.success(TYPO3.lang['NsT3Ai.generated.success'], TYPO3.lang['NsT3Ai.generated.success.message'], 8);
+                document.querySelector('.ns-t3ai__seo').style.display = 'none';
                 location.reload();
-                document.querySelector('.ns-openai-seo-set-btn').style.display = 'none';
+                document.querySelector('.ns-t3ai-seo-set-btn').style.display = 'none';
             }
         })
         .catch((error) => {
-            Notification.error(TYPO3.lang['NsOpenai.error'], error);
+            Notification.error(TYPO3.lang['NsT3Ai.error'], error);
         });
 }
 
 // Top 2 Tabs Button changes Code here
-const tabButtons = document.querySelectorAll('.ns-openai__btn-top');
+const tabButtons = document.querySelectorAll('.ns-t3ai__btn-top');
 function toggleTab(tabId) {
     const content = document.getElementById(tabId);
     const activeButton = document.querySelector(`[ns-data-target="${tabId}"]`);
@@ -135,14 +135,14 @@ function toggleTab(tabId) {
         content.classList.remove('active-tab');
         activeButton.classList.remove('active');
     } else {
-        const contentSections = document.querySelectorAll('.ns-openai--content');
+        const contentSections = document.querySelectorAll('.ns-t3ai--content');
         contentSections.forEach((section) => {
             section.classList.remove('active-tab');
         });
         content.classList.add('active-tab');
         activeButton.classList.add('active');
 
-        const tabButtons = document.querySelectorAll('.ns-openai__btn-top');
+        const tabButtons = document.querySelectorAll('.ns-t3ai__btn-top');
         tabButtons.forEach((button) => {
             if (button !== activeButton) {
                 button.classList.remove('active');
