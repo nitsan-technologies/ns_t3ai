@@ -1,7 +1,7 @@
 <?php
 
 $EM_CONF['ns_t3ai'] = [
-    'title' => 'T3AI = TYPO3 + AI',
+    'title' => 'T3AI - TYPO3 AI Extension',
     'description' => 'T3AI — TYPO3 meets Artificial Intelligence with T3AI (ChatGPT, DALL-E, etc). T3AI provides rich content assistance, automating tasks like content creation and SEO optimization. It offers wide range of features like quick sidebar options, AI page creation, RTE chatbot, Language translation, Chat assistance, and Helpful prompts and so on.
 
     *** Live Demo: https://demo.t3planet.com/t3-extensions/pro/t3ai-typo3-chatgpt-extension *** Premium Version, Documentation & Free Support: https://t3planet.com/t3ai-typo3-chatgpt-extension',
