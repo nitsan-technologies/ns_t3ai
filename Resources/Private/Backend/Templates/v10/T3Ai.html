@@ -1,0 +1,91 @@
+<html
+        xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+        xmlns:core="http://typo3.org/ns/TYPO3/Core/Core/ViewHelpers"
+        data-namespace-typo3-fluid="true">
+
+<section class="ns-t3ai">
+    <div class="ns-t3ai__top-bar">
+        <h3>
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M22.32 14.59l-2.49.06a5.298 5.298 0 01-5.18-3.66l-.78-2.37c-.05-.16-.29-.12-.29.05l.06 2.49a5.298 5.298 0 01-3.66 5.18l-2.37.78c-.16.05-.12.29.05.29l2.49-.06a5.298 5.298 0 015.18 3.66l.77 2.37c.05.16.29.12.29-.05l-.06-2.49a5.306 5.306 0 013.66-5.18l2.37-.77c.16-.05.12-.29-.05-.29z"/><path d="M21.11 22.27c.53-.96 1.63-1.46 2.71-1.23l.5.11c.16.04.25-.19.1-.27l-.46-.25a2.498 2.498 0 01-1.23-2.71l.11-.5c.04-.16-.19-.25-.27-.1l-.25.46c-.53.96-1.63 1.46-2.71 1.23l-.5-.11c-.16-.04-.25.19-.1.27l.46.25c.97.53 1.46 1.63 1.23 2.71l-.11.5c-.04.16.19.25.27.1l.25-.46zm-2.13-10.38c.65-.42 1.5-.37 2.09.13.13.11.31-.05.22-.19-.42-.65-.37-1.5.13-2.09.11-.13-.05-.31-.19-.22-.65.42-1.5.37-2.09-.13-.13-.11-.31.05-.22.19.42.65.37 1.5-.13 2.09-.11.13.05.31.19.22z"/></svg>
+            <f:translate key="page.nst3ai" />
+        </h3>
+        <a href="https://t3planet.com/t3ai-typo3-chatgpt-extension" target="_blank">
+            <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><g id="Layer_1-2"><g id="star"><path d="m14.7,6.9l-3,2.93.71,4.13c.03.18-.04.36-.19.47-.08.06-.18.09-.28.09-.08,0-.15-.02-.22-.06l-3.71-1.95-3.71,1.95c-.16.09-.36.07-.51-.04-.15-.11-.22-.29-.19-.47l.71-4.13-3-2.93c-.13-.13-.18-.32-.12-.49s.21-.3.39-.33l4.15-.6,1.86-3.76c.16-.33.7-.33.86,0l1.86,3.76,4.15.6c.18.03.33.15.39.33s0,.37-.12.49h0Z" style="fill:#ff8700;" /></g><rect width="16" height="16" style="fill:none;" /></g></svg>
+            <span><f:translate key="page.upgrade" /></span>
+        </a>
+    </div>
+
+    <div class="ns-t3ai__action-wrapper">
+        <div class="ns-t3ai__btn-group">
+            <a href="javascript:;" ns-data-target="ns-t3ai__content1" class="ns-t3ai__btn-top ns-t3ai__btn-seo">
+                <f:translate key="page.seo" />
+            </a>
+        </div>
+
+        <!-- SEO Content -->
+        <div class="ns-t3ai--content ns-t3ai__seo ns-t3ai-hidden" id="ns-t3ai__content1">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="tabpanel">
+                        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <li class="active">
+                                <a href="javascript:;" class="nav-link active" id="ns_seo_title" data-toggle="tab"
+                                   data-target="#ns_content_seo_title"> <f:translate key="page.seoMetadata" />
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="ns-t3ai-nav-tabContent">
+                            <div class="tab-pane fade active show" id="ns_content_seo_title" role="tabpanel" aria-labelledby="ns_seo_title">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="ns-t3ai__seo-title">
+                                            <label><f:translate key="page.title" /></label>
+                                            <div class="ns-t3ai__seo-title-ddr">
+                                                <f:render section="prompt" arguments="{prompts: pageTitlePrompts, fieldName: 'seo_title', pageId: pageId}" />
+                                            </div>
+                                            <div id="nav_seo_title"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mb-3 mt-1 btn btn-primary ns-t3ai-seo-set-btn" style="display:none;" data-page-id="{pageId}"
+                            data-field-name="seo_title">
+                        <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-document-save"
+                              data-identifier="actions-document-save">
+                            <span class="icon-markup">
+                                <svg class="icon-color">
+                                    <use xlink:href="/typo3/sysext/core/Resources/Public/Icons/T3Icons/sprites/actions.svg#actions-save"></use>
+                                </svg>
+                            </span>
+                        </span>
+                        <f:translate key="seo.button.set" />
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="ns-t3ai__loader"></div>
+    </div>
+</section>
+
+<f:section name="prompt">
+    <f:form.select id="{fieldName}_prompt" name="{fieldName}_prompt" class="form-select form-control">
+        <f:form.select.option value="">{f:translate(key: 'global.prompt')}</f:form.select.option>
+        <f:for each="{prompts}" as="popmptValue" key="popmptLabel">
+            <f:form.select.option value="{popmptValue}">{popmptLabel}</f:form.select.option>
+        </f:for>
+    </f:form.select>
+
+
+    <button class="btn btn-primary ns-t3ai-seo-generation-btn" type="button" data-page-id="{pageId}" data-field-name="{fieldName}">
+        <span class="icon icon-size-small icon-state-default">
+            <span class="icon-markup">
+                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 16 16"><g fill="currentColor"><path d="M6.768 15H1.5a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v5.47a5.779 5.779 0 0 0-1-.831V2H2v12h3.975c.227.362.493.698.793 1Zm-1.572-3H3v1h2.476a5.707 5.707 0 0 1-.28-1Zm-.018-2H3v1h2.1a5.87 5.87 0 0 1 .078-1Zm.735-2H3v1h2.44c.125-.35.285-.685.473-1Zm2.01-2H3v1h3.671a5.775 5.775 0 0 1 1.251-1ZM3 3h10v2H3V3Zm8 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM9.285 8.55l-.517-.86a4 4 0 0 1 6.248 3.307h.825c.14 0 .226.161.151.285l-1.307 2.433a.175.175 0 0 1-.304 0l-1.357-2.433c-.075-.124.011-.284.151-.284h.84a3 3 0 0 0-4.73-2.449ZM11.024 14c.645 0 1.218-.203 1.707-.55l.517.86A4 4 0 0 1 7 11.002h-.817c-.14 0-.226-.161-.152-.285l1.3-2.433a.175.175 0 0 1 .304 0l1.316 2.433c.074.124-.012.284-.152.284H8C8.001 12.658 9.368 14 11.024 14Z"/></g></svg>
+            </span>
+        </span>
+    </button>
+    <div class="response-section"></div>
+</f:section>
+
+</html>
