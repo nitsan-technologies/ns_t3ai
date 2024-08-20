@@ -27,7 +27,7 @@ $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
         "@import 'EXT:ns_t3ai/Configuration/TypoScript/t3ai.typoscript'"
     );
 })();
-if (version_compare($typo3VersionArray['version_main'], 11, '<=')) { 
+if (version_compare($typo3VersionArray['version_main'], 11, '<=')) {
     if (TYPO3_MODE === 'BE' && \NITSAN\NsT3Ai\Utility\NsT3AiBackendUtility::isApiKeySet()) {
        $config = $extensionConfiguration->get('ns_t3ai');
        $renderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);

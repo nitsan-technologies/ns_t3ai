@@ -116,6 +116,43 @@
 
 			<!-- JavaScript Module.js Localisation end -->
 
+			<trans-unit id="NsT3Ai.rte.heading" resname="NsT3Ai.rte.heading">
+				<source>T3AI Content Assistance</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.tab.general" resname="NsT3Ai.rte.tab.general">
+				<source>General</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.tab.advanced" resname="NsT3Ai.rte.tab.advanced">
+				<source>Advanced</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.input.label" resname="NsT3Ai.rte.input.label">
+				<source>What should I write about?</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.generate" resname="NsT3Ai.rte.generate">
+				<source>Generate</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.advanced.style" resname="NsT3Ai.rte.advanced.style">
+				<source>Please select the writing style you wish to use.</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.advanced.tone" resname="NsT3Ai.rte.advanced.tone">
+				<source>Please select the tone you want to use.</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.advanced.temperature"
+			resname="NsT3Ai.rte.advanced.temperature">
+				<source>Temperature ranges from 0 to 2. Smaller values produce more consistent
+results.</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.advanced.resultAmount"
+			resname="NsT3Ai.rte.advanced.resultAmount">
+				<source>Number of results</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.addContent" resname="NsT3Ai.rte.addContent">
+				<source>Save</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.rte.cancel" resname="NsT3Ai.rte.cancel">
+				<source>Cancel</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

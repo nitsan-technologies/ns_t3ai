@@ -1,6 +1,8 @@
 CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
-    const NsT3AiKey = TYPO3.settings.NS_T3AI_KEY;
-    let select_model = "text-davinci-003", select_temperature = 0.5, select_max_tokens = 4e3, select_amount = 1;
+    let select_model = "gpt-3.5-turbo-instruct",
+        select_temperature = 0.5,
+        select_max_tokens = 4e3,
+        select_amount = 1;
     const escapeHtml = (unsafe) => {
         return unsafe.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
     };
@@ -15,55 +17,85 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
                 accessKey: "C",
                 elements: [
                     {
-                        type: "textarea",
+                        type: "text",
                         id: "ns-t3ai-prompt",
                         label: editor.lang.nst3ai_content.writeAbout,
-                        rows: 6,
+                        rows: 2,
                         validate: CKEDITOR.dialog.validate.notEmpty(editor.lang.nst3ai_content.errorNotEmpty),
                         setup: function(element) {
                             this.setValue(element.getText());
                         },
                         commit: function(element) {
-                            element.setText(" Loading … ");
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "https://api.openai.com/v1/completions", true);
-                            xhr.setRequestHeader("Content-Type", "application/json");
-                            xhr.setRequestHeader("Authorization", "Bearer " + NsT3AiKey);
-                            xhr.send(JSON.stringify({
-                                prompt: this.getValue(),
-                                // Text to complete
-                                max_tokens: select_max_tokens,
-                                // 1 to 4000
-                                model: 'gpt-3.5-turbo-instruct',
-                                // 'text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'
-                                temperature: select_temperature,
-                                // 0.0 is equivalent to greedy sampling
-                                top_p: 1,
-                                // 1.0 is equivalent to greedy sampling
-                                n: select_amount,
-                                // Number of results to return
-                                frequency_penalty: 0,
-                                // 0.0 is equivalent to no penalty
-                                presence_penalty: 0
-                                // 0.0 is equivalent to no penalty
-                            }));
-                            xhr.onreadystatechange = function() {
-                                if (this.readyState === 4) {
-                                    if (this.status === 200) {
-                                        let completeText = "", choices = JSON.parse(this.responseText).choices;
-                                        for (let i = 0; i < choices.length; i++) {
-                                            completeText += "<p>" + escapeHtml(choices[i].text) + "</p>";
-                                        }
-                                        element.setHtml(completeText);
-                                    } else {
-                                        element.setText(" Error: " + this.responseText);
-                                    }
-                                }
-                            };
-                            xhr.onerror = function() {
-                                element.setText(" Error: " + this.responseText);
-                            };
+                            let generatedContent = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-generated-content').getValue();
+                            element.setHtml(generatedContent);
                         }
+                    },
+                    {
+                        type: "button",
+                        id: "ns-t3ai-generate",
+                        label: editor.lang.nst3ai_content.generate,
+                        onClick: function (element) {
+                            let promptElement = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-prompt');
+                            let promptValue = promptElement && promptElement.getValue().trim();
+                            if (!promptValue) {
+                                alert(editor.lang.nst3ai_content.errorNotEmpty);
+                            } else {
+                                select_temperature = parseFloat(this.getDialog().getValueOf("tab-advanced", "temperature"));
+                                select_amount = parseInt(this.getDialog().getValueOf("tab-advanced", "amount"));
+                                let resElement = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-generated-content');
+                                var buttonElement = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-generate');
+                                buttonElement.disable()
+                                const NsT3AiKey = TYPO3.settings.NS_T3AI_KEY;
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "https://api.openai.com/v1/completions", true);
+                                xhr.setRequestHeader("Content-Type", "application/json");
+                                xhr.setRequestHeader("Authorization", "Bearer " + NsT3AiKey);
+                                resElement.setValue('Loading...')
+                                xhr.send(JSON.stringify({
+                                    prompt: promptValue,
+                                    // Text to complete
+                                    max_tokens: select_max_tokens,
+                                    // 1 to 4000
+                                    model: select_model,
+                                    // 'text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'
+                                    temperature: select_temperature,
+                                    // 0.0 is equivalent to greedy sampling
+                                    top_p: 1,
+                                    // 1.0 is equivalent to greedy sampling
+                                    n: select_amount,
+                                    // Number of results to return
+                                    frequency_penalty: 0,
+                                    // 0.0 is equivalent to no penalty
+                                    presence_penalty: 0
+                                    // 0.0 is equivalent to no penalty
+                                }));
+                                xhr.onreadystatechange = function() {
+                                    if (this.readyState === 4) {
+                                        if (this.status === 200) {
+                                            let completeText = "", choices = JSON.parse(this.responseText).choices;
+                                            for (let i = 0; i < choices.length; i++) {
+                                                completeText += "<p>" + escapeHtml(choices[i].text) + "</p>";
+                                            }
+                                            resElement.setValue(completeText.trim().replace(/\n\s+/g, '\n'));
+                                            buttonElement.enable()
+                                        } else {
+                                            resElement.setValue(" Error: " + this.responseText);
+                                            buttonElement.enable()
+                                        }
+                                    }
+                                };
+                                xhr.onerror = function() {
+                                    resElement.setValue(" Error: " + this.responseText);
+                                    buttonElement.enable()
+                                };
+                            }
+                        }
+                    },
+                    {
+                        type: "textarea",
+                        id: "ns-t3ai-generated-content",
+                        rows: 5,
+                        validate: CKEDITOR.dialog.validate.notEmpty(editor.lang.nst3ai_content.errorNotEmpty),
                     }
                 ]
             },
