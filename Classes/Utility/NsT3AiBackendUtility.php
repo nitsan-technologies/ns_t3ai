@@ -45,7 +45,7 @@ class NsT3AiBackendUtility
     public static function loadConfiguration(): void
     {
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('ns_t3ai');
-        self::$apiKey = $extensionConfiguration['apiKey'];
+        self::$apiKey = $extensionConfiguration['apiKey'] ?? '';
         self::$configurationLoaded = true;
     }
 
