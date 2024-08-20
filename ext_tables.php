@@ -12,7 +12,6 @@ $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
 if (version_compare($typo3VersionArray['version_main'], 12, '>=')) {
     $config = $extensionConfiguration->get('ns_t3ai');
     $renderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
-    $renderer->addCssFile('EXT:ns_t3ai/Resources/Public/Css/Rte.css');
-    $renderer->addInlineSetting(null,'NS_T3AI_KEY',$config['apiKey']);
     $renderer->addInlineLanguageLabelFile('EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf');
+    $renderer->addCssFile('EXT:ns_t3ai/Resources/Public/Css/Rte.css');
 }

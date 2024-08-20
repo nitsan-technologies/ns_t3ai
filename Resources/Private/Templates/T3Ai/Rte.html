@@ -1,0 +1,80 @@
+<html data-namespace-typo3-fluid="true"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+>
+<head>
+  <title>{f:translate(key: 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.heading')}</title>
+</head>
+<body>
+<div class="t3ai-rte-container">
+  <nav id="tabs">
+    <li class="active"><a href="#general">
+      {f:translate(key: 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.tab.general')}
+    </a></li>
+    <li><a href="#advanced">
+      {f:translate(key: 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.tab.advanced')}
+    </a></li>
+  </nav>
+  <section id="tab-contents">
+    <div id="general" class="tab-contents active">
+      <div class="form-group">
+        <label class="" for="inputText">
+          {f:translate(key:
+          'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.input.label')}
+        </label>
+        <input type="text" name="inputText" id="input-text" class="text-area-input form-control"/>
+      </div>
+      <div class="form-group btn-wrap">
+        <button id="openai-generate-content" class="openai-cancel btn btn-primary">
+          <core:icon identifier="actions-localize-nst3ai" size="small"/>
+          {f:translate(key:
+          'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.generate')}
+        </button>
+      </div>
+      <div class="form-group">
+        <textarea class="text-area-input form-control" id="ns-t3ai-generated-content" rows="5"></textarea>
+      </div>
+
+    </div>
+    <div id="advanced" class="tab-contents">
+      <div class="form-group">
+        <label for="advanceOption4">
+          {f:translate(key:
+          'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.advanced.temperature')}
+        </label>
+        <select class="form-control" name="advanceOption4" id="temperature">
+          <option value="0.01">0.0</option>
+          <option value="0.25">0.25</option>
+          <option value="0.5">0.5</option>
+          <option value="0.75">0.75</option>
+          <option value="1">1.0</option>
+          <option value="1.25">1.25</option>
+          <option value="1.5">1.5</option>
+          <option value="1.75">1.75</option>
+          <option value="2">2.0</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="advanceOption5">
+          {f:translate(key:
+          'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.advanced.resultAmount')}
+        </label>
+        <select class="form-control" name="advanceOption5" id="result-amount">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  <div class="btn-wrap">
+    <button id="openai-cancel" class="btn">
+      {f:translate(key: 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.cancel')}
+    </button>
+    <button id="openai-submit" class="openai-save btn">
+      {f:translate(key: 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.rte.addContent')}
+    </button>
+  </div>
+</div>
+</body>
+</html>

@@ -250,4 +250,38 @@ class NsT3AiContentService
             return null;
         }
     }
+
+    public function getTemplateData($templateName, $data) {
+        $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
+        $standaloneView->setTemplateRootPaths(['EXT:ns_t3ai/Resources/Private/Templates/T3Ai/']);
+        $standaloneView->setPartialRootPaths(['EXT:ns_t3ai/Resources/Private/Partials/']);
+        $standaloneView->getRenderingContext()->setControllerName('T3Ai');
+        $standaloneView->setTemplate($templateName);
+        $assign = [
+            'data' => $data
+        ];
+        $standaloneView->assignMultiple($assign);
+        return $standaloneView->render();
+    }
+
+    /**
+     * @param array $jsonContent
+     * @return array
+     */
+    public function requestAiForRteContent(array $jsonContent): array
+    {
+        $response = $this->requestFactory->request(
+            'https://api.openai.com/v1/completions',
+            'POST',
+            [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->extConf['apiKey']
+                ],
+                'json' => $jsonContent
+            ]
+        );
+        $resJsonBody = $response->getBody()->getContents();
+        return json_decode($resJsonBody, true);
+    }
 }

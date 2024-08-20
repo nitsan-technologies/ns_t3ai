@@ -12,4 +12,12 @@ return [
         'path' => '/generate/save',
         'target' => T3AiController::class . '::saveAction'
     ],
+    'rte_content_generation' => [
+        'path' => '/backend/rte-content-generation',
+        'target' => T3AiController::class . '::generateRteContentAction'
+    ],
+    'rte_template' => [
+        'path' => '/render/rte-template',
+        'target' => T3AiController::class . '::renderRteTemplate'
+    ],
 ];

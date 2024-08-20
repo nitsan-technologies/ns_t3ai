@@ -11,7 +11,9 @@ use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Http\Response;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Routing\UnableToLinkToPageException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class T3AiController
@@ -140,6 +142,68 @@ class T3AiController
             }
         }
         return $currentPage;
+    }
+
+    public function generateRteContentAction(ServerRequestInterface $request): ResponseInterface
+    {
+        $body = $request->getParsedBody();
+        return $this->generateRteContent($body);
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function renderRteTemplate(): ResponseInterface
+    {
+        $generatedContent = $this->contentService->getTemplateData('Rte', []);
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->setBodyContent($generatedContent);
+        return $pageRenderer->renderResponse();
+    }
+
+    /**
+     *
+     * @param array $parsedBody
+     * @return Response
+     */
+    private function generateRteContent(array $parsedBody): ResponseInterface
+    {
+        $response = new Response();
+        $jsonContent = [
+            'prompt' => $parsedBody['prompt'],
+            'max_tokens' => (int)$parsedBody['max_tokens'],
+            'model' => $parsedBody['model'],
+            'temperature' => (float)$parsedBody['temperature'],
+            'top_p' => (int)$parsedBody['top_p'],
+            'n' => (int)$parsedBody['n'],
+            'frequency_penalty' => (int)$parsedBody['frequency_penalty'],
+            'presence_penalty' => (int)$parsedBody['presence_penalty']
+        ];
+        try {
+            $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
+            $completeText = '';
+            $choices = $generatedContent['choices'];
+            foreach($choices as $choicesItem) {
+                $completeText .= "<p>" . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
+            }
+            $response->getBody()->write(
+                json_encode(
+                    [
+                        'success' => true,
+                        'generatedContent' => $completeText,
+                    ]
+                )
+            );
+        } catch(Exception $e) {
+            $response->getBody()->write(
+                json_encode(
+                    [
+                        'success' => false,
+                    ]
+                )
+            );
+        }
+        return $response;
     }
 
 }
