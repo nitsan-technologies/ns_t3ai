@@ -11,15 +11,18 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Routing\UnableToLinkToPageException;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 
 class NsT3AiContentService
 {
@@ -218,17 +221,32 @@ class NsT3AiContentService
      * @param int $pageLanguage
      * @return string
      */
-    protected function getPreviewUrl(int $pageId, int $pageLanguage): string
+    public function getPreviewUrl(int $pageId, int $pageLanguage, bool $includeType = true): string
     {
+        $arg['_language'] = $pageLanguage;
+        if ($includeType) {
+            $arg['type'] = '1696828748';
+        }
+        $this->uriBuilder->setRequest($this->getExtbaseRequest());
         $previewUri = $this->uriBuilder
+            ->reset()
             ->setTargetPageUid($pageId)
             ->setCreateAbsoluteUri(true)
-            ->setArguments(['_language'=>$pageLanguage, 'type'=>'1696828748'])->buildFrontendUri();
+            ->setArguments($arg)->buildFrontendUri();
 
         return filter_var($previewUri, FILTER_VALIDATE_URL) ? $previewUri : GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST'). $previewUri;
-
     }
 
+    private function getExtbaseRequest(): Request
+    {
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+
+        // We have to provide an Extbase request object
+        return new Request(
+            $request->withAttribute('extbase', new ExtbaseRequestParameters()),
+        );
+    }
 
     protected function getLanguageId(): int
     {
@@ -240,16 +258,30 @@ class NsT3AiContentService
     {
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
         try {
+            $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
+                VersionNumberUtility::getCurrentTypo3Version()
+            );
             $site = $siteFinder->getSiteByPageId($pageId);
             if ($this->languageId === -1) {
                 $this->languageId = $site->getDefaultLanguage()->getLanguageId();
-                return $site->getDefaultLanguage()->getTwoLetterIsoCode();
+                if ($typo3VersionArray['version_main'] === 13) {
+                    $languageCode = $site->getDefaultLanguage()->getLocale()->getLanguageCode();
+                } else {
+                    $languageCode = $site->getDefaultLanguage()->getTwoLetterIsoCode();
+                }
+                return $languageCode;
             }
-            return $site->getLanguageById($this->languageId)->getTwoLetterIsoCode();
+            if ($typo3VersionArray['version_main'] === 13) {
+                $languageCode = $site->getLanguageById($this->languageId)->getLocale()->getLanguageCode();
+            } else {
+                $languageCode = $site->getLanguageById($this->languageId)->getTwoLetterIsoCode();
+            }
+            return $languageCode;
         } catch (SiteNotFoundException|\InvalidArgumentException $e) {
-            return null;
+            return '';
         }
     }
+
 
     public function getTemplateData($templateName, $data) {
         $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);

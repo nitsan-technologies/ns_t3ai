@@ -53,9 +53,6 @@ class PageLayoutHeader extends AbstractPageLayoutHeader
             VersionNumberUtility::getCurrentTypo3Version()
         );
         $templatePathAndFilename = $templateRootPath.'T3Ai.html';
-        if (version_compare($typo3VersionArray['version_main'], 11, '<')) {
-            $templatePathAndFilename = $templateRootPath.'/v10/T3Ai.html';
-        }
         $standlone->setTemplatePathAndFilename($templatePathAndFilename);
         $pageData = $this->pageRepository->getCurrentPageData($parentObj->id, $typo3VersionArray['version_main']);
         $assign = [
