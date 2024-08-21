@@ -1,8 +1,8 @@
 {
     "name": "nitsan/ns-t3ai",
     "type": "typo3-cms-extension",
-    "description": "Meet T3AI- Experience AI-powered content generation, advanced SEO optimization, creative media production, easy language translation, and more—all within a few clicks, directly from your TYPO3 backend. Maximize your productivity by saving up to four times your time with T3AI.",
-    "homepage": "https://t3planet.com/t3ai-typo3-chatgpt-extension",
+    "description": "Meet T3AI- Experience AI-powered Models with ChatGPT, Gemini, Cloude & Azure AI for content generation, advanced SEO optimization, creative media production, easy language translation, and more—all within a few clicks, directly from your TYPO3 backend. Maximize your productivity by saving up to four times your time with T3AI.",
+    "homepage": "https://t3planet.com/t3ai-typo3-extension",
     "authors": [
         {
             "name": "T3: Nilesh Malankiya, T3: Parth Parmar, T3: Jay Bhalgamiya, T3: Rohan Parmar, QA: Vishal Solanki",
@@ -13,8 +13,27 @@
     "keywords": [
         "TYPO3",
         "T3AI",
-        "ChatGPT",
-        "AI"
+        "AI",
+        "TYPO3AI",
+        "openai",
+        "chatgpt",
+        "cloude",
+        "gemini",
+        "SEO",
+        "AIcontent",
+        "AIpages",
+        "AITranslations",
+        "AIchatbot",
+        "AIprompts",
+        "AIimages",
+        "AImedia",
+        "AIgeneration",
+        "AIAssistant",
+        "AIsuggestion",
+        "AIsidebar",
+        "T3AI",
+        "TYPO3KI",
+        "KI"
     ],
     "support": {
         "issues": "https://t3planet.com/support"

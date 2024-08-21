@@ -223,6 +223,18 @@ class NsT3AiContentService
      */
     public function getPreviewUrl(int $pageId, int $pageLanguage, bool $includeType = true): string
     {
+        $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
+            VersionNumberUtility::getCurrentTypo3Version()
+        );
+
+        if ($typo3VersionArray['version_main'] === 10) {
+            $previewUri = $this->uriBuilder
+                ->setTargetPageUid($pageId)
+                ->setCreateAbsoluteUri(true)
+                ->setArguments(['_language'=>$pageLanguage, 'type'=>'1696828748'])->buildFrontendUri();
+            return filter_var($previewUri, FILTER_VALIDATE_URL) ? $previewUri : GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST'). $previewUri;
+        }
+    
         $arg['_language'] = $pageLanguage;
         if ($includeType) {
             $arg['type'] = '1696828748';
