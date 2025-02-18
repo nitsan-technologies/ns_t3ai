@@ -83,7 +83,6 @@ class T3AiController
             $response->withStatus(400);
             $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
         }
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($response,__FILE__.''.__LINE__);die;
         return $response;
     }
 
