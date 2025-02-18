@@ -55,15 +55,11 @@ class T3AiController
             );
             return $response;
         } catch (GuzzleException $e) {
-            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($e->getMessage(), __FILE__.' Line No. '.__LINE__);die;
             $response = $this->logGuzzleError($e, $response);
         } catch (UnableToLinkToPageException $e) {
-            $this->logger->error($e->getMessage());
-            $response->withStatus(404);
-            $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
+            $response = $this->logGuzzleError($e, $response);
         } catch (Exception $e) {
-            \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($e->getMessage(), __FILE__.' Line No. '.__LINE__);die;
-            $response = $this->logError($e, $response);
+            $response = $this->logGuzzleError($e, $response);
         }
         return $response;
     }
@@ -77,10 +73,17 @@ class T3AiController
         } elseif ($e->getCode() === 401 && strpos($e->getMessage(), 'You need to provide your API key') !== false) {
             $response->withStatus($e->getCode());
             $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.missingApiKey')]));
+        } elseif (str_contains($e->getMessage(), 'exceeded your current quota')) {
+            $response->withStatus($e->getCode());
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.exceededQuota')
+            ]));
         } else {
             $response->withStatus(400);
             $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
         }
+        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($response,__FILE__.''.__LINE__);die;
         return $response;
     }
 

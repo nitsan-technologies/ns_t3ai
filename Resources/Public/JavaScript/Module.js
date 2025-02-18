@@ -52,14 +52,15 @@ define(["TYPO3/CMS/Core/Ajax/AjaxRequest",
                 } else {
                     handleResponse(pageId, fieldName, responseBody)
                     Notification.success(TYPO3.lang['NsT3Ai.generated.success'], TYPO3.lang['NsT3Ai.generated.success.message'], 8);
-                    button.disabled = false;
-                    // button.querySelector('.btn-label').innerHTML = TYPO3.lang['NsT3Ai.regenerate'];
-                    document.getElementById('ns-t3ai__loader').innerHTML = '';
-                    document.getElementById('ns-t3ai__loader').classList.remove('ns-show-overlay');
                 }
             })
             .catch((error) => {
                 Notification.error(TYPO3.lang['NsT3Ai.error'], error);
+            })
+            .finally(()=>{
+                button.disabled = false;
+                document.getElementById('ns-t3ai__loader').innerHTML = '';
+                document.getElementById('ns-t3ai__loader').classList.remove('ns-show-overlay');
             });
     }
 

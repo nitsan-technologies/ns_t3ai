@@ -78,6 +78,9 @@
 			<trans-unit id="NsT3Ai.missingApiKey" resname="NsT3Ai.missingApiKey">
 				<source>T3AI verification failed. Maybe you haven't saved your API key in the extension configuration yet?</source>
 			</trans-unit>
+			<trans-unit id="NsT3Ai.exceededQuota" resname="NsT3Ai.exceededQuota">
+				<source>You exceeded your current quota, please check your plan and billing details.</source>
+			</trans-unit>
 			<trans-unit id="NsT3Ai.pageNotAccessible" resname="NsT3Ai.pageNotAccessible">
 				<source>Page not found. If the page is hidden, please activate it (and possibly deactivate the option "Page in menus activated" within the page properties) so that the page is accessible.</source>
 			</trans-unit>
