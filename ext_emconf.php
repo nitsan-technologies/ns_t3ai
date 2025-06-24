@@ -1,15 +1,15 @@
 <?php
 
 $EM_CONF['ns_t3ai'] = [
-    'title' => 'T3AI: All-in-One TYPO3 AI Extension',
-    'description' => 'Meet T3AI- Experience AI-powered Models with ChatGPT, Gemini, Cloude & Azure AI for content generation, advanced SEO optimization, creative media production, easy language translation, and more—all within a few clicks, directly from your TYPO3 backend. Maximize your productivity by saving up to four times your time with T3AI.
+    'title' => 'T3AI – TYPO3 AI Integration Extension',
+    'description' => 'T3AI empowers your TYPO3 backend with advanced AI capabilities including content generation, SEO optimization, media creation, translation, and more using ChatGPT, Gemini, Claude, and Azure AI. Save time and boost productivity with powerful AI tools built directly into your TYPO3 environment.
     
     Explore the Live Demo: https://t3-extension-live.t3planet.com/typo3/?TYPO3_AUTOLOGIN_USER=editor-ns-t3ai
     Product Page, Documentation & Support: https://t3planet.com/t3ai-typo3-extension',
     'category' => 'be',
-    'author' => 'T3: Nilesh Malankiya, T3: Parth Parmar, T3: Jay Bhalgamiya, T3: Rohan Parmar, QA: Vishal Solanki, Krishna Dhapa',
-    'author_email' => 'sanjay@nitsantech.com',
-    'author_company' => 'T3Planet // NITSAN',
+    'author' => 'Team T3Planet',
+    'author_email' => 'info@t3planet.de',
+    'author_company' => 'T3Planet',
     'state' => 'stable',
     'clearCacheOnLoad' => 0,
     'version' => '2.0.2',
