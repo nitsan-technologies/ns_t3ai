@@ -143,7 +143,7 @@
 			<trans-unit id="NsT3Ai.rte.advanced.temperature"
 			resname="NsT3Ai.rte.advanced.temperature">
 				<source>Temperature ranges from 0 to 2. Smaller values produce more consistent
-results.</source>
+				results.</source>
 			</trans-unit>
 			<trans-unit id="NsT3Ai.rte.advanced.resultAmount"
 			resname="NsT3Ai.rte.advanced.resultAmount">
@@ -155,7 +155,9 @@ results.</source>
 			<trans-unit id="NsT3Ai.rte.cancel" resname="NsT3Ai.rte.cancel">
 				<source>Cancel</source>
 			</trans-unit>
-
+			<trans-unit id="NsT3Ai.tx_nst3ai_domain_model_customlanguage" xml:space="preserve">
+				<source>T3ai</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

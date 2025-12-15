@@ -17,7 +17,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'iso_code,speech',
-        'iconfile' => 'EXT:ns_t3ai/Resources/Public/Icons/tx_nst3ai_domain_model_customlanguage.svg'
+        'iconfile' => 'EXT:ns_t3ai/Resources/Public/Icons/Extension.svg'
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid,iso_code,speech, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden,'],
@@ -105,7 +105,7 @@ return [
         ],
         'iso_code' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:NsT3Ai.tx_nst3ai_domain_model_customlanguage.iso_code',
+            'label' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.tx_aiseohelper_domain_model_customlanguage.iso_code',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -115,7 +115,7 @@ return [
         ],
         'speech' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:NsT3Ai.tx_nst3ai_domain_model_customlanguage.speech',
+            'label' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.tx_aiseohelper_domain_model_customlanguage.speech',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
