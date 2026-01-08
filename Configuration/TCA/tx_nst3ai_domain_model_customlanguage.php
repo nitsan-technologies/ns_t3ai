@@ -1,5 +1,7 @@
 <?php
 
+
+$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class)->getMajorVersion();
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.tx_nst3ai_domain_model_customlanguage',
@@ -16,7 +18,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'iso_code,speech',
+        'searchFields' => $typo3Version < 12 ? 'iso_code,speech' : '',
         'iconfile' => 'EXT:ns_t3ai/Resources/Public/Icons/Extension.svg'
     ],
     'types' => [
@@ -26,18 +28,17 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
+            'config' => $typo3Version >= 12 ? [
+                'type' => 'language',
+                'default' => 0,
+            ] : [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
                 'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ]
+                    ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1, 'flags-multiple']
                 ],
-                'default' => -1,
+                'default' => 0,
             ],
         ],
         'l10n_parent' => [
@@ -47,7 +48,9 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'default' => 0,
-                'items' => [
+                'items' => $typo3Version >= 12 ? [
+                    ['label' => '', 'value' => 0],
+                ] : [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_nst3ai_domain_model_customlanguage',
@@ -65,42 +68,45 @@ return [
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
-                'items' => [
-                    [
-                        0 => '',
-                        1 => '',
-                        'invertStateDisplay' => true
-                    ]
+                'items' => $typo3Version >= 12 ? [
+                    ['label' => '', 'value' => '', 'invertStateDisplay' => true]
+                ] : [
+                    [0 => '', 1 => '', 'invertStateDisplay' => true]
                 ],
             ],
         ],
         'starttime' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
-            'config' => [
+            'config' => $typo3Version >= 12 ? [
+                'type' => 'datetime',
+                'default' => 0,
+                'behaviour' => ['allowLanguageSynchronization' => true],
+                'searchable' => false,
+            ] : [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
                 'eval' => 'datetime,int',
                 'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
+                'behaviour' => ['allowLanguageSynchronization' => true]
             ],
         ],
         'endtime' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
-            'config' => [
+            'config' => $typo3Version >= 12 ? [
+                'type' => 'datetime',
+                'default' => 0,
+                'range' => ['upper' => mktime(0, 0, 0, 1, 1, 2038)],
+                'behaviour' => ['allowLanguageSynchronization' => true],
+                'searchable' => false,
+            ] : [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
                 'eval' => 'datetime,int',
                 'default' => 0,
-                'range' => [
-                    'upper' => mktime(0, 0, 0, 1, 1, 2038)
-                ],
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
+                'range' => ['upper' => mktime(0, 0, 0, 1, 1, 2038)],
+                'behaviour' => ['allowLanguageSynchronization' => true]
             ],
         ],
         'iso_code' => [
@@ -110,7 +116,8 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
-                'default' => ''
+                'default' => '',
+                'searchable' => $typo3Version >= 12 ? true : null,
             ],
         ],
         'speech' => [
@@ -120,7 +127,8 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
-                'default' => ''
+                'default' => '',
+                'searchable' => $typo3Version >= 12 ? true : null,
             ],
         ],
     ],

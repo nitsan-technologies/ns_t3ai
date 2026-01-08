@@ -1,7 +1,7 @@
 {
     "name": "nitsan/ns-t3ai",
     "type": "typo3-cms-extension",
-    "description": "Meet T3AI- Experience AI-powered Models with ChatGPT, Gemini, Cloude & Azure AI for content generation, advanced SEO optimization, creative media production, easy language translation, and more—all within a few clicks, directly from your TYPO3 backend. Maximize your productivity by saving up to four times your time with T3AI.",
+    "description": "T3AI – TYPO3 AI Integration Extension",
     "homepage": "https://t3planet.com/t3ai-typo3-extension",
     "authors": [
         {
@@ -39,7 +39,7 @@
         "issues": "https://t3planet.com/support"
     },
     "require": {
-        "typo3/cms-core": "^10 || ^11 || ^12 || ^13"
+        "typo3/cms-core": "^10 || ^11 || ^12 || ^13 || ^14"
     },
     "autoload": {
         "psr-4": {

@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace NITSAN\NsT3Ai\Service;
 
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Exception\SiteNotFoundException;
-use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Routing\SiteMatcher;
 use TYPO3\CMS\Core\Routing\UnableToLinkToPageException;
-use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
-use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 
 class NsT3AiContentService
 {
@@ -90,7 +89,7 @@ class NsT3AiContentService
     public function getContentFromAi(
         ServerRequestInterface $request,
         string $extConfPrompt,
-        string $extConfReplaceText = ""
+        string $extConfReplaceText = ''
     ): string {
         $parsedBody = $request->getParsedBody();
         $locale = $this->getLocale((int)$parsedBody['pageId']);
@@ -102,10 +101,10 @@ class NsT3AiContentService
     /**
      * @throws GuzzleException
      */
-    public function requestAi(string $content, $extConfPromptPrefix, $extConfReplaceText = '', $languageIsoCode= '', $parsedBody = []): string
+    public function requestAi(string $content, $extConfPromptPrefix, $extConfReplaceText = '', $languageIsoCode = '', $parsedBody = []): string
     {
         $jsonContent = [
-            "model" => $this->extConf['model'],
+            'model' => $this->extConf['model'],
         ];
         $this->addModelSpecificPrompt($jsonContent, $content, $extConfPromptPrefix, $languageIsoCode, $parsedBody);
 
@@ -136,16 +135,14 @@ class NsT3AiContentService
     public function getContentForSuggestions(ServerRequestInterface $request, string $type): string
     {
         $data = $request->getParsedBody();
-        $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
-        $standaloneView->setTemplateRootPaths(['EXT:ns_t3ai/Resources/Private/Templates/T3Ai/']);
-        $standaloneView->getRenderingContext()->setControllerName('T3Ai');
-        $standaloneView->setTemplate('GenerateSuggestions');
+
+        $view = $this->createView('GenerateSuggestions');
         $generatedContent = $this->getContentFromAi($request, 'openAiPromptPrefix' . $type, 'seo keywords:');
-        $standaloneView->assignMultiple([
+        $view->assignMultiple([
             'suggestions' => $this->buildBulletPointList($generatedContent),
             'data' => $data
         ]);
-        return $standaloneView->render();
+        return $view->render();
     }
 
     protected function stripPageContent(string $pageContent): string
@@ -165,9 +162,9 @@ class NsT3AiContentService
         $suggestions = GeneralUtility::trimExplode(PHP_EOL, $content, true);
         $strippedSuggestions = [];
         foreach ($suggestions as $suggestion) {
-            if (!empty($suggestion)){
+            if (!empty($suggestion)) {
                 $strippedSuggestionsWithNumber = $suggestion;
-                if(str_contains($suggestion, '-') && str_contains($suggestion, '•')){
+                if (str_contains($suggestion, '-') && str_contains($suggestion, '•')) {
                     $strippedSuggestionsWithNumber = ltrim(str_replace(['-', '•'], '', $suggestion));
                 }
                 $line = preg_replace('/^\d+\.\s+/', '', $strippedSuggestionsWithNumber);
@@ -184,13 +181,20 @@ class NsT3AiContentService
      */
     protected function fetchContentFromUrl(string $previewUrl): string
     {
-        $response = $this->requestFactory->request($previewUrl);
-        $fetchedContent = $response->getBody()->getContents();
 
-        if (empty($fetchedContent)) {
-            throw new Exception(LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:AiSeoHelper.fetchContentFailed'));
+        if (empty($previewUrl) || strpos($previewUrl, 'http') !== 0) {
+            throw new Exception('Invalid URL format: ' . $previewUrl);
         }
-        return $fetchedContent;
+        try {
+            $response = $this->requestFactory->request($previewUrl);
+            $fetchedContent = $response->getBody()->getContents();
+            if (empty($fetchedContent)) {
+                throw new Exception(LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/backend.xlf:AiSeoHelper.fetchContentFailed'));
+            }
+            return $fetchedContent;
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     protected function addModelSpecificPrompt(array &$jsonContent, string $content, string $extConfPromptPrefix, string $languageIsoCode, array $parsedBody)
@@ -200,22 +204,26 @@ class NsT3AiContentService
         }
         if (str_contains($this->extConf[$extConfPromptPrefix], '[Content]')) {
             $newContent = str_replace('[Content]', $content, $this->extConf[$extConfPromptPrefix]);
-            $finalContent = $newContent. ' in ' . $this->languages[$languageIsoCode];
+            $finalContent = $newContent . ' in ' . $this->languages[$languageIsoCode];
         } else {
-            $finalContent = $this->extConf[$extConfPromptPrefix]. ' in ' . $this->languages[$languageIsoCode] .":\n\n" . trim($content);
+            $finalContent = $this->extConf[$extConfPromptPrefix] . ' in ' . $this->languages[$languageIsoCode] . ":\n\n" . trim($content);
         }
 
         if ($this->extConf['model'] === 'gpt-3.5-turbo' || $this->extConf['model'] === 'gpt-4') {
-            $jsonContent["messages"][] = [
+            $jsonContent['messages'][] = [
                 'role' => 'user',
                 'content' => $finalContent
-                ];
+            ];
         } else {
-            $jsonContent["prompt"] = $finalContent;
+            $jsonContent['prompt'] = $finalContent;
         }
-
     }
 
+    /**
+     * @param int $pageId
+     * @param int $pageLanguage
+     * @return string
+     */
     /**
      * @param int $pageId
      * @param int $pageLanguage
@@ -227,43 +235,98 @@ class NsT3AiContentService
             VersionNumberUtility::getCurrentTypo3Version()
         );
 
-        if ($typo3VersionArray['version_main'] === 10) {
+        $arguments = ['_language' => $pageLanguage];
+        if ($includeType) {
+            $arguments['type'] = '1696828748';
+        }
+
+        $siteUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
+        $siteUrl = rtrim($siteUrl, '/') . '/';
+
+        if ($typo3VersionArray['version_main'] <= 10) {
+            // $this->uriBuilder->setRequest($this->getExtbaseRequest());
             $previewUri = $this->uriBuilder
                 ->setTargetPageUid($pageId)
                 ->setCreateAbsoluteUri(true)
-                ->setArguments(['_language'=>$pageLanguage, 'type'=>'1696828748'])->buildFrontendUri();
-            return filter_var($previewUri, FILTER_VALIDATE_URL) ? $previewUri : GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST'). $previewUri;
-        }
-    
-        $arg['_language'] = $pageLanguage;
-        if ($includeType) {
-            $arg['type'] = '1696828748';
-        }
-        $this->uriBuilder->setRequest($this->getExtbaseRequest());
-        $previewUri = $this->uriBuilder
-            ->reset()
-            ->setTargetPageUid($pageId)
-            ->setCreateAbsoluteUri(true)
-            ->setArguments($arg)->buildFrontendUri();
+                ->setArguments($arguments)
+                ->buildFrontendUri();
 
-        return filter_var($previewUri, FILTER_VALIDATE_URL) ? $previewUri : GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST'). $previewUri;
+            if (strpos($previewUri, 'http') !== 0) {
+                $previewUri = $siteUrl . ltrim($previewUri, '/');
+            }
+            return $previewUri;
+        }
+
+        try {
+            $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+            $site = $siteFinder->getSiteByPageId($pageId);
+            $language = null;
+            try {
+                if ($pageLanguage === 0 || $pageLanguage === -1) {
+                    $language = $site->getDefaultLanguage();
+                } else {
+                    $language = $site->getLanguageById($pageLanguage);
+                }
+            } catch (\InvalidArgumentException $e) {
+                $language = $site->getDefaultLanguage();
+            }
+            $uri = (string)$site->getRouter()->generateUri(
+                $pageId,
+                $arguments,
+                '',
+                \TYPO3\CMS\Core\Routing\RouterInterface::ABSOLUTE_URL
+            );
+            if (empty($uri) || strpos($uri, 'http') !== 0) {
+                $uri = $site->getBase() . 'index.php?id=' . $pageId . '&L=' . $pageLanguage . '&type=1696828748';
+
+                if (strpos($uri, 'http') !== 0) {
+                    $uri = $siteUrl . ltrim($uri, '/');
+                }
+            }
+            return $uri;
+        } catch (\Exception $e) {
+
+            $this->uriBuilder->setRequest($this->getExtbaseRequest());
+            $previewUri = $this->uriBuilder
+                ->reset()
+                ->setTargetPageUid($pageId)
+                ->setCreateAbsoluteUri(true)
+                ->setArguments($arguments)
+                ->buildFrontendUri();
+
+            if (strpos($previewUri, 'http') !== 0) {
+                $previewUri = $siteUrl . ltrim($previewUri, '/');
+            }
+            return $previewUri;
+        }
     }
 
-    private function getExtbaseRequest(): Request
+    private function getExtbaseRequest()
     {
-        /** @var ServerRequestInterface $request */
-        $request = $GLOBALS['TYPO3_REQUEST'];
-
-        // We have to provide an Extbase request object
-        return new Request(
-            $request->withAttribute('extbase', new ExtbaseRequestParameters()),
+        $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
+            VersionNumberUtility::getCurrentTypo3Version()
         );
+
+        if ($typo3VersionArray['version_main'] >= 11) {
+
+            /** @var ServerRequestInterface $request */
+            $request = $GLOBALS['TYPO3_REQUEST'];
+
+            if (class_exists('TYPO3\\CMS\\Extbase\\Mvc\\ExtbaseRequestParameters')) {
+                return new Request(
+                    $request->withAttribute('extbase', new ExtbaseRequestParameters())
+                );
+            }
+            return new Request($request);
+        } else {
+            return null;
+        }
     }
 
     protected function getLanguageId(): int
     {
-        $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
-        return (int)$moduleData['language'];
+        $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
+        return (int)($moduleData['language'] ?? 0);
     }
 
     public function getLocale(int $pageId): ?string
@@ -274,38 +337,96 @@ class NsT3AiContentService
                 VersionNumberUtility::getCurrentTypo3Version()
             );
             $site = $siteFinder->getSiteByPageId($pageId);
-            if ($this->languageId === -1) {
-                $this->languageId = $site->getDefaultLanguage()->getLanguageId();
-                if ($typo3VersionArray['version_main'] === 13) {
-                    $languageCode = $site->getDefaultLanguage()->getLocale()->getLanguageCode();
-                } else {
-                    $languageCode = $site->getDefaultLanguage()->getTwoLetterIsoCode();
-                }
-                return $languageCode;
-            }
-            if ($typo3VersionArray['version_main'] === 13) {
-                $languageCode = $site->getLanguageById($this->languageId)->getLocale()->getLanguageCode();
+            $language = null;
+
+            if ($this->languageId === -1 || $this->languageId === 0) {
+                $language = $site->getDefaultLanguage();
             } else {
-                $languageCode = $site->getLanguageById($this->languageId)->getTwoLetterIsoCode();
+                $language = $site->getLanguageById($this->languageId);
             }
+            if ($typo3VersionArray['version_main'] >= 13) {
+                $languageCode = $language->getLocale()->getLanguageCode();
+            } elseif ($typo3VersionArray['version_main'] >= 10) {
+                if (method_exists($language, 'getTwoLetterIsoCode')) {
+                    $languageCode = $language->getTwoLetterIsoCode();
+                } else {
+                    $languageCode = $language->getLocale()->getLanguageCode();
+                }
+            } else {
+                if (method_exists($language, 'getTwoLetterIsoCode')) {
+                    $languageCode = $language->getTwoLetterIsoCode();
+                } else {
+                    $hreflang = $language->getHreflang();
+                    $languageCode = substr($hreflang, 0, 2);
+                }
+            }
+
             return $languageCode;
-        } catch (SiteNotFoundException|\InvalidArgumentException $e) {
+        } catch (SiteNotFoundException | \InvalidArgumentException $e) {
             return '';
         }
     }
 
+    /**
+     * Create a Fluid view with the proper configuration
+     *
+     * @param string $templateName
+     * @return object View instance
+     */
+    protected function createView(string $templateName)
+    {
+        $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
+            VersionNumberUtility::getCurrentTypo3Version()
+        );
 
-    public function getTemplateData($templateName, $data) {
-        $standaloneView = GeneralUtility::makeInstance(StandaloneView::class);
-        $standaloneView->setTemplateRootPaths(['EXT:ns_t3ai/Resources/Private/Templates/T3Ai/']);
-        $standaloneView->setPartialRootPaths(['EXT:ns_t3ai/Resources/Private/Partials/']);
-        $standaloneView->getRenderingContext()->setControllerName('T3Ai');
-        $standaloneView->setTemplate($templateName);
-        $assign = [
+        // For TYPO3 v13+, use ViewFactory
+        if ($typo3VersionArray['version_main'] >= 13) {
+            $viewFactory = GeneralUtility::getContainer()->get(ViewFactoryInterface::class);
+
+            // Get the template path
+            $templatePath = GeneralUtility::getFileAbsFileName('EXT:ns_t3ai/Resources/Private/Templates/T3Ai/' . $templateName . '.html');
+
+
+            $viewFactoryData = new ViewFactoryData(
+                ['EXT:ns_t3ai/Resources/Private/Templates/'],
+                ['EXT:ns_t3ai/Resources/Private/Partials/'],
+                [],
+                $templatePath,
+                $this->getExtbaseRequest()
+            );
+
+            $view = $viewFactory->create($viewFactoryData);
+            $view->getRenderingContext()->setControllerName('T3Ai');
+
+            return $view;
+        } else {
+            // For TYPO3 v9-12, use StandaloneView
+            $standaloneViewClass = 'TYPO3\\CMS\\Fluid\\View\\StandaloneView';
+
+            if (!class_exists($standaloneViewClass)) {
+                throw new \RuntimeException('StandaloneView not available in this TYPO3 version');
+            }
+
+            $view = GeneralUtility::makeInstance($standaloneViewClass);
+            $view->setTemplateRootPaths(['EXT:ns_t3ai/Resources/Private/Templates/']);
+            $view->setPartialRootPaths(['EXT:ns_t3ai/Resources/Private/Partials/']);
+            $view->getRenderingContext()->setControllerName('T3Ai');
+            $view->setTemplatePathAndFilename(
+                GeneralUtility::getFileAbsFileName('EXT:ns_t3ai/Resources/Private/Templates/T3Ai/' . $templateName . '.html')
+            );
+
+            return $view;
+        }
+    }
+
+    public function getTemplateData($templateName, $data)
+    {
+        $view = $this->createView($templateName);
+        $view->assignMultiple([
             'data' => $data
-        ];
-        $standaloneView->assignMultiple($assign);
-        return $standaloneView->render();
+        ]);
+
+        return $view->render();
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace NITSAN\NsT3Ai\Controller;
 
-use NITSAN\NsT3Ai\Service\NsT3AiContentService;
-use Psr\Log\LoggerInterface;
 use GuzzleHttp\Exception\GuzzleException;
+use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
+use NITSAN\NsT3Ai\Service\NsT3AiContentService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
+use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Http\Response;
@@ -121,8 +121,10 @@ class T3AiController
 
     protected function getLanguageId(): int
     {
-        $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
-        return (int)$moduleData['language'];
+        // $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
+        // return (int)$moduleData['language'];
+        $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
+        return (int)($moduleData['language'] ?? 0);
     }
 
     protected function getCurrentPage($pageId, $languageId)
@@ -185,8 +187,8 @@ class T3AiController
             $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
             $completeText = '';
             $choices = $generatedContent['choices'];
-            foreach($choices as $choicesItem) {
-                $completeText .= "<p>" . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
+            foreach ($choices as $choicesItem) {
+                $completeText .= '<p>' . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</p>';
             }
             $response->getBody()->write(
                 json_encode(
@@ -196,7 +198,7 @@ class T3AiController
                     ]
                 )
             );
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $response->getBody()->write(
                 json_encode(
                     [
