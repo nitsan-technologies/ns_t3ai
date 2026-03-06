@@ -15,7 +15,7 @@ $EM_CONF['ns_t3ai'] = [
     'version' => '2.0.3',
     'constraints' => [
         'depends' => [
-            'typo3' => '10.0.0-14.0.1',
+            'typo3' => '10.0.0-14.99.9',
         ],
         'conflicts' => [],
         'suggests' => [],
