@@ -33,7 +33,7 @@ class PageLayoutHeader extends AbstractPageLayoutHeader
      * @param null  $parentObj
      * @return string
      */
-    public function render(array $params = null, $parentObj = null): string
+    public function render(?array $params = null, $parentObj = null): string
     {
         $languageId = $this->getLanguageId();
         $pageId = (int)GeneralUtility::_GET('id');
