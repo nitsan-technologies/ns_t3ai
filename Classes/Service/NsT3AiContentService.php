@@ -379,7 +379,6 @@ class NsT3AiContentService
             VersionNumberUtility::getCurrentTypo3Version()
         );
 
-        // For TYPO3 v13+, use ViewFactory
         if ($typo3VersionArray['version_main'] >= 13) {
             $viewFactory = GeneralUtility::getContainer()->get(ViewFactoryInterface::class);
 
@@ -400,7 +399,6 @@ class NsT3AiContentService
 
             return $view;
         } else {
-            // For TYPO3 v9-12, use StandaloneView
             $standaloneViewClass = 'TYPO3\\CMS\\Fluid\\View\\StandaloneView';
 
             if (!class_exists($standaloneViewClass)) {
