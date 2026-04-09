@@ -70,9 +70,18 @@ class T3AiController
         if ($e->getCode() === 500 && strpos($e->getMessage(), 'auth_subrequest_error') !== false) {
             $response->withStatus($e->getCode());
             $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.apiNotReachable')]));
-        } elseif ($e->getCode() === 401 && strpos($e->getMessage(), 'You need to provide your API key') !== false) {
+        } elseif ($e->getCode() === 401 && (str_contains($e->getMessage(), 'You need to provide your API key') || str_contains($e->getMessage(), 'No API key provided'))) {
             $response->withStatus($e->getCode());
-            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.missingApiKey')]));
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'apiKeyMissing' => true,
+            ]));
+        } elseif ($e->getCode() === 401 && (str_contains($e->getMessage(), 'Incorrect API key') || str_contains($e->getMessage(), 'invalid_api_key'))) {
+            $response->withStatus($e->getCode());
+            $response->getBody()->write(json_encode([
+                'success' => false,
+                'apiKeyInvalid' => true,
+            ]));
         } elseif (str_contains($e->getMessage(), 'exceeded your current quota')) {
             $response->withStatus($e->getCode());
             $response->getBody()->write(json_encode([
@@ -168,44 +177,54 @@ class T3AiController
      * @param array $parsedBody
      * @return Response
      */
+    /**
+     * @param array $parsedBody
+     * @return ResponseInterface
+     */
     private function generateRteContent(array $parsedBody): ResponseInterface
     {
-        $response = new Response();
+        $response    = new Response();
         $jsonContent = [
-            'prompt' => $parsedBody['prompt'],
-            'max_tokens' => (int)$parsedBody['max_tokens'],
-            'model' => $parsedBody['model'],
-            'temperature' => (float)$parsedBody['temperature'],
-            'top_p' => (int)$parsedBody['top_p'],
-            'n' => (int)$parsedBody['n'],
-            'frequency_penalty' => (int)$parsedBody['frequency_penalty'],
-            'presence_penalty' => (int)$parsedBody['presence_penalty']
+            'prompt'            => $parsedBody['prompt'] ?? '',
+            'max_tokens'        => (int)($parsedBody['max_tokens'] ?? 500),
+            'model'             => $parsedBody['model'] ?? '',
+            'temperature'       => min((float)($parsedBody['temperature'] ?? 0.7), 0.9),
+            'top_p'             => (float)($parsedBody['top_p'] ?? 1),
+            'n'                 => (int)($parsedBody['n'] ?? 1),
+            'frequency_penalty' => (float)($parsedBody['frequency_penalty'] ?? 0),
+            'presence_penalty'  => (float)($parsedBody['presence_penalty'] ?? 0),
         ];
+
         try {
             $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
-            $completeText = '';
-            $choices = $generatedContent['choices'];
-            foreach ($choices as $choicesItem) {
-                $completeText .= '<p>' . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . '</p>';
+            $completeText     = '';
+
+            foreach ($generatedContent['choices'] ?? [] as $choicesItem) {
+                $text = $choicesItem['text'] ?? '';
+                // Sanitize invalid UTF-8 bytes
+                $text = mb_convert_encoding($text, 'UTF-8', 'UTF-8');
+                $text = preg_replace(
+                    '/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u',
+                    '',
+                    $text
+                );
+                $completeText .= trim($text);
             }
+
             $response->getBody()->write(
                 json_encode(
                     [
-                        'success' => true,
+                        'success'          => true,
                         'generatedContent' => $completeText,
                     ]
                 )
             );
+        } catch (GuzzleException $e) {
+            $response = $this->logGuzzleError($e, $response);
         } catch (Exception $e) {
-            $response->getBody()->write(
-                json_encode(
-                    [
-                        'success' => false,
-                    ]
-                )
-            );
+            $response = $this->logError($e, $response);
         }
+
         return $response;
     }
-
 }

@@ -158,6 +158,12 @@
 			<trans-unit id="NsT3Ai.tx_nst3ai_domain_model_customlanguage" xml:space="preserve">
 				<source>T3ai</source>
 			</trans-unit>
+			<trans-unit id="NsT3Ai.api">
+   				 <source>API key is required. Please enter your API key.</source>
+			</trans-unit>
+			<trans-unit id="NsT3Ai.apiInvalid">
+				<source>Invalid API key. Please enter a valid API key.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

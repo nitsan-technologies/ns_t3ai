@@ -78,13 +78,18 @@ export class T3Ai extends Core.Plugin {
                       .then(async function (response) {
                         const resolved = await response.resolve();
                         const responseBody = JSON.parse(resolved);
-                        if (responseBody.success) {
-                          textArea.value = responseBody.generatedContent;
-                        }
-                        else {
+                      if (responseBody.success) {
+                      textArea.value = responseBody.generatedContent;
+                      } else if (responseBody.apiKeyMissing) {
+                          Notification.error(TYPO3.lang['NsT3Ai.api']);
+                          textArea.value = "";
+                      } else if (responseBody.apiKeyInvalid) {
+                          Notification.error(TYPO3.lang['NsT3Ai.apiInvalid']);
+                          textArea.value = "";
+                      } else {
                           Notification.error(TYPO3.lang['NsT3Ai.error']);
                           textArea.value = "";
-                        }
+                      }
                         e.target.disabled = 0;
                       })
                       .catch(() => {

@@ -13,7 +13,9 @@ if (version_compare($typo3VersionArray['version_main'], 11, '<=')) {
         $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['nst3ai'] =
         'EXT:ns_t3ai/Configuration/RTE/Pluginv12.yaml';
     }
-
+if (\TYPO3\CMS\Core\Core\Environment::getContext()->isDevelopment()) {
+    $GLOBALS['TYPO3_CONF_VARS']['HTTP']['verify'] = false;
+}
 // Make the extension configuration accessible
 $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
     \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
