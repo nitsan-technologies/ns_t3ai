@@ -432,40 +432,20 @@ class NsT3AiContentService
      * @return array
      */
 
-    public function requestAiForRteContent(array $jsonContent): array
-    {
-        $jsonContent['temperature']       = min((float)($jsonContent['temperature'] ?? 0.7), 0.9);
-        $jsonContent['top_p']             = (float)($jsonContent['top_p'] ?? 1);
-        $jsonContent['frequency_penalty'] = (float)($jsonContent['frequency_penalty'] ?? 0);
-        $jsonContent['presence_penalty']  = (float)($jsonContent['presence_penalty'] ?? 0);
-
-        $maxRetries = 3;
-
-        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
-            $response = $this->requestFactory->request(
-                'https://api.openai.com/v1/completions',
-                'POST',
-                [
-                    'headers' => [
-                        'Content-Type'  => 'application/json',
-                        'Authorization' => 'Bearer ' . $this->extConf['apiKey']
-                    ],
-                    'json' => $jsonContent
-                ]
-            );
-
-            $resJsonBody = $response->getBody()->getContents();
-            $decoded     = json_decode($resJsonBody, true);
-
-            $errorCode = $decoded['error']['code'] ?? '';
-            if ($errorCode === 'invalid_model_output' && $attempt < $maxRetries) {
-                $jsonContent['temperature'] = round($jsonContent['temperature'] * 0.6, 2);
-                continue;
-            }
-
-            return $decoded;
-        }
-
-        return [];
-    }
+   public function requestAiForRteContent(array $jsonContent): array
+{
+    $response = $this->requestFactory->request(
+        'https://api.openai.com/v1/completions',
+        'POST',
+        [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->extConf['apiKey']
+            ],
+            'json' => $jsonContent
+        ]
+    );
+    $resJsonBody = $response->getBody()->getContents();
+    return json_decode($resJsonBody, true);
+}
 }

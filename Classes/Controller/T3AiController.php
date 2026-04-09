@@ -177,54 +177,43 @@ class T3AiController
      * @param array $parsedBody
      * @return Response
      */
-    /**
-     * @param array $parsedBody
-     * @return ResponseInterface
-     */
-    private function generateRteContent(array $parsedBody): ResponseInterface
-    {
-        $response    = new Response();
-        $jsonContent = [
-            'prompt'            => $parsedBody['prompt'] ?? '',
-            'max_tokens'        => (int)($parsedBody['max_tokens'] ?? 500),
-            'model'             => $parsedBody['model'] ?? '',
-            'temperature'       => min((float)($parsedBody['temperature'] ?? 0.7), 0.9),
-            'top_p'             => (float)($parsedBody['top_p'] ?? 1),
-            'n'                 => (int)($parsedBody['n'] ?? 1),
-            'frequency_penalty' => (float)($parsedBody['frequency_penalty'] ?? 0),
-            'presence_penalty'  => (float)($parsedBody['presence_penalty'] ?? 0),
-        ];
-
-        try {
-            $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
-            $completeText     = '';
-
-            foreach ($generatedContent['choices'] ?? [] as $choicesItem) {
-                $text = $choicesItem['text'] ?? '';
-                // Sanitize invalid UTF-8 bytes
-                $text = mb_convert_encoding($text, 'UTF-8', 'UTF-8');
-                $text = preg_replace(
-                    '/[^\x{0009}\x{000A}\x{000D}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u',
-                    '',
-                    $text
-                );
-                $completeText .= trim($text);
-            }
-
-            $response->getBody()->write(
-                json_encode(
-                    [
-                        'success'          => true,
-                        'generatedContent' => $completeText,
-                    ]
-                )
-            );
-        } catch (GuzzleException $e) {
-            $response = $this->logGuzzleError($e, $response);
-        } catch (Exception $e) {
-            $response = $this->logError($e, $response);
+   private function generateRteContent(array $parsedBody): ResponseInterface
+{
+    $response = new Response();
+    $jsonContent = [
+        'prompt' => $parsedBody['prompt'],
+        'max_tokens' => (int)$parsedBody['max_tokens'],
+        'model' => $parsedBody['model'],
+        'temperature' => min((float)$parsedBody['temperature'], 0.9),
+        'top_p' => (int)$parsedBody['top_p'],
+        'n' => (int)$parsedBody['n'],
+        'frequency_penalty' => (int)$parsedBody['frequency_penalty'],
+        'presence_penalty' => (int)$parsedBody['presence_penalty']
+    ];
+    try {
+        $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
+        $completeText = '';
+        $choices = $generatedContent['choices'];
+        foreach($choices as $choicesItem) {
+            $completeText .= "<p>" . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
         }
-
-        return $response;
+        $response->getBody()->write(
+            json_encode(
+                [
+                    'success' => true,
+                    'generatedContent' => $completeText,
+                ]
+            )
+        );
+    } catch(Exception $e) {
+        $response->getBody()->write(
+            json_encode(
+                [
+                    'success' => false,
+                ]
+            )
+        );
     }
+    return $response;
+}
 }
