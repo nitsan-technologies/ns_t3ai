@@ -205,15 +205,12 @@ class T3AiController
                 ]
             )
         );
-    } catch(Exception $e) {
-        $response->getBody()->write(
-            json_encode(
-                [
-                    'success' => false,
-                ]
-            )
-        );
+    } catch (GuzzleException $e) {
+        $response = $this->logGuzzleError($e, $response);
+    } catch (Exception $e) {
+        $response = $this->logError($e, $response);
     }
+
     return $response;
 }
 }
