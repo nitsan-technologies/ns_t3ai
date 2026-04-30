@@ -70,18 +70,9 @@ class T3AiController
         if ($e->getCode() === 500 && strpos($e->getMessage(), 'auth_subrequest_error') !== false) {
             $response->withStatus($e->getCode());
             $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.apiNotReachable')]));
-        } elseif ($e->getCode() === 401 && (str_contains($e->getMessage(), 'You need to provide your API key') || str_contains($e->getMessage(), 'No API key provided'))) {
+        } elseif ($e->getCode() === 401 && strpos($e->getMessage(), 'You need to provide your API key') !== false) {
             $response->withStatus($e->getCode());
-            $response->getBody()->write(json_encode([
-                'success' => false,
-                'apiKeyMissing' => true,
-            ]));
-        } elseif ($e->getCode() === 401 && (str_contains($e->getMessage(), 'Incorrect API key') || str_contains($e->getMessage(), 'invalid_api_key'))) {
-            $response->withStatus($e->getCode());
-            $response->getBody()->write(json_encode([
-                'success' => false,
-                'apiKeyInvalid' => true,
-            ]));
+            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.missingApiKey')]));
         } elseif (str_contains($e->getMessage(), 'exceeded your current quota')) {
             $response->withStatus($e->getCode());
             $response->getBody()->write(json_encode([

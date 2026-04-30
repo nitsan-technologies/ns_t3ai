@@ -53,7 +53,7 @@ export class T3Ai extends Core.Plugin {
                 var userInput = modelContent.find("#input-text")[0].value;
                 var temperature =
                     Number(modelContent.find("#temperature")[0].value) ?? 0.01;
-                var modelType = 'gpt-3.5-turbo-instruct';
+                    var modelType = 'gpt-4o';
                 var resultAmount =
                     Number(modelContent.find("#result-amount")[0].value) ?? 1;
                 var select_max_tokens = 4e3;
@@ -78,18 +78,18 @@ export class T3Ai extends Core.Plugin {
                       .then(async function (response) {
                         const resolved = await response.resolve();
                         const responseBody = JSON.parse(resolved);
-                      if (responseBody.success) {
-                      textArea.value = responseBody.generatedContent;
-                      } else if (responseBody.apiKeyMissing) {
+                        if (responseBody.success) {
+                          textArea.value = responseBody.generatedContent;
+                        } else if (responseBody.apiKeyMissing) {
                           Notification.error(TYPO3.lang['NsT3Ai.api']);
                           textArea.value = "";
-                      } else if (responseBody.apiKeyInvalid) {
+                        } else if (responseBody.apiKeyInvalid) {
                           Notification.error(TYPO3.lang['NsT3Ai.apiInvalid']);
                           textArea.value = "";
-                      } else {
-                          Notification.error(TYPO3.lang['NsT3Ai.error']);
+                        } else {
+                          Notification.error(responseBody.error || TYPO3.lang['NsT3Ai.error']);
                           textArea.value = "";
-                      }
+                        }
                         e.target.disabled = 0;
                       })
                       .catch(() => {

@@ -122,7 +122,7 @@ class NsT3AiContentService
 
         $resJsonBody = $response->getBody()->getContents();
         $resBody = json_decode($resJsonBody, true);
-        $generatedText = $this->extConf['model'] === 'gpt-3.5-turbo' || $this->extConf['model'] === 'gpt-4' ?
+        $generatedText = $this->extConf['model'] === 'gpt-4o' || $this->extConf['model'] === 'gpt-4' ?
             $resBody['choices'][0]['message']['content'] : $resBody['choices'][0]['text'];
         return ltrim(str_replace($extConfReplaceText, '', $generatedText));
     }
@@ -209,7 +209,7 @@ class NsT3AiContentService
             $finalContent = $this->extConf[$extConfPromptPrefix] . ' in ' . $this->languages[$languageIsoCode] . ":\n\n" . trim($content);
         }
 
-        if ($this->extConf['model'] === 'gpt-3.5-turbo' || $this->extConf['model'] === 'gpt-4') {
+        if ($this->extConf['model'] === 'gpt-4o' || $this->extConf['model'] === 'gpt-4') {
             $jsonContent['messages'][] = [
                 'role' => 'user',
                 'content' => $finalContent
