@@ -434,15 +434,36 @@ class NsT3AiContentService
 
    public function requestAiForRteContent(array $jsonContent): array
 {
+    $requestPayload = [
+        'model' => $jsonContent['model'],
+        'max_tokens' => $jsonContent['max_tokens'],
+        'temperature' => $jsonContent['temperature'],
+        'top_p' => $jsonContent['top_p'],
+        'n' => $jsonContent['n'],
+        'frequency_penalty' => $jsonContent['frequency_penalty'],
+        'presence_penalty' => $jsonContent['presence_penalty'],
+    ];
+
+    if ($this->nonLegacyModel) {
+        $requestPayload['messages'][] = [
+            'role' => 'user',
+            'content' => $jsonContent['prompt'],
+        ];
+        $endpoint = 'https://api.openai.com/v1/chat/completions';
+    } else {
+        $requestPayload['prompt'] = $jsonContent['prompt'];
+        $endpoint = 'https://api.openai.com/v1/completions';
+    }
+
     $response = $this->requestFactory->request(
-        'https://api.openai.com/v1/completions',
+        $endpoint,
         'POST',
         [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->extConf['apiKey']
             ],
-            'json' => $jsonContent
+            'json' => $requestPayload
         ]
     );
     $resJsonBody = $response->getBody()->getContents();

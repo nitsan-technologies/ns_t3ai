@@ -2,12 +2,12 @@
 
 namespace NITSAN\NsT3Ai\Controller;
 
-use GuzzleHttp\Exception\GuzzleException;
-use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
 use NITSAN\NsT3Ai\Service\NsT3AiContentService;
+use Psr\Log\LoggerInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\LoggerInterface;
+use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Http\Response;
@@ -121,8 +121,8 @@ class T3AiController
 
     protected function getLanguageId(): int
     {
-        $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
-        return (int)($moduleData['language'] ?? 0);
+        $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
+        return (int)$moduleData['language'];
     }
 
     protected function getCurrentPage($pageId, $languageId)
@@ -184,9 +184,13 @@ class T3AiController
     try {
         $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
         $completeText = '';
-        $choices = $generatedContent['choices'];
-        foreach($choices as $choicesItem) {
-            $completeText .= "<p>" . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
+        $choices = $generatedContent['choices'] ?? [];
+        foreach ($choices as $choicesItem) {
+            $generatedText = $choicesItem['text'] ?? ($choicesItem['message']['content'] ?? '');
+            if ($generatedText === '') {
+                continue;
+            }
+            $completeText .= "<p>" . htmlspecialchars($generatedText, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
         }
         $response->getBody()->write(
             json_encode(
@@ -205,3 +209,4 @@ class T3AiController
     return $response;
 }
 }
+
