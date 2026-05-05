@@ -121,8 +121,8 @@ class T3AiController
 
     protected function getLanguageId(): int
     {
-        $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
-        return (int)$moduleData['language'];
+       $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
+        return (int)($moduleData['language'] ?? 0);
     }
 
     protected function getCurrentPage($pageId, $languageId)
