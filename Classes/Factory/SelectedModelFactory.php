@@ -8,7 +8,6 @@ class SelectedModelFactory
     {
         return  
                 $extConf['model'] === 'gpt-4' ||
-                $extConf['model'] === 'gpt-4-32k' ||
                 $extConf['model'] === 'gpt-4o';
     }
 }

@@ -1,5 +1,5 @@
 CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
-    let select_model = "4o",
+    let select_model = "gpt-4o",
         select_temperature = 0.5,
         select_max_tokens = 4e3,
         select_amount = 1;
