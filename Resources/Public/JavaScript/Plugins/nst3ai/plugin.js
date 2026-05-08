@@ -1,4 +1,4 @@
-CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
+CKEDITOR.dialog.add("nsT3AiContentDialog", function (editor) {
     let select_model = "gpt-4o",
         select_temperature = 0.5,
         select_max_tokens = 4e3,
@@ -22,10 +22,10 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
                         label: editor.lang.nst3ai_content.writeAbout,
                         rows: 2,
                         validate: CKEDITOR.dialog.validate.notEmpty(editor.lang.nst3ai_content.errorNotEmpty),
-                        setup: function(element) {
+                        setup: function (element) {
                             this.setValue(element.getText());
                         },
-                        commit: function(element) {
+                        commit: function (element) {
                             let generatedContent = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-generated-content').getValue();
                             element.setHtml(generatedContent);
                         }
@@ -69,7 +69,7 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
                                     presence_penalty: 0
                                     // 0.0 is equivalent to no penalty
                                 }));
-                                xhr.onreadystatechange = function() {
+                                xhr.onreadystatechange = function () {
                                     if (this.readyState === 4) {
                                         if (this.status === 200) {
                                             let completeText = "", choices = JSON.parse(this.responseText).choices;
@@ -84,7 +84,7 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
                                         }
                                     }
                                 };
-                                xhr.onerror = function() {
+                                xhr.onerror = function () {
                                     resElement.setValue(" Error: " + this.responseText);
                                     buttonElement.enable()
                                 };
@@ -121,11 +121,11 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
                             ["1.75", 1.75],
                             ["2.0", 2]
                         ],
-                        setup: function(element) {
+                        setup: function (element) {
                             element.setAttribute("type", "number");
                             this.setValue(element.getText());
                         },
-                        commit: function(element) {
+                        commit: function (element) {
                         }
                     },
                     // Add select field for number of results
@@ -141,17 +141,17 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
                             ["3", 3],
                             ["4", 4]
                         ],
-                        setup: function(element) {
+                        setup: function (element) {
                             element.setAttribute("type", "number");
                             this.setValue(element.getText());
                         },
-                        commit: function(element) {
+                        commit: function (element) {
                         }
                     }
                 ]
             }
         ],
-        onOk: function() {
+        onOk: function () {
             let dialog = this, nst3ai = editor.document.createElement("div");
             select_temperature = parseFloat(dialog.getValueOf("tab-advanced", "temperature"));
             select_amount = parseInt(dialog.getValueOf("tab-advanced", "amount"));
@@ -164,7 +164,7 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function(editor) {
 CKEDITOR.plugins.add("nst3ai_content", {
     icons: "ns-t3ai",
     lang: ["en", "de"],
-    init: function(editor) {
+    init: function (editor) {
         editor.addCommand("nst3ai_content", new CKEDITOR.dialogCommand("nsT3AiContentDialog"));
         editor.ui.addButton("ns_t3ai", {
             label: "T3AI Content Assistance",

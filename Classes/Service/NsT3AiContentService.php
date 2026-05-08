@@ -218,12 +218,7 @@ class NsT3AiContentService
             $jsonContent['prompt'] = $finalContent;
         }
     }
-
-    /**
-     * @param int $pageId
-     * @param int $pageLanguage
-     * @return string
-     */
+    
     /**
      * @param int $pageId
      * @param int $pageLanguage

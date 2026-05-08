@@ -121,7 +121,7 @@ class T3AiController
 
     protected function getLanguageId(): int
     {
-       $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
+        $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
         return (int)($moduleData['language'] ?? 0);
     }
 
@@ -168,45 +168,44 @@ class T3AiController
      * @param array $parsedBody
      * @return Response
      */
-   private function generateRteContent(array $parsedBody): ResponseInterface
-{
-    $response = new Response();
-    $jsonContent = [
-        'prompt' => $parsedBody['prompt'],
-        'max_tokens' => (int)$parsedBody['max_tokens'],
-        'model' => $parsedBody['model'],
-        'temperature' => min((float)$parsedBody['temperature'], 0.9),
-        'top_p' => (int)$parsedBody['top_p'],
-        'n' => (int)$parsedBody['n'],
-        'frequency_penalty' => (int)$parsedBody['frequency_penalty'],
-        'presence_penalty' => (int)$parsedBody['presence_penalty']
-    ];
-    try {
-        $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
-        $completeText = '';
-        $choices = $generatedContent['choices'] ?? [];
-        foreach ($choices as $choicesItem) {
-            $generatedText = $choicesItem['text'] ?? ($choicesItem['message']['content'] ?? '');
-            if ($generatedText === '') {
-                continue;
+    private function generateRteContent(array $parsedBody): ResponseInterface
+    {
+        $response = new Response();
+        $jsonContent = [
+            'prompt' => $parsedBody['prompt'],
+            'max_tokens' => (int)$parsedBody['max_tokens'],
+            'model' => $parsedBody['model'],
+            'temperature' => min((float)$parsedBody['temperature'], 0.9),
+            'top_p' => (int)$parsedBody['top_p'],
+            'n' => (int)$parsedBody['n'],
+            'frequency_penalty' => (int)$parsedBody['frequency_penalty'],
+            'presence_penalty' => (int)$parsedBody['presence_penalty']
+        ];
+        try {
+            $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
+            $completeText = '';
+            $choices = $generatedContent['choices'] ?? [];
+            foreach ($choices as $choicesItem) {
+                $generatedText = $choicesItem['text'] ?? ($choicesItem['message']['content'] ?? '');
+                if ($generatedText === '') {
+                    continue;
+                }
+                $completeText .= "<p>" . htmlspecialchars($generatedText, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
             }
-            $completeText .= "<p>" . htmlspecialchars($generatedText, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
+            $response->getBody()->write(
+                json_encode(
+                    [
+                        'success' => true,
+                        'generatedContent' => $completeText,
+                    ]
+                )
+            );
+        } catch (GuzzleException $e) {
+            $response = $this->logGuzzleError($e, $response);
+        } catch (Exception $e) {
+            $response = $this->logError($e, $response);
         }
-        $response->getBody()->write(
-            json_encode(
-                [
-                    'success' => true,
-                    'generatedContent' => $completeText,
-                ]
-            )
-        );
-    } catch (GuzzleException $e) {
-        $response = $this->logGuzzleError($e, $response);
-    } catch (Exception $e) {
-        $response = $this->logError($e, $response);
+
+        return $response;
     }
-
-    return $response;
 }
-}
-
