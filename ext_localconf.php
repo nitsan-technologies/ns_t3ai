@@ -9,24 +9,23 @@ if (version_compare($typo3VersionArray['version_main'], 11, '<=')) {
     $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['nst3ai'] =
     'EXT:ns_t3ai/Configuration/RTE/Plugin.yaml';
 
-}
-else{
-    $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['nst3ai'] =
-    'EXT:ns_t3ai/Configuration/RTE/Pluginv12.yaml';
-}
-
-//// Make the extension configuration accessible
+    } else {
+        $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['default'] = $GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['nst3ai'] =
+        'EXT:ns_t3ai/Configuration/RTE/Pluginv12.yaml';
+    }
+// Make the extension configuration accessible
 $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
     \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
 );
 
-(static function () : void {
+(static function (): void {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScript(
         'ns_t3ai',
         'setup',
         "@import 'EXT:ns_t3ai/Configuration/TypoScript/t3ai.typoscript'"
     );
 })();
+
 if (version_compare($typo3VersionArray['version_main'], 11, '<=')) {
     if (TYPO3_MODE === 'BE' && \NITSAN\NsT3Ai\Utility\NsT3AiBackendUtility::isApiKeySet()) {
        $config = $extensionConfiguration->get('ns_t3ai');

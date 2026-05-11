@@ -1,19 +1,19 @@
 <?php
 
+use NITSAN\NsT3Ai\Controller\T3AiController;
+use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
+use NITSAN\NsT3Ai\Factory\CustomLanguageFactory;
 use NITSAN\NsT3Ai\Factory\SelectedModelFactory;
 use NITSAN\NsT3Ai\Helper\NsExtensionConfiguration;
+use NITSAN\NsT3Ai\Service\NsT3AiContentService;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Log\LogManager;
-use Psr\Log\LoggerInterface;
-use NITSAN\NsT3Ai\Service\NsT3AiContentService;
-use NITSAN\NsT3Ai\Factory\CustomLanguageFactory;
-use NITSAN\NsT3Ai\Controller\T3AiController;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
     global $typo3VersionArray;
@@ -66,17 +66,16 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->set(NsExtensionConfiguration::class)
         ->public();
 
-    if(version_compare($typo3VersionArray['version_main'], 12, '>=')){
+    if (version_compare($typo3VersionArray['version_main'], 12, '>=')) {
         $services->set(\NITSAN\NsT3Ai\Backend\PageLayoutHeaderV12::class)
             ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
             ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
             ->arg('$pageRenderer', new ReferenceConfigurator(PageRenderer::class))
             ->public();
-    }
-    else{
+    } else {
         $services->set(\NITSAN\NsT3Ai\Backend\PageLayoutHeader::class)
             ->arg('$extensionConfiguration', new ReferenceConfigurator(NsExtensionConfiguration::class))
             ->arg('$pageRepository', new ReferenceConfigurator(PageRepository::class))
-            ->public();            
+            ->public();
     }
 };

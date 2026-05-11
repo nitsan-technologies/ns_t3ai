@@ -21,5 +21,5 @@ abstract class AbstractPageLayoutHeader
         $this->pageRenderer->addInlineLanguageLabelFile('EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf');
     }
 
-    abstract public function render(array $params = null, $parentObj = null): string;
+    abstract public function render(?array $params = null, $parentObj = null): string;
 }

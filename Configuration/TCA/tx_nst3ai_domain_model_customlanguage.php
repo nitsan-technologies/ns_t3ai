@@ -16,31 +16,22 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'iso_code,speech',
+        'searchFields' =>  '',
         'iconfile' => 'EXT:ns_t3ai/Resources/Public/Icons/Extension.svg'
     ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid,iso_code,speech, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden,'],
     ],
     'columns' => [
-        'sys_language_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple'
-                    ]
+            'sys_language_uid' => [
+                'exclude' => true,
+                'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
+                'config' => [
+                    'type' => 'language',
+                    'default' => 0,
                 ],
-                'default' => -1,
             ],
-        ],
-        'l10n_parent' => [
+                    'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
@@ -48,8 +39,8 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
-                ],
+                    ['label' => '', 'value' => 0],
+                ] ,
                 'foreign_table' => 'tx_nst3ai_domain_model_customlanguage',
                 'foreign_table_where' => 'AND {#tx_nst3ai_domain_model_customlanguage}.{#pid}=###CURRENT_PID### AND {#tx_nst3ai_domain_model_customlanguage}.{#sys_language_uid} IN (-1,0)',
             ],
@@ -66,42 +57,30 @@ return [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
                 'items' => [
-                    [
-                        0 => '',
-                        1 => '',
-                        'invertStateDisplay' => true
-                    ]
-                ],
+                    ['label' => '', 'value' => '', 'invertStateDisplay' => true]
+                ] ,
             ],
         ],
         'starttime' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
-            'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+            'config' =>  [
+                'type' => 'datetime',
                 'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
-            ],
+                'behaviour' => ['allowLanguageSynchronization' => true],
+                'searchable' => false,
+            ] 
         ],
         'endtime' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
                 'default' => 0,
-                'range' => [
-                    'upper' => mktime(0, 0, 0, 1, 1, 2038)
-                ],
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true
-                ]
-            ],
+                'range' => ['upper' => mktime(0, 0, 0, 1, 1, 2038)],
+                'behaviour' => ['allowLanguageSynchronization' => true],
+                'searchable' => false,
+            ] 
         ],
         'iso_code' => [
             'exclude' => true,
@@ -110,7 +89,8 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
-                'default' => ''
+                'default' => '',
+                'searchable' =>  true,
             ],
         ],
         'speech' => [
@@ -120,8 +100,10 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
-                'default' => ''
+                'default' => '',
+                'searchable' =>  true
             ],
         ],
     ],
 ];
+

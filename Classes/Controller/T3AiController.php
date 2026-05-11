@@ -121,8 +121,8 @@ class T3AiController
 
     protected function getLanguageId(): int
     {
-        $moduleData = (array)BackendUtility::getModuleData(['language'], [], 'web_layout');
-        return (int)$moduleData['language'];
+        $moduleData = (array)BackendUtility::getModuleData(['language' => 0], [], 'web_layout');
+        return (int)($moduleData['language'] ?? 0);
     }
 
     protected function getCurrentPage($pageId, $languageId)
@@ -175,7 +175,7 @@ class T3AiController
             'prompt' => $parsedBody['prompt'],
             'max_tokens' => (int)$parsedBody['max_tokens'],
             'model' => $parsedBody['model'],
-            'temperature' => (float)$parsedBody['temperature'],
+            'temperature' => min((float)$parsedBody['temperature'], 0.9),
             'top_p' => (int)$parsedBody['top_p'],
             'n' => (int)$parsedBody['n'],
             'frequency_penalty' => (int)$parsedBody['frequency_penalty'],
@@ -184,9 +184,13 @@ class T3AiController
         try {
             $generatedContent = $this->contentService->requestAiForRteContent($jsonContent);
             $completeText = '';
-            $choices = $generatedContent['choices'];
-            foreach($choices as $choicesItem) {
-                $completeText .= "<p>" . htmlspecialchars($choicesItem['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
+            $choices = $generatedContent['choices'] ?? [];
+            foreach ($choices as $choicesItem) {
+                $generatedText = $choicesItem['text'] ?? ($choicesItem['message']['content'] ?? '');
+                if ($generatedText === '') {
+                    continue;
+                }
+                $completeText .= "<p>" . htmlspecialchars($generatedText, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "</p>";
             }
             $response->getBody()->write(
                 json_encode(
@@ -196,16 +200,12 @@ class T3AiController
                     ]
                 )
             );
-        } catch(Exception $e) {
-            $response->getBody()->write(
-                json_encode(
-                    [
-                        'success' => false,
-                    ]
-                )
-            );
+        } catch (GuzzleException $e) {
+            $response = $this->logGuzzleError($e, $response);
+        } catch (Exception $e) {
+            $response = $this->logError($e, $response);
         }
+
         return $response;
     }
-
 }

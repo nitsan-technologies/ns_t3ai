@@ -6,9 +6,8 @@ class SelectedModelFactory
 {
     public function checkSelectedModel($extConf): bool
     {
-        return  $extConf['model'] === 'gpt-3.5-turbo' ||
-                $extConf['model'] === 'gpt-3.5-turbo-16k' ||
+        return  
                 $extConf['model'] === 'gpt-4' ||
-                $extConf['model'] === 'gpt-4-32k';
+                $extConf['model'] === 'gpt-4o';
     }
 }

@@ -58,7 +58,7 @@ function sendAjaxRequest(pageId, fieldName, button) {
         .catch((error) => {
             Notification.error(TYPO3.lang['NsT3Ai.error'], error);
         })
-        .finally(()=>{
+        .finally(() => {
             button.disabled = false;
             document.getElementById('ns-t3ai__loader').innerHTML = '';
             document.getElementById('ns-t3ai__loader').classList.remove('ns-show-overlay');
@@ -84,12 +84,12 @@ function handleResponse(pageId, fieldName, responseBody) {
             const ele = document.getElementsByName('generatedseo_titleSuggestions');
             for (let i = 0; i < ele.length; i++) {
                 if (ele[i].type === "radio") {
-                    if (ele[i].checked){
-                        selectedText =  ele[i].value;
+                    if (ele[i].checked) {
+                        selectedText = ele[i].value;
                     }
                 }
             }
-            sendSaveRequest(pageId, fieldName,selectedText);
+            sendSaveRequest(pageId, fieldName, selectedText);
         });
     });
 }
@@ -106,7 +106,7 @@ function sendSaveRequest(pageId, fieldName, suggestion) {
             {
                 pageId: pageId,
                 fieldName: fieldName,
-                suggestion: suggestion ,
+                suggestion: suggestion,
             }
         )
         .then(async function (response) {
