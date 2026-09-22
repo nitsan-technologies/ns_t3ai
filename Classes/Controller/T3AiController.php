@@ -9,10 +9,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use NITSAN\NsT3Ai\Domain\Repository\PageRepository;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Routing\UnableToLinkToPageException;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -92,6 +94,8 @@ class T3AiController
         $response->withStatus(400);
         if ($e->getCode() === 1476107295) {
             $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.pageNotAccessible')]));
+        } elseif ($e->getCode() === 1737050003) {
+            $response->getBody()->write(json_encode(['success' => false, 'error' => LocalizationUtility::translate('LLL:EXT:ns_t3ai/Resources/Private/Language/locallang_be.xlf:NsT3Ai.invalidField')]));
         } else {
             $response->getBody()->write(json_encode(['success' => false, 'error' => $e->getMessage()]));
         }
@@ -105,17 +109,32 @@ class T3AiController
 
     public function saveAction(ServerRequestInterface $request): ResponseInterface
     {
-        $data = $request->getParsedBody();
-        $currentPage = $this->getCurrentPage($data['pageId'], $this->getLanguageId());
-        $status = $this->pageRepository->saveField($currentPage['uid'], $data);
         $response = new Response();
-        $response->getBody()->write(
-            json_encode(
-                [
-                    'success' => $status,
-                ]
-            )
-        );
+        try {
+            $data = $request->getParsedBody();
+            if (!is_array($data)) {
+                throw new Exception('Invalid request body', 1737050001);
+            }
+            $pageId = (int)($data['pageId'] ?? 0);
+            if ($pageId <= 0) {
+                throw new Exception('Invalid page id', 1737050002);
+            }
+            $currentPage = $this->getCurrentPage($pageId, $this->getLanguageId());
+            if ($currentPage === null) {
+                throw new Exception('Page not accessible', 1476107295);
+            }
+            $this->assertBackendUserCanEditPage((int)$currentPage['uid']);
+            $status = $this->pageRepository->saveField((int)$currentPage['uid'], $data);
+            $response->getBody()->write(
+                json_encode(
+                    [
+                        'success' => $status,
+                    ]
+                )
+            );
+        } catch (Exception $e) {
+            $response = $this->logError($e, $response);
+        }
         return $response;
     }
 
@@ -125,14 +144,17 @@ class T3AiController
         return (int)($moduleData['language'] ?? 0);
     }
 
-    protected function getCurrentPage($pageId, $languageId)
+    /**
+     * Fail closed: return null when the page (or language overlay) cannot be resolved.
+     */
+    protected function getCurrentPage(int $pageId, int $languageId): ?array
     {
         if ($languageId === 0) {
-            $currentPage = BackendUtility::getRecord(
-                'pages',
-                $pageId
-            );
-        } elseif ($languageId > 0) {
+            $currentPage = BackendUtility::getRecord('pages', $pageId);
+            return is_array($currentPage) ? $currentPage : null;
+        }
+
+        if ($languageId > 0) {
             $overlayRecords = BackendUtility::getRecordLocalization(
                 'pages',
                 $pageId,
@@ -140,10 +162,22 @@ class T3AiController
             );
 
             if (is_array($overlayRecords) && array_key_exists(0, $overlayRecords) && is_array($overlayRecords[0])) {
-                $currentPage = $overlayRecords[0];
+                return $overlayRecords[0];
             }
         }
-        return $currentPage;
+
+        return null;
+    }
+
+    protected function assertBackendUserCanEditPage(int $pageId): void
+    {
+        $backendUser = $GLOBALS['BE_USER'] ?? null;
+        if (!$backendUser instanceof BackendUserAuthentication) {
+            throw new Exception('Backend user required', 1737050004);
+        }
+        if (!$backendUser->isAdmin() && !$backendUser->doesUserHaveAccess($pageId, Permission::PAGE_EDIT)) {
+            throw new Exception('Page not accessible', 1476107295);
+        }
     }
 
     public function generateRteContentAction(ServerRequestInterface $request): ResponseInterface

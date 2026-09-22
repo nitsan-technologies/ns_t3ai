@@ -1,7 +1,6 @@
 <?php
 
 use NITSAN\NsT3Ai\Controller\T3AiController;
-use NITSAN\NsT3Ai\Override\LocalizationController;
 
 return [
     'seo_title_generation' => [
