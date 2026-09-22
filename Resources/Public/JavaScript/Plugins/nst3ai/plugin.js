@@ -1,11 +1,7 @@
 CKEDITOR.dialog.add("nsT3AiContentDialog", function (editor) {
-    let select_model = "gpt-4o",
-        select_temperature = 0.5,
+    let select_temperature = 0.5,
         select_max_tokens = 4e3,
         select_amount = 1;
-    const escapeHtml = (unsafe) => {
-        return unsafe.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
-    };
     return {
         title: "T3AI Content Assistance",
         minWidth: 400,
@@ -44,50 +40,61 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function (editor) {
                                 select_amount = parseInt(this.getDialog().getValueOf("tab-advanced", "amount"));
                                 let resElement = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-generated-content');
                                 var buttonElement = this.getDialog().getContentElement('ns-tab-basic', 'ns-t3ai-generate');
-                                buttonElement.disable()
-                                const NsT3AiKey = TYPO3.settings.NS_T3AI_KEY;
+                                buttonElement.disable();
+                                resElement.setValue('Loading...');
+
+                                var ajaxUrl = (typeof TYPO3 !== 'undefined'
+                                    && TYPO3.settings
+                                    && TYPO3.settings.ajaxUrls
+                                    && TYPO3.settings.ajaxUrls.rte_content_generation)
+                                    ? TYPO3.settings.ajaxUrls.rte_content_generation
+                                    : null;
+
+                                if (!ajaxUrl) {
+                                    resElement.setValue('Error: Backend AJAX unavailable');
+                                    buttonElement.enable();
+                                    return;
+                                }
+
+                                var params = new URLSearchParams();
+                                params.append('prompt', promptValue);
+                                params.append('max_tokens', String(select_max_tokens));
+                                params.append('temperature', String(select_temperature));
+                                params.append('top_p', '1');
+                                params.append('n', String(select_amount));
+                                params.append('frequency_penalty', '0');
+                                params.append('presence_penalty', '0');
+
                                 var xhr = new XMLHttpRequest();
-                                xhr.open("POST", "https://api.openai.com/v1/completions", true);
-                                xhr.setRequestHeader("Content-Type", "application/json");
-                                xhr.setRequestHeader("Authorization", "Bearer " + NsT3AiKey);
-                                resElement.setValue('Loading...')
-                                xhr.send(JSON.stringify({
-                                    prompt: promptValue,
-                                    // Text to complete
-                                    max_tokens: select_max_tokens,
-                                    // 1 to 4000
-                                    model: select_model,
-                                    // 'text-davinci-003', 'text-curie-001', 'text-babbage-001', 'text-ada-001'
-                                    temperature: select_temperature,
-                                    // 0.0 is equivalent to greedy sampling
-                                    top_p: 1,
-                                    // 1.0 is equivalent to greedy sampling
-                                    n: select_amount,
-                                    // Number of results to return
-                                    frequency_penalty: 0,
-                                    // 0.0 is equivalent to no penalty
-                                    presence_penalty: 0
-                                    // 0.0 is equivalent to no penalty
-                                }));
+                                xhr.open('POST', ajaxUrl, true);
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                                xhr.withCredentials = true;
                                 xhr.onreadystatechange = function () {
-                                    if (this.readyState === 4) {
-                                        if (this.status === 200) {
-                                            let completeText = "", choices = JSON.parse(this.responseText).choices;
-                                            for (let i = 0; i < choices.length; i++) {
-                                                completeText += "<p>" + escapeHtml(choices[i].text) + "</p>";
+                                    if (this.readyState !== 4) {
+                                        return;
+                                    }
+                                    buttonElement.enable();
+                                    if (this.status === 200) {
+                                        try {
+                                            var responseBody = JSON.parse(this.responseText);
+                                            if (responseBody.success && responseBody.generatedContent) {
+                                                resElement.setValue(String(responseBody.generatedContent).trim());
+                                            } else {
+                                                resElement.setValue('Error: ' + (responseBody.error || 'generation failed'));
                                             }
-                                            resElement.setValue(completeText.trim().replace(/\n\s+/g, '\n'));
-                                            buttonElement.enable()
-                                        } else {
-                                            resElement.setValue(" Error: " + this.responseText);
-                                            buttonElement.enable()
+                                        } catch (parseError) {
+                                            resElement.setValue('Error: invalid response');
                                         }
+                                    } else {
+                                        resElement.setValue('Error: ' + this.status);
                                     }
                                 };
                                 xhr.onerror = function () {
-                                    resElement.setValue(" Error: " + this.responseText);
-                                    buttonElement.enable()
+                                    resElement.setValue('Error: network failure');
+                                    buttonElement.enable();
                                 };
+                                xhr.send(params.toString());
                             }
                         }
                     },
@@ -103,7 +110,6 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function (editor) {
                 id: "tab-advanced",
                 label: editor.lang.nst3ai_content.tabAdvanced,
                 elements: [
-                    // Add select field with different temperatures from 0 to 2
                     {
                         type: "select",
                         id: "temperature",
@@ -128,7 +134,6 @@ CKEDITOR.dialog.add("nsT3AiContentDialog", function (editor) {
                         commit: function (element) {
                         }
                     },
-                    // Add select field for number of results
                     {
                         type: "select",
                         id: "amount",

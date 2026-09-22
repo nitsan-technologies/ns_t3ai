@@ -26,10 +26,3 @@ $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
     );
 })();
 
-if (version_compare($typo3VersionArray['version_main'], 11, '<=')) {
-    if (TYPO3_MODE === 'BE' && \NITSAN\NsT3Ai\Utility\NsT3AiBackendUtility::isApiKeySet()) {
-       $config = $extensionConfiguration->get('ns_t3ai');
-       $renderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
-       $renderer->addInlineSetting(null,'NS_T3AI_KEY',$config['apiKey']);
-    }
-}
