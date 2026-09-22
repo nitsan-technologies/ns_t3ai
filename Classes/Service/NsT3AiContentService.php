@@ -103,6 +103,10 @@ class NsT3AiContentService
      */
     public function requestAi(string $content, $extConfPromptPrefix, $extConfReplaceText = '', $languageIsoCode = '', $parsedBody = []): string
     {
+        if (empty($this->extConf['apiKey'])) {
+            throw new Exception('OpenAI API key is not configured', 1737050004);
+        }
+
         $jsonContent = [
             'model' => $this->extConf['model'],
         ];
@@ -224,16 +228,13 @@ class NsT3AiContentService
      * @param int $pageLanguage
      * @return string
      */
-    public function getPreviewUrl(int $pageId, int $pageLanguage, bool $includeType = true): string
+    public function getPreviewUrl(int $pageId, int $pageLanguage, bool $includeType = false): string
     {
         $typo3VersionArray = VersionNumberUtility::convertVersionStringToArray(
             VersionNumberUtility::getCurrentTypo3Version()
         );
 
         $arguments = ['_language' => $pageLanguage];
-        if ($includeType) {
-            $arguments['type'] = '1696828748';
-        }
 
         $siteUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
         $siteUrl = rtrim($siteUrl, '/') . '/';
@@ -272,7 +273,7 @@ class NsT3AiContentService
                 \TYPO3\CMS\Core\Routing\RouterInterface::ABSOLUTE_URL
             );
             if (empty($uri) || strpos($uri, 'http') !== 0) {
-                $uri = $site->getBase() . 'index.php?id=' . $pageId . '&L=' . $pageLanguage . '&type=1696828748';
+                $uri = $site->getBase() . 'index.php?id=' . $pageId . '&L=' . $pageLanguage;
 
                 if (strpos($uri, 'http') !== 0) {
                     $uri = $siteUrl . ltrim($uri, '/');
@@ -429,14 +430,19 @@ class NsT3AiContentService
 
    public function requestAiForRteContent(array $jsonContent): array
 {
+    if (empty($this->extConf['apiKey'])) {
+        throw new Exception('OpenAI API key is not configured', 1737050004);
+    }
+
+    // Always use the configured model; never trust a client-supplied model name.
     $requestPayload = [
-        'model' => $jsonContent['model'],
-        'max_tokens' => $jsonContent['max_tokens'],
-        'temperature' => $jsonContent['temperature'],
-        'top_p' => $jsonContent['top_p'],
-        'n' => $jsonContent['n'],
-        'frequency_penalty' => $jsonContent['frequency_penalty'],
-        'presence_penalty' => $jsonContent['presence_penalty'],
+        'model' => $this->extConf['model'] ?? ($jsonContent['model'] ?? 'gpt-4o'),
+        'max_tokens' => min(max((int)($jsonContent['max_tokens'] ?? 256), 1), 4000),
+        'temperature' => min(max((float)($jsonContent['temperature'] ?? 0.5), 0.0), 0.9),
+        'top_p' => 1,
+        'n' => min(max((int)($jsonContent['n'] ?? 1), 1), 4),
+        'frequency_penalty' => 0,
+        'presence_penalty' => 0,
     ];
 
     if ($this->nonLegacyModel) {
