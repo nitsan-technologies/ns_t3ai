@@ -3,6 +3,15 @@
     <file source-language="en" datatype="plaintext" original="EXT:ns_t3ai/Resources/Private/Language/locallang_be" date="2023-03-12T06:46:21Z" product-name="ns_t3ai">
         <header/>
         <body>
+            <trans-unit id="premium.strip.headline" xml:space="preserve">
+                <source>You're using the free version of NS T3AI</source>
+            </trans-unit>
+            <trans-unit id="premium.strip.description" xml:space="preserve">
+                <source>Unlock premium features and get more out of NS T3AI.</source>
+            </trans-unit>
+            <trans-unit id="premium.strip.trial" xml:space="preserve">
+                <source>Start Free Trial</source>
+            </trans-unit>
             <trans-unit id="pageTitle">
                 <source>Page title</source>
             </trans-unit>
