@@ -4,10 +4,10 @@
         <header/>
         <body>
             <trans-unit id="premium.strip.headline" xml:space="preserve">
-                <source>You're using the free version of NS T3AI</source>
+                <source>You're using the free version of T3AI</source>
             </trans-unit>
             <trans-unit id="premium.strip.description" xml:space="preserve">
-                <source>Unlock premium features and get more out of NS T3AI.</source>
+                <source>Unlock premium features and get more out of T3AI.</source>
             </trans-unit>
             <trans-unit id="premium.strip.trial" xml:space="preserve">
                 <source>Start Free Trial</source>

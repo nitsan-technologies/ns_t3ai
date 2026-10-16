@@ -6,8 +6,8 @@ preselected in Free Trial mode. Requires ns_license 14.5.4 (deep-link support) t
 
 ## Licensing status
 
-Freemium. The T3AI panel's top bar keeps its own "Upgrade Premium?" link to
-https://t3planet.de/en/t3ai-typo3-extension; the strip adds the in-backend trial path next to it.
+Freemium. The premium strip is the in-backend trial path (the old panel top bar with
+"Upgrade Premium?" was removed).
 
 ## Dependency
 
@@ -34,8 +34,8 @@ CKEditor T3AI dialog: it is an iframe, so the same-frame trial link would open i
 
 ## Strip
 
-- Labels in `locallang.xlf`: `premium.strip.headline` "You're using the free version of NS T3AI",
-  `premium.strip.description` "Unlock premium features and get more out of NS T3AI.",
+- Labels in `locallang.xlf`: `premium.strip.headline` "You're using the free version of T3AI",
+  `premium.strip.description` "Unlock premium features and get more out of T3AI.",
   `premium.strip.trial` "Start Free Trial".
 - `Resources/Public/Css/backend-premium-strip.css`: `.ns-t3ai-premium-strip` — team-wide design (light-blue card
   `#e7f2fc`, border `#8eb6e8`, 4px `#2b6cb0` left accent, 6px radius, padding 14px 18px, 1rem bottom margin,

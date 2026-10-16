@@ -39,8 +39,8 @@ AJAX routes and one small record table. No content element, no backend module, n
 
 ## Views and assets
 
-- `Resources/Private/Backend/Templates/T3Ai.html` — panel (top bar with "Upgrade Premium?" link, "Optimize AI-SEO"
-  button, "Metadata" tab); `v10/T3Ai.html` legacy.
+- `Resources/Private/Backend/Templates/T3Ai.html` — panel ("Optimize AI-SEO" button, "Metadata" tab);
+  `v10/T3Ai.html` legacy.
 - `Resources/Private/Templates/T3Ai/{GenerateSuggestions,Rte}.html`, `Layouts/Default.html`.
 - JS: `ModuleV12.js` (panel), `Plugins/nst3ai/pluginv12.js` (CKEditor plugin); `Module.js`, `plugin.js` legacy.
 - CSS: `Style.css` (panel), `Rte.css` (RTE dialog), `backend-premium-strip.css`, `Vendor/backend.css`.

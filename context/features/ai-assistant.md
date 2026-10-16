@@ -16,8 +16,8 @@ calls and the CKEditor dialog were not tested (no API key).*
 
 ## Page module panel (AI SEO)
 
-- `ModifyPageLayoutContentEvent` → `PageLayoutHeaderV12` renders `T3Ai.html` above the page content: top bar
-  "T3AI" + "Upgrade Premium?" link, button "Optimize AI-SEO", tab "Metadata" with a prompt select
+- `ModifyPageLayoutContentEvent` → `PageLayoutHeaderV12` renders `T3Ai.html` above the page content:
+  button "Optimize AI-SEO", tab "Metadata" with a prompt select
   (Professional / Optimized / Catchy from `NsExtensionConfiguration`) and a generate button.
 - Generate → AJAX `seo_title_generation` (`fieldName` + `_generation`) → `NsT3AiContentService` fetches the page,
   strips scripts/styles/nav/footer/tags, sends the prompt to OpenAI (`/v1/chat/completions` for chat models) and
