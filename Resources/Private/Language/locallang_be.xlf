@@ -84,6 +84,9 @@
 			<trans-unit id="NsT3Ai.pageNotAccessible" resname="NsT3Ai.pageNotAccessible">
 				<source>Page not found. If the page is hidden, please activate it (and possibly deactivate the option "Page in menus activated" within the page properties) so that the page is accessible.</source>
 			</trans-unit>
+			<trans-unit id="NsT3Ai.invalidField" resname="NsT3Ai.invalidField">
+				<source>The selected field is not allowed to be updated by T3AI.</source>
+			</trans-unit>
 			<trans-unit id="NsT3Ai.tx_aiseohelper_domain_model_customlanguage" resname="NsT3Ai.tx_aiseohelper_domain_model_customlanguage">
 				<source>Custom language</source>
 			</trans-unit>

@@ -47,7 +47,7 @@ function sendAjaxRequest(pageId, fieldName, button) {
         )
         .then(async function (response) {
             const resolved = await response.resolve();
-            const responseBody = JSON.parse(resolved);
+            const responseBody = typeof resolved === 'string' ? JSON.parse(resolved) : resolved;
             if (responseBody.error) {
                 Notification.error(TYPO3.lang['NsT3Ai.error'], responseBody.error);
             } else {
@@ -56,7 +56,8 @@ function sendAjaxRequest(pageId, fieldName, button) {
             }
         })
         .catch((error) => {
-            Notification.error(TYPO3.lang['NsT3Ai.error'], error);
+            const message = (error && error.message) ? error.message : TYPO3.lang['NsT3Ai.error'];
+            Notification.error(TYPO3.lang['NsT3Ai.error'], String(message));
         })
         .finally(() => {
             button.disabled = false;

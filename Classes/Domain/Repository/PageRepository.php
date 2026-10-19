@@ -3,28 +3,51 @@
 namespace NITSAN\NsT3Ai\Domain\Repository;
 
 use Doctrine\DBAL\Driver\Exception;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PageRepository
 {
-    public function saveField($pageId, $data): bool
+    /**
+     * SEO fields the AI feature is allowed to write.
+     *
+     * @var list<string>
+     */
+    public const ALLOWED_SAVE_FIELDS = [
+        'seo_title',
+        'description',
+        'keywords',
+        'og_title',
+        'og_description',
+        'twitter_title',
+        'twitter_description',
+    ];
+
+    /**
+     * Persist a whitelisted pages field via DataHandler (enforces BE permissions).
+     */
+    public function saveField(int $pageId, string $fieldName, string $suggestion): bool
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
-        try {
-            $connection->update(
-                'pages',
-                [
-                   $data['fieldName'] => $data['suggestion'],
-                ],
-                ['uid' => (int)$pageId]
-            );
-            return true;
-        } catch (Exception $e) {
+        if ($pageId <= 0 || !in_array($fieldName, self::ALLOWED_SAVE_FIELDS, true)) {
             return false;
         }
 
+        $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
+        $dataHandler->start(
+            [
+                'pages' => [
+                    $pageId => [
+                        $fieldName => $suggestion,
+                    ],
+                ],
+            ],
+            []
+        );
+        $dataHandler->process_datamap();
+
+        return empty($dataHandler->errorLog);
     }
 
     /**
@@ -57,7 +80,7 @@ class PageRepository
     public function getCurrentPageData($pageId, $version)
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('pages');
-        if($version < 11){
+        if ($version < 11) {
             return $connection->select(
                 ['uid', 'title', 'seo_title', 'description', 'keywords', 'og_title', 'og_description', 'twitter_title', 'twitter_description'],
                 'pages',
@@ -67,15 +90,14 @@ class PageRepository
                 1
             )->fetch();
         }
-        else{
-            return $connection->select(
-                ['uid', 'title', 'seo_title', 'description', 'keywords', 'og_title', 'og_description', 'twitter_title', 'twitter_description'],
-                'pages',
-                ['uid' => (int)$pageId],
-                [],
-                [],
-                1
-            )->fetchAssociative();
-        }
+
+        return $connection->select(
+            ['uid', 'title', 'seo_title', 'description', 'keywords', 'og_title', 'og_description', 'twitter_title', 'twitter_description'],
+            'pages',
+            ['uid' => (int)$pageId],
+            [],
+            [],
+            1
+        )->fetchAssociative();
     }
 }
