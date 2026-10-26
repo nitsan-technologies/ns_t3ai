@@ -33,20 +33,105 @@ export class T3Ai extends Core.Plugin {
     });
   }
   showUI() {
-    const url = TYPO3.settings.ajaxUrls['rte_template'];
+    const scheme =
+      document.documentElement.getAttribute("data-color-scheme") ||
+      document.documentElement.getAttribute("data-bs-theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const baseUrl = TYPO3.settings.ajaxUrls['rte_template'];
+    const url = baseUrl + (baseUrl.includes("?") ? "&" : "?") + "colorScheme=" + encodeURIComponent(scheme);
     const ajaxRoute = TYPO3.settings.ajaxUrls.rte_content_generation;
+
+    /**
+     * Copy TYPO3 core CSS custom properties into the iframe document.
+     * Visual backgrounds/overflow are handled by Rte.css (.ns_t3ai--modal / light-dark).
+     */
+    const syncCoreCssVariables = (target) => {
+      if (!target || !target.style) {
+        return;
+      }
+      const styles = window.getComputedStyle(document.documentElement);
+      const read = (name) => (styles.getPropertyValue(name) || "").trim();
+      const vars = [
+        "--typo3-state-primary-bg",
+        "--typo3-state-primary-color",
+        "--typo3-state-primary-border-color",
+        "--typo3-state-primary-hover-bg",
+        "--typo3-state-primary-hover-color",
+        "--typo3-state-primary-hover-border-color",
+        "--typo3-state-default-bg",
+        "--typo3-state-default-color",
+        "--typo3-state-default-border-color",
+        "--typo3-state-default-hover-bg",
+        "--typo3-state-default-hover-color",
+        "--typo3-state-default-hover-border-color",
+        "--typo3-surface-container-low",
+        "--typo3-surface-container-lowest",
+        "--typo3-text-color-base",
+        "--typo3-component-border-color",
+        "--bs-primary",
+      ];
+      vars.forEach((name) => {
+        const value = read(name);
+        if (value) {
+          target.style.setProperty(name, value);
+        }
+      });
+    };
+
+    const syncIframeColorScheme = (iframe, forcedScheme) => {
+      try {
+        const parentRoot = document.documentElement;
+        const activeScheme =
+          forcedScheme ||
+          parentRoot.getAttribute("data-color-scheme") ||
+          parentRoot.getAttribute("data-bs-theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        const iframeDoc = iframe.contentDocument;
+        if (!iframeDoc) {
+          return;
+        }
+        const iframeRoot = iframeDoc.documentElement;
+        iframeRoot.setAttribute("data-color-scheme", activeScheme);
+        iframeRoot.setAttribute("data-bs-theme", activeScheme);
+        syncCoreCssVariables(iframeRoot);
+        if (iframeDoc.body) {
+          iframeDoc.body.setAttribute("data-color-scheme", activeScheme);
+          iframeDoc.body.setAttribute("data-bs-theme", activeScheme);
+          syncCoreCssVariables(iframeDoc.body);
+        }
+        const shell = iframeDoc.querySelector(".t3ai-rte-shell");
+        if (shell) {
+          shell.setAttribute("data-color-scheme", activeScheme);
+          shell.setAttribute("data-bs-theme", activeScheme);
+          syncCoreCssVariables(shell);
+        }
+        syncCoreCssVariables(iframe.closest(".ns_t3ai--modal") || iframe.parentElement);
+      } catch (e) {
+        // Cross-origin or unavailable iframe document — keep CSS defaults.
+      }
+    };
+
     modalObject.advanced({
       type: modalObject.types.iframe,
       title: "T3AI Content Assistance",
       severity: Severity.notice,
-      additionalCssClasses: [`ns_t3ai--modal ns_t3ai--modal-${modalObject.sizes.small}`],
+      additionalCssClasses: [
+        `ns_t3ai--modal ns_t3ai--modal-${modalObject.sizes.small} ns_t3ai--${scheme}`,
+      ],
       size: modalObject.sizes.small,
       content: url,
       callback: (currentModal) => {
+        syncCoreCssVariables(currentModal);
+        const iframe = currentModal.querySelector("iframe");
+        if (iframe) {
+          // Background + overflow come from Rte.css (.ns_t3ai--modal iframe).
+          iframe.setAttribute("scrolling", "no");
+        }
         $(currentModal)
           .find("iframe")
           .on("load", function (p) {
             var modelContent = $(this).contents();
+            syncIframeColorScheme(this, scheme);
             handleTemplate(modelContent);
             modelContent.on("click", "#openai-generate-content", function (e) {
               var textArea = modelContent.find("#ns-t3ai-generated-content")[0]
@@ -138,6 +223,11 @@ export class T3Ai extends Core.Plugin {
           // Deactivate all tabs
           tabLabels.forEach(function (label) {
             label.classList.remove("active");
+            const link = label.querySelector("a");
+            if (link) {
+              link.classList.remove("active");
+              link.setAttribute("aria-selected", "false");
+            }
           });
 
           [].forEach.call(tabPanes, (pane) => {
@@ -145,8 +235,14 @@ export class T3Ai extends Core.Plugin {
           });
 
           // Activate current tab
-          e.target.parentNode.classList.add("active");
-          var clickedTab = e.target.getAttribute("href");
+          const tabLink = e.target.closest("a") || e.target;
+          const tabItem = tabLink.parentNode;
+          tabItem.classList.add("active");
+          if (tabLink && tabLink.setAttribute) {
+            tabLink.classList.add("active");
+            tabLink.setAttribute("aria-selected", "true");
+          }
+          var clickedTab = tabLink.getAttribute("href");
           modelContent.find(clickedTab)[0].classList.add("active");
 
         });

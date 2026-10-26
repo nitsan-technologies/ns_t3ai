@@ -145,8 +145,7 @@
 			</trans-unit>
 			<trans-unit id="NsT3Ai.rte.advanced.temperature"
 			resname="NsT3Ai.rte.advanced.temperature">
-				<source>Temperature ranges from 0 to 2. Smaller values produce more consistent
-				results.</source>
+				<source>Temperature ranges from 0 to 2. Smaller values produce more consistent results.</source>
 			</trans-unit>
 			<trans-unit id="NsT3Ai.rte.advanced.resultAmount"
 			resname="NsT3Ai.rte.advanced.resultAmount">

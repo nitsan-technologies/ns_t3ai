@@ -265,6 +265,26 @@ class T3AiController
     {
         $generatedContent = $this->contentService->getTemplateData('Rte', []);
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $colorScheme = (string)($GLOBALS['TYPO3_REQUEST']?->getQueryParams()['colorScheme'] ?? 'light');
+        if (!in_array($colorScheme, ['light', 'dark'], true)) {
+            $colorScheme = 'light';
+        }
+
+        // Load TYPO3 core backend styles so .card / .input-group / .btn work inside the iframe.
+        $pageRenderer->addCssFile('EXT:backend/Resources/Public/Css/backend.css');
+        $pageRenderer->addCssFile('EXT:ns_t3ai/Resources/Public/Css/Rte.css');
+        $pageRenderer->addCssInlineBlock(
+            'ns-t3ai-rte-scheme',
+            'html,body{margin:0!important;padding:0!important;height:100%!important;overflow:hidden!important;}'
+            . 'html[data-color-scheme="dark"],html[data-bs-theme="dark"]{color-scheme:only dark;}'
+            . 'html[data-color-scheme="light"],html[data-bs-theme="light"]{color-scheme:only light;}'
+        );
+        $pageRenderer->addHeaderData(
+            '<script>'
+            . 'document.documentElement.setAttribute("data-color-scheme","' . $colorScheme . '");'
+            . 'document.documentElement.setAttribute("data-bs-theme","' . $colorScheme . '");'
+            . '</script>'
+        );
         $pageRenderer->setBodyContent($generatedContent);
         return $pageRenderer->renderResponse();
     }
