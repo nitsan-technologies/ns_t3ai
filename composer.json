@@ -1,12 +1,12 @@
 {
     "name": "nitsan/ns-t3ai",
     "type": "typo3-cms-extension",
-    "version": "14.0.3",
+    "version": "14.0.4",
     "description": "T3AI – TYPO3 AI Integration Extension",
     "homepage": "https://t3planet.com/t3ai-typo3-extension",
     "authors": [
         {
-            "name": "T3: Nilesh Malankiya, T3: Parth Parmar, T3: Jay Bhalgamiya, T3: Rohan Parmar, QA: Vishal Solanki",
+            "name": "Team T3Planet",
             "role": "Developer"
         }
     ],
